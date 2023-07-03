@@ -7,44 +7,22 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
+source("usePackages.R")
+pkgnames <- c("tidyverse","shiny", "shinyjs","DBI")
+loadPkgs(pkgnames)
 
-# Define UI for application that draws a histogram
-ui <- fluidPage(
+#feature Modules
+source("router/routerModule.R")
 
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
+#Helper Functions
+source("router/dbHelper.R")
 
-    # Sidebar with a slider input for number of bins 
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 100,
-                        value = 30)
-        ),
+# Define UI for application
+ui <- routerModuleUI("router")
 
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
-        )
-    )
-)
-
-# Define server logic required to draw a histogram
+# Define server logic
 server <- function(input, output) {
-
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white',
-             xlab = 'Waiting time to next eruption (in mins)',
-             main = 'Histogram of waiting times')
-    })
+  routerModuleServer("router")
 }
 
 # Run the application 
