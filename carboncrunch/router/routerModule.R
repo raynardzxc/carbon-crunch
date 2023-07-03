@@ -13,12 +13,22 @@ routerModuleServer <- function(id) {
     output$navigation <- renderUI({
       switch(game_state(),
              "home" = wellPanel(
-               h2("Welcome to Net-Zero Emissions Challenge"),
-               actionButton(session$ns("tutorial"), "Tutorial"),
-               actionButton(session$ns("play"), "Play Game"),
-               actionButton(session$ns("leaderboard"), "Leaderboard"),
-               actionButton(session$ns("credits"), "Credits"),
-               actionButton(session$ns("quit"), "Quit Game")
+               fluidRow(
+                 column(12, align = "center",
+                        tags$style(HTML("
+                        .header { text-align: center; }
+                        .btn { display: block; margin: 10px auto; width: 200px; }
+                        .footer-btns { display: flex; justify-content: space-between; width: 420px; margin: 0 auto; }")),
+                        h1("Welcome to Carbon Crunch", class = "header"),
+                        actionButton(session$ns("tutorial"), "Tutorial", class = "btn"),
+                        actionButton(session$ns("play"), "Play Game", class = "btn"),
+                        actionButton(session$ns("leaderboard"), "Leaderboard", class = "btn"),
+                        div(class = "footer-btns",
+                            actionButton(session$ns("credits"), "Credits"),
+                            actionButton(session$ns("quit"), "Quit Game")
+                        )
+                 )
+               )
              ),
              "game" = wellPanel(
                h2("Day 1: Make Your Decisions"),

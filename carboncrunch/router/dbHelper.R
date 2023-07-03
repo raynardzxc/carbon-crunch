@@ -1,6 +1,6 @@
-pwd <- rstudioapi::askForPassword("AWS database password")
-options(AWSPassword=pwd)
-rm(pwd)
+# pwd <- rstudioapi::askForPassword("AWS database password")
+# options(AWSPassword=pwd)
+# rm(pwd)
 
 # Taken from class activities
 getAWSConnection <- function(){
