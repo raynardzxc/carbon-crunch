@@ -1,15 +1,15 @@
-
 routerModuleUI <- function(id){
   ns <- NS(id)
   uiOutput(ns("navigation"))
 }
 
+
 routerModuleServer <- function(id) {
   moduleServer(id, function(input, output, session) {
-    
+
     # Game state reactive variable
     game_state <- reactiveVal("home")
-    
+
     output$navigation <- renderUI({
       switch(game_state(),
              "home" = wellPanel(
@@ -45,18 +45,21 @@ routerModuleServer <- function(id) {
              )
       )
     })
-    
+
     output$score <- renderPrint({
       "Your score: 0"
     })
-    
+
     observeEvent(input$play, {
       game_state("game")
     })
-    
+
     observeEvent(input$next_day, {
       game_state("end")
     })
+    
+    observe({
+      print(game_state())
+    })
   })
 }
-
