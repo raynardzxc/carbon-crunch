@@ -14,12 +14,40 @@ loadPkgs(pkgnames)
 # import modules
 source("modules/tutorial/tutorialModule.R")
 source("modules/game/gameModule.R")
+source("modules/leaderboard/leaderboardModule.R")
+source("modules/credits/creditModule.R")
 
 home_page <- div(
-  titlePanel("Carbon Crunch"),
-  p("This is the home page"),
-  tags$li(a(href = route_link("tutorial"), "Tutorial")),
-  tags$li(a(href = route_link("game"), "Game"))
+  fluidRow(
+    column(12, align="center",
+           h1("Welcome to Carbon Crunch", class = "title-text"),
+           PrimaryButton.shinyInput(
+             "tutorial",
+             class="home-button",
+             text = "Tutorial"
+           ),
+           PrimaryButton.shinyInput(
+             "play",
+             class="home-button",
+             text = "Play Game"
+           ),
+           PrimaryButton.shinyInput(
+             "lb",
+             class="home-button",
+             text = "Leaderboard"
+           ),
+           PrimaryButton.shinyInput(
+             "credits",
+             class="home-button",
+             text = "Credits"
+           ),
+           PrimaryButton.shinyInput(
+             "quit",
+             class="home-button",
+             text = "Quit Game"
+           )
+           )
+  )
 )
 
 # Define UI for application
@@ -27,7 +55,9 @@ ui <- fluidPage(
   router_ui(
     route("/", home_page),
     route("tutorial", tutorial_page),
-    route("game", game_page)
+    route("game", game_page),
+    route("leaderboard",leaderboard_page),
+    route("credits", credit_page)
   ),
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
@@ -38,12 +68,20 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   router_server()
   
+  # catch routing from URL
   component <- reactive({
     if (is.null(get_query_param()$add)) {
       return(0)
     }
     as.numeric(get_query_param()$add)
   })
+  
+  observeEvent(input$quit, stopApp())
+  observeEvent(input$tutorial, change_page("tutorial"))
+  observeEvent(input$play, change_page("game"))
+  observeEvent(input$lb, change_page("leaderboard"))
+  observeEvent(input$credits, change_page("credits"))
+  game_server("game")
 }
 
 # Run the application 

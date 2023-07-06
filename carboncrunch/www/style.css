@@ -8,20 +8,34 @@ a {
     color: darkgray;
 }
 
-.card {
-  background: #fff;
-  padding: 28px;
-  margin-bottom: 28px;
-  border-radius: 2px;
-  background-clip: padding-box;
+a:hover {
+    color: rgb(128, 208, 91);
 }
 
-.main {
-  grid-area: main;
-  background-color: #faf9f8;
-  padding-left: 40px;
-  padding-right: 32px;
-  max-width: calc(100vw - 400px);
-  max-height: calc(100vh - 100px);
-  overflow: auto;
+.btn {
+  text-align: center;
+  font-size: 16px;
+  padding: 15px 32px;
+  margin: 7px 0%;
+}
+
+.home-button:hover {
+  background-color:#002ead;
+  transition: 0.7s;
+}
+
+.home-button {
+  text-align: center;
+  padding: 15px 32px;
+  width: 30%;
+  margin: 7px 0%;
+  font-size: 16px;
+  color: black;
+  padding: 0px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.title-text {
+  
 }
