@@ -11,23 +11,15 @@ source("usePackages.R")
 pkgnames <- c("tidyverse","shiny","shiny.fluent","shiny.router","DBI")
 loadPkgs(pkgnames)
 
+# import modules
+source("modules/tutorial/tutorialModule.R")
+source("modules/game/gameModule.R")
+
 home_page <- div(
   titlePanel("Carbon Crunch"),
   p("This is the home page"),
   tags$li(a(href = route_link("tutorial"), "Tutorial")),
   tags$li(a(href = route_link("game"), "Game"))
-)
-
-tutorial_page <- div(
-  titlePanel("Tutorial Page"),
-  p("This is the tutorial page"),
-  tags$li(a(href = route_link("/"), "Back"))
-)
-
-game_page <- div(
-  titlePanel("Game Page"),
-  p("This is the game page"),
-  tags$li(a(href = route_link("/"), "Back"))
 )
 
 # Define UI for application
@@ -36,6 +28,9 @@ ui <- fluidPage(
     route("/", home_page),
     route("tutorial", tutorial_page),
     route("game", game_page)
+  ),
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
   )
 )
 
