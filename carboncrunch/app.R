@@ -8,21 +8,47 @@
 #
 
 source("usePackages.R")
-pkgnames <- c("tidyverse","shiny", "shinyjs","DBI")
+pkgnames <- c("tidyverse","shiny","shiny.fluent","shiny.router","DBI")
 loadPkgs(pkgnames)
 
-#feature Modules
-source("router/routerModule.R")
+home_page <- div(
+  titlePanel("Carbon Crunch"),
+  p("This is the home page"),
+  tags$li(a(href = route_link("tutorial"), "Tutorial")),
+  tags$li(a(href = route_link("game"), "Game"))
+)
 
-#Helper Functions
-source("router/dbHelper.R")
+tutorial_page <- div(
+  titlePanel("Tutorial Page"),
+  p("This is the tutorial page"),
+  tags$li(a(href = route_link("/"), "Back"))
+)
+
+game_page <- div(
+  titlePanel("Game Page"),
+  p("This is the game page"),
+  tags$li(a(href = route_link("/"), "Back"))
+)
 
 # Define UI for application
-ui <- routerModuleUI("router")
+ui <- fluidPage(
+  router_ui(
+    route("/", home_page),
+    route("tutorial", tutorial_page),
+    route("game", game_page)
+  )
+)
 
 # Define server logic
-server <- function(input, output) {
-  routerModuleServer("router")
+server <- function(input, output, session) {
+  router_server()
+  
+  component <- reactive({
+    if (is.null(get_query_param()$add)) {
+      return(0)
+    }
+    as.numeric(get_query_param()$add)
+  })
 }
 
 # Run the application 
