@@ -3,7 +3,6 @@ game_page <- function(id) {
   div(
     titlePanel("Game Page"),
     p("This is the game page"),
-    tags$li(a(href = route_link("/"), "Back")),
     PrimaryButton.shinyInput(
       ns("back"),
       class=".btn",
