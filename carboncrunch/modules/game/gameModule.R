@@ -1,19 +1,22 @@
-game_page <- div(
-  titlePanel("Game Page"),
-  p("This is the game page"),
-  tags$li(a(href = route_link("/"), "Back")),
-  PrimaryButton.shinyInput(
-    "back",
-    class=".btn",
-    text = "Back to Home"
+game_page <- function(id) {
+  ns <- NS(id)
+  div(
+    titlePanel("Game Page"),
+    p("This is the game page"),
+    tags$li(a(href = route_link("/"), "Back")),
+    PrimaryButton.shinyInput(
+      ns("back"),
+      class=".btn",
+      text = "Back to Home"
+    )
   )
-)
+}
 
 game_server <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
-      router_server()
+      ns <- session$ns
       observeEvent(input$back, change_page("/"))
     }
   )

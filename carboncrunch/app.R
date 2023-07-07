@@ -54,10 +54,10 @@ home_page <- div(
 ui <- fluidPage(
   router_ui(
     route("/", home_page),
-    route("tutorial", tutorial_page),
-    route("game", game_page),
-    route("leaderboard",leaderboard_page),
-    route("credits", credit_page)
+    route("tutorial", tutorial_page("tutorial")),
+    route("game", game_page("game")),
+    route("leaderboard",leaderboard_page("leaderboard")),
+    route("credits", credit_page("credits"))
   ),
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
@@ -75,13 +75,17 @@ server <- function(input, output, session) {
     }
     as.numeric(get_query_param()$add)
   })
-  
-  observeEvent(input$quit, stopApp())
+
   observeEvent(input$tutorial, change_page("tutorial"))
   observeEvent(input$play, change_page("game"))
   observeEvent(input$lb, change_page("leaderboard"))
   observeEvent(input$credits, change_page("credits"))
+  observeEvent(input$quit, stopApp())
+  
+  tutorial_server("tutorial")
   game_server("game")
+  leaderboard_server("leaderboard")
+  credit_server("credits")
 }
 
 # Run the application 
