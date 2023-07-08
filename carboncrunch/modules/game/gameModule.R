@@ -17,10 +17,11 @@ game_page2 <- function(id) {
     titlePanel("Game Page"),
     sidebarLayout(
       sidebarPanel(
-        uiOutput(ns("battery")),
-        textOutput(ns("battery_level")),
-        div(
-          id = ns("prodline"),
+        div(class = "battery",
+          uiOutput(ns("battery")),
+          textOutput(ns("battery_level")),
+        ),
+        div(class = "prodline",
           Toggle.shinyInput(inputId = ns("toggle1"), value = TRUE),
           Toggle.shinyInput(inputId = ns("toggle2"), value = TRUE),
           Toggle.shinyInput(inputId = ns("toggle3"), value = TRUE),
@@ -29,12 +30,14 @@ game_page2 <- function(id) {
         ),
         width = 8),
       mainPanel(
-        textOutput(ns("day")),
-        textOutput(ns("cash")),
-        textOutput(ns("emissions")),
-        textOutput(ns("selected_component")),
-        actionButton(ns("next_day"), "Next Day"),
-        actionButton(ns("confirm_back"), "Back to Home"),
+        div(class = "stats",
+          textOutput(ns("day")),
+          textOutput(ns("cash")),
+          textOutput(ns("emissions")),
+          textOutput(ns("selected_component")),
+          actionButton(ns("next_day"), "Next Day"),
+          actionButton(ns("confirm_back"), "Back to Home"),
+        ),
         width = 4),
       position = c("left", "right"),
       fluid = TRUE

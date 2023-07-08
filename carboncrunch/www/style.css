@@ -56,8 +56,3 @@ a:hover {
 .custom-dialog .ms-Dialog-title {
   color: black;
 }
-
-.battery_level {
-  color: red;
-  font-size: 20px;
-}
