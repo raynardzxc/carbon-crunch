@@ -19,7 +19,8 @@ source("modules/credits/creditModule.R")
 
 home_page <- div(
   fluidRow(
-    column(12, align="center",
+    column(12, 
+           align="center",
            h1("Welcome to Carbon Crunch", class = "title-text"),
            PrimaryButton.shinyInput(
              "tutorial",
@@ -55,9 +56,11 @@ ui <- fluidPage(
   router_ui(
     route("/", home_page),
     route("tutorial", tutorial_page("tutorial")),
-    route("game", game_page("game")),
+    route("game", game_page2("game")),
     route("leaderboard",leaderboard_page("leaderboard")),
     route("credits", credit_page("credits"))
+    # route to analysis
+    # route to publish?
   ),
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")

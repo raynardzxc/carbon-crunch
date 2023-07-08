@@ -39,3 +39,25 @@ a:hover {
 .title-text {
   
 }
+
+.modal-content {
+  background-color: #f9f9f9;
+  color: black;
+}
+.modal-header {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.custom-dialog .ms-Dialog-main {
+  background-color: #f9f9f9;
+  color: black;
+}
+.custom-dialog .ms-Dialog-title {
+  color: black;
+}
+
+.battery_level {
+  color: red;
+  font-size: 20px;
+}
