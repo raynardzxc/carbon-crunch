@@ -8,7 +8,7 @@
 #
 
 source("usePackages.R")
-pkgnames <- c("tidyverse","shiny","shiny.fluent","shiny.router","DBI")
+pkgnames <- c("tidyverse","shiny","shiny.fluent","shiny.router","DBI", "shinyWidgets")
 loadPkgs(pkgnames)
 
 # import modules

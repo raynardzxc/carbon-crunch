@@ -18,8 +18,9 @@ game_page2 <- function(id) {
     sidebarLayout(
       sidebarPanel(
         div(class = "battery",
-          uiOutput(ns("battery")),
-          textOutput(ns("battery_level")),
+          progressBar(ns("battery_bar"), value = 10, total = 15),
+          #uiOutput(ns("battery")),
+          textOutput(ns("battery_value")),
         ),
         div(class = "prodline",
           Toggle.shinyInput(inputId = ns("toggle1"), value = TRUE),
@@ -36,7 +37,7 @@ game_page2 <- function(id) {
           textOutput(ns("emissions")),
           textOutput(ns("selected_component")),
           actionButton(ns("next_day"), "Next Day"),
-          actionButton(ns("confirm_back"), "Back to Home"),
+          actionButton(ns("back"), "Back to Home"),
         ),
         width = 4),
       position = c("left", "right"),
@@ -55,7 +56,7 @@ game_server <- function(id) {
       day <- reactiveVal(1)
       cash <- reactiveVal(0)
       emissions <- reactiveVal(0)
-      battery_level <- reactiveVal(10)
+      battery_value <- reactiveVal(10)
       battery_cap <- reactiveVal(15)
       selected_component <- reactiveVal("None")
       
@@ -63,27 +64,29 @@ game_server <- function(id) {
         day(1)
         cash(0)
         emissions(0)
-        battery_level(10)
+        battery_value(10)
         battery_cap(15)
         selected_component("None")
       }
       
-      output$battery_level <- renderText({ paste("Battery:", battery_level(),"/",battery_cap()) })
+      # update values shown
+      output$battery_value <- renderText({ paste("Battery:", battery_value(),"/",battery_cap()) })
       output$day <- renderText({ paste("Day:", day()) })
       output$cash <- renderText({ paste("Cash:", cash()) })
       output$emissions <- renderText({ paste("Emissions:", emissions()) })
       output$selected_component <- renderText({ paste("Selected component:", selected_component()) })
       
-      output$battery <- renderUI({
-        if (battery_level() >= 0) {
-          actionButton(ns("battery"), img(src = "noun-battery-5868848.png", height = 100, width = 200))
-        } else {
-          actionButton(ns("battery"), img(src = "noun-battery-5868850.png", height = 100, width = 200)) # replace with your image source
-        }
+      output$battery_bar <- renderUI({
+        updateProgressBar(
+          session = session,
+          id = ns("battery_bar"),
+          value = battery_value()
+        )
       })
       
       observeEvent(input$battery, {
         selected_component("Battery")
+        print("hi")
       })
       
       observeEvent(input$next_day, {
@@ -98,7 +101,12 @@ game_server <- function(id) {
           toggleValue <- input[[paste0("toggle", i)]]
           if(toggleValue == FALSE) {
             cash(cash() + 10)
-            battery_level(battery_level()-2)
+            battery_value(battery_value()-2)
+            updateProgressBar(
+              session = session,
+              id = ns("battery_bar"),
+              value = battery_value()
+            )
           } else if(toggleValue == TRUE) {
             cash(cash() + 15)
             emissions(emissions() + 10)
@@ -130,12 +138,12 @@ game_server <- function(id) {
         showModal(
           Dialog(
             className = "custom-dialog",
-            isOpen = TRUE,
+            hidden = FALSE,
             title = "Confirmation",
             subText = "Are you sure you want to go back to home? All progress will be lost.",
             DialogFooter(
-              DefaultButton("Cancel", id = ns("cancelButton"), shinyInput = TRUE),
-              PrimaryButton("Yes", onclick = JS("function() { Shiny.setInputValue('backConfirmed', true); }"))
+              DefaultButton.shinyInput(ns("cancelButton"), text="Cancel"),
+              PrimaryButton.shinyInput(ns("confirm_back"), text="Yes")
             ),
             # Prevent automatic dismissal
             dismissOnClickOutside = FALSE,
@@ -146,13 +154,17 @@ game_server <- function(id) {
       
       observeEvent(input$cancelButton, {
         removeModal()
+        print("Cancel back to home dialog")
       })
       
       observeEvent(input$confirm_back, {
+        resetGame()
+        print("Game resetted")
         removeModal()
         change_page("/")
-        resetGame()
+        print("Back to home")
       })
+      
       
     }
   )
