@@ -19,8 +19,6 @@ game_page2 <- function(id) {
       sidebarPanel(
         div(class = "battery",
           progressBar(ns("battery_bar"), value = 10, total = 15),
-          #uiOutput(ns("battery")),
-          textOutput(ns("battery_value")),
         ),
         div(class = "prodline",
           Toggle.shinyInput(inputId = ns("toggle1"), value = TRUE),
