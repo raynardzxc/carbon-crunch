@@ -106,6 +106,25 @@ game_page2 <- function(id) {
   )
 }
 
+game_page_new <- function(id) {
+  ns <- NS(id)
+  div(
+    fluidRow(
+      column(6,
+             align="center",
+             Text(variant="xxLarge","Carbon Crunch Game!", class="big-text")),
+      column(4),
+      column(2,
+             align="center",
+             PrimaryButton.shinyInput(
+               inputId = ns("back"),
+               class=".btn",
+               text="X"
+             ))
+    )
+  )
+}
+
 game_server <- function(id) {
   moduleServer(
     id,
