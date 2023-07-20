@@ -4,7 +4,7 @@ game_page <- function(id) {
     fluidRow(
       column(6,
              align="center",
-             Text(variant="xxLarge","Carbon Crunch Game!", class="big-text")),
+             div(Text(variant = "xLarge", "Carbon Crunch Game!"), class = "big-text")),
       column(4),
       column(2,
              align="center",
