@@ -1,114 +1,6 @@
 game_page <- function(id) {
   ns <- NS(id)
-  div(
-    titlePanel("Game Page"),
-    p("This is the game page"),
-    PrimaryButton.shinyInput(
-      inputId = ns("back"),
-      class=".btn",
-      text = "Back to Home"
-    )
-  )
-}
-
-game_page2 <- function(id) {
-  ns <- NS(id)
-  div(
-    titlePanel("Game Page"),
-    sidebarLayout(
-      
-      ### Left side of the screen (Battery Indicator, Factory floor)
-      sidebarPanel(
-        
-        ### Battery Indicator
-        div(class = "battery",
-          progressBar(ns("battery_bar"), value = 10, total = 15),
-        ),
-        
-        ### Factory Floor
-        div(class = "prodline",
-          fluidRow(
-            column(12,
-                   "Upgrade button",
-                   "Production line 1",
-                   switchInput(inputId = ns("toggle1"), ## idk why this switch is not on the same level as the other elements even though they are in the same row. 
-                               offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
-                               onLabel = icon("oil-well"),
-                               offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
-                               onStatus = "danger",
-                               value = TRUE,
-                               inline = TRUE),
-                   ),
-            column(12,
-                   "Upgrade button",
-                   "Production line 2",
-                   switchInput(inputId = ns("toggle2"), 
-                               offLabel = icon("sun","fa-solid"), 
-                               onLabel = icon("oil-well"),
-                               offStatus = "success", 
-                               onStatus = "danger",
-                               value = TRUE,
-                               inline = TRUE),
-                   ),
-            column(12,
-                   "Upgrade button",
-                   "Production line 3",
-                   switchInput(inputId = ns("toggle3"), 
-                               offLabel = icon("sun","fa-solid"), 
-                               onLabel = icon("oil-well"),
-                               offStatus = "success", 
-                               onStatus = "danger",
-                               value = TRUE,
-                               inline = TRUE),
-                   ),
-            column(12,
-                   "Upgrade button",
-                   "Production line 4",
-                   switchInput(inputId = ns("toggle4"), 
-                               offLabel = icon("sun","fa-solid"), 
-                               onLabel = icon("oil-well"),
-                               offStatus = "success", 
-                               onStatus = "danger",
-                               value = FALSE,
-                               inline = TRUE),
-                   ),
-            column(12,
-                   "Upgrade button",
-                   "Production line 5",
-                   switchInput(inputId = ns("toggle5"), 
-                               offLabel = icon("sun","fa-solid"), 
-                               onLabel = icon("oil-well"),
-                               offStatus = "success", 
-                               onStatus = "danger",
-                               value = FALSE,
-                               inline = TRUE),
-                   ),
-            ),
-        ),
-        width = 8),
-      
-      ### Right side of the screen (Day indicator, Dashboard, Next day)
-      mainPanel(
-        
-        ### Dashboard
-        div(class = "stats",
-          textOutput(ns("day")),
-          textOutput(ns("cash")),
-          textOutput(ns("emissions")),
-          textOutput(ns("selected_component")),
-          actionButton(ns("next_day"), "Next Day"), ## temp next day
-          actionButton(ns("back"), "Back to Home"), ## temp back home
-        ),
-        width = 4),
-      position = c("left", "right"),
-      fluid = TRUE
-    )
-  )
-}
-
-game_page_new <- function(id) {
-  ns <- NS(id)
-  div(
+  div(class = "game-page",
     fluidRow(
       column(6,
              align="center",
@@ -120,6 +12,89 @@ game_page_new <- function(id) {
                inputId = ns("back"),
                class=".btn",
                text="X"
+             ))
+    ),
+    fluidRow(
+      column(8,
+             align="center",
+             ### Battery Indicator
+             div(class = "battery",
+                 progressBar(ns("battery_bar"), value = 10, total = 15),
+             ),
+             
+             ### Factory Floor
+             div(class = "prodline",
+                 fluidRow(
+                   column(12,
+                          "Upgrade button",
+                          "Production line 1",
+                          switchInput(inputId = ns("toggle1"), ## idk why this switch is not on the same level as the other elements even though they are in the same row. 
+                                      offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
+                                      onStatus = "danger",
+                                      value = TRUE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          "Upgrade button",
+                          "Production line 2",
+                          switchInput(inputId = ns("toggle2"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = TRUE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          "Upgrade button",
+                          "Production line 3",
+                          switchInput(inputId = ns("toggle3"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = TRUE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          "Upgrade button",
+                          "Production line 4",
+                          switchInput(inputId = ns("toggle4"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = FALSE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          "Upgrade button",
+                          "Production line 5",
+                          switchInput(inputId = ns("toggle5"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = FALSE,
+                                      inline = TRUE),
+                   ),
+                 ),
+             )),
+      column(4,
+             align="center",
+             ### Panel
+             div(class = "stats",
+                 textOutput(ns("day")),
+                 textOutput(ns("cash")),
+                 textOutput(ns("emissions")),
+                 textOutput(ns("selected_component")),
+                 PrimaryButton.shinyInput(
+                   inputId = ns("next_day"),
+                   class=".btn",
+                   text="Next Day"
+                 )
              ))
     )
   )

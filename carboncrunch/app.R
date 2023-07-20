@@ -56,7 +56,7 @@ ui <- fluidPage(
   router_ui(
     route("/", home_page),
     route("tutorial", tutorial_page("tutorial")),
-    route("game", game_page_new("game")),
+    route("game", game_page("game")),
     route("leaderboard",leaderboard_page("leaderboard")),
     route("credits", credit_page("credits"))
     # route to analysis
