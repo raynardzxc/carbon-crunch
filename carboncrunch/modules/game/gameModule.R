@@ -89,12 +89,8 @@ game_page <- function(id) {
                  textOutput(ns("day")),
                  textOutput(ns("cash")),
                  textOutput(ns("emissions")),
-                 textOutput(ns("selected_component")),
-                 PrimaryButton.shinyInput(
-                   inputId = ns("next_day"),
-                   class=".btn",
-                   text="Next Day"
-                 )
+                 uiOutput(ns("selected_component")),
+                 uiOutput(ns("next_day_button"))
              ))
     )
   )
@@ -113,6 +109,7 @@ game_server <- function(id) {
       battery_value <- reactiveVal(10)
       battery_cap <- reactiveVal(15)
       selected_component <- reactiveVal("None")
+      summary_data <- reactiveVal() 
       
       resetGame <- function() {
         day(1)
@@ -121,6 +118,17 @@ game_server <- function(id) {
         battery_value(10)
         battery_cap(15)
         selected_component("None")
+        summary_data <- reactiveVal() 
+        print("resetGame")
+      }
+      
+      generateUI <- function(name) {
+        div(
+          h3(paste0(name, " Selected")),
+          p(paste0("Some descriptive text about ", name, "...")),
+          actionButton(ns(paste0("button_", name, "_1")), paste0("Button 1 for ", name)),
+          actionButton(ns(paste0("button_", name, "_2")), paste0("Button 2 for ", name))
+        )
       }
       
       # update values shown
@@ -128,7 +136,49 @@ game_server <- function(id) {
       output$day <- renderText({ paste("Day:", day()) })
       output$cash <- renderText({ paste("Cash:", cash()) })
       output$emissions <- renderText({ paste("Emissions:", emissions()) })
-      output$selected_component <- renderText({ paste("Selected component:", selected_component()) })
+      
+      output$selected_component <- renderUI({
+        req(selected_component())
+        if (selected_component() == "Toggle1") {
+          generateUI("Toggle1")
+        } else if (selected_component() == "Toggle2") {
+          generateUI("Toggle2")
+        } else if (selected_component() == "Toggle3") {
+          generateUI("Toggle3")
+        } else if (selected_component() == "Toggle4") {
+          generateUI("Toggle4")
+        } else if (selected_component() == "Toggle5") {
+          generateUI("Toggle5")
+        } else if (selected_component() == "NextDay") {
+          req(summary_data())  # Make sure summary_data exists
+          
+          if (is.null(summary_data())) return()
+          
+          HTML(
+            paste0(
+              '<table border="1" style="width:100%">',
+              '<tr><th>Category</th><th>Old Value</th><th>New Value</th><th>Change</th></tr>',
+              paste0(
+                '<tr>',
+                '<td>', summary_data()$Category, '</td>',
+                '<td>', summary_data()$"Old Value", '</td>',
+                '<td>', summary_data()$"New Value", '</td>',
+                '<td>', summary_data()$Change, '</td>',
+                '</tr>',
+                collapse = ""
+              ),
+              '</table>'
+            )
+          )
+          
+        } else {
+          div(
+            h3("No Component Selected"),
+            p("Please select a component.")
+          )
+        }
+      })
+      
       
       output$battery_bar <- renderUI({
         updateProgressBar(
@@ -138,12 +188,40 @@ game_server <- function(id) {
         )
       })
       
+      output$next_day_button <- renderUI({
+        if (day() < 30) {
+          PrimaryButton.shinyInput(
+            inputId = ns("next_day"),
+            class=".btn",
+            text="Next Day"
+          )
+        } else {
+          PrimaryButton.shinyInput(
+            inputId = ns("finish_game"),
+            class=".btn",
+            text="Finish Game"
+          )
+        }
+      })
+      
+      
       observeEvent(input$battery, {
         selected_component("Battery")
-        print("hi")
+        print("Observe Battery Clicked")
+      })
+      
+      observeEvent(input$toggle1, {
+        selected_component("Toggle1")
+        print("Toggle1 Clicked")
+      })
+      
+      observeEvent(input$toggle2, {
+        selected_component("Toggle2")
+        print("Toggle2 Clicked")
       })
       
       observeEvent(input$next_day, {
+        
         # Get the current values
         old_day <- day()
         old_cash <- cash()
@@ -166,28 +244,33 @@ game_server <- function(id) {
             emissions(emissions() + 10)
           }
         }
+        
         # Get the changes
         change_in_day <- day() - old_day
         change_in_cash <- cash() - old_cash
         change_in_emissions <- emissions() - old_emissions
         
-        # Construct the summary string and set it as the value of selected_component
-        summary_string <- paste0(
-          "Day: ", old_day, " -> ", day(), " (", change_in_day, ")\n",
-          "Cash: ", old_cash, " -> ", cash(), " (", change_in_cash, ")\n",
-          "Emissions: ", old_emissions, " -> ", emissions(), " (", change_in_emissions, ")"
-        )
-        selected_component(summary_string)
+        # Create data frame
+        summary_data(data.frame(
+          Category = c("Day", "Cash", "Emissions"), 
+          "Old Value" = c(old_day, old_cash, old_emissions),
+          "New Value" = c(day(), cash(), emissions()),
+          "Change" = c(change_in_day, change_in_cash, change_in_emissions)
+        ))
         
-        # Check if day is 30
-        if(day() > 30) {
-          # route to analysis
-          resetGame()
-        }
+        # Update summary
+        selected_component("NextDay")
         
       })
       
-      #not working
+      observeEvent(input$finish_game, {
+        # Reset the game and go back to the home page
+        print("Finish Game")
+        resetGame()
+        change_page("analysis")
+      })
+      
+      
       observeEvent(input$back, {
         showModal(
           Dialog(
@@ -213,7 +296,6 @@ game_server <- function(id) {
       
       observeEvent(input$confirm_back, {
         resetGame()
-        print("Game resetted")
         removeModal()
         change_page("/")
         print("Back to home")

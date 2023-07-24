@@ -15,7 +15,9 @@ loadPkgs(pkgnames)
 source("modules/tutorial/tutorialModule.R")
 source("modules/game/gameModule.R")
 source("modules/leaderboard/leaderboardModule.R")
+source("modules/leaderboard/publishModule.R")
 source("modules/credits/creditModule.R")
+source("modules/analysis/analysisModule.R")
 
 home_page <- div(
   fluidRow(
@@ -58,9 +60,9 @@ ui <- fluidPage(
     route("tutorial", tutorial_page("tutorial")),
     route("game", game_page("game")),
     route("leaderboard",leaderboard_page("leaderboard")),
-    route("credits", credit_page("credits"))
-    # route to analysis
-    # route to publish?
+    route("credits", credit_page("credits")),
+    route("analysis", analysis_page("analysis")),
+    route("publish", publish_page("publish"))
   ),
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
@@ -89,6 +91,8 @@ server <- function(input, output, session) {
   game_server("game")
   leaderboard_server("leaderboard")
   credit_server("credits")
+  analysis_server("analysis")
+  publish_server("analysis")
 }
 
 # Run the application 
