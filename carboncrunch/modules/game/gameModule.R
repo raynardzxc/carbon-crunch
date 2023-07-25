@@ -26,7 +26,11 @@ game_page <- function(id) {
              div(class = "prodline",
                  fluidRow(
                    column(12,
-                          "Upgrade button",
+                          PrimaryButton.shinyInput(
+                            inputId = ns("PL1"),
+                            class=".btn",
+                            text="Upgrade 1"
+                          ),
                           "Production line 1",
                           switchInput(inputId = ns("toggle1"), ## idk why this switch is not on the same level as the other elements even though they are in the same row. 
                                       offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
@@ -37,7 +41,11 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          "Upgrade button",
+                          PrimaryButton.shinyInput(
+                            inputId = ns("PL2"),
+                            class=".btn",
+                            text="Upgrade 2"
+                          ),
                           "Production line 2",
                           switchInput(inputId = ns("toggle2"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -48,7 +56,11 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          "Upgrade button",
+                          PrimaryButton.shinyInput(
+                            inputId = ns("PL3"),
+                            class=".btn",
+                            text="Upgrade 3"
+                          ),
                           "Production line 3",
                           switchInput(inputId = ns("toggle3"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -59,7 +71,11 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          "Upgrade button",
+                          PrimaryButton.shinyInput(
+                            inputId = ns("PL4"),
+                            class=".btn",
+                            text="Upgrade 4"
+                          ),
                           "Production line 4",
                           switchInput(inputId = ns("toggle4"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -70,7 +86,11 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          "Upgrade button",
+                          PrimaryButton.shinyInput(
+                            inputId = ns("PL5"),
+                            class=".btn",
+                            text="Upgrade 5"
+                          ),
                           "Production line 5",
                           switchInput(inputId = ns("toggle5"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -139,16 +159,16 @@ game_server <- function(id) {
       
       output$selected_component <- renderUI({
         req(selected_component())
-        if (selected_component() == "Toggle1") {
-          generateUI("Toggle1")
-        } else if (selected_component() == "Toggle2") {
-          generateUI("Toggle2")
-        } else if (selected_component() == "Toggle3") {
-          generateUI("Toggle3")
-        } else if (selected_component() == "Toggle4") {
-          generateUI("Toggle4")
-        } else if (selected_component() == "Toggle5") {
-          generateUI("Toggle5")
+        if (selected_component() == "PL1") {
+          generateUI("Production Line 1")
+        } else if (selected_component() == "PL2") {
+          generateUI("Production Line 2")
+        } else if (selected_component() == "PL3") {
+          generateUI("Production Line 3")
+        } else if (selected_component() == "PL4") {
+          generateUI("Production Line 4")
+        } else if (selected_component() == "PL5") {
+          generateUI("Production Line 5")
         } else if (selected_component() == "NextDay") {
           req(summary_data())  # Make sure summary_data exists
           
@@ -161,8 +181,8 @@ game_server <- function(id) {
               paste0(
                 '<tr>',
                 '<td>', summary_data()$Category, '</td>',
-                '<td>', summary_data()$"Old Value", '</td>',
-                '<td>', summary_data()$"New Value", '</td>',
+                '<td>', summary_data()$Old.Value, '</td>',
+                '<td>', summary_data()$New.Value, '</td>',
                 '<td>', summary_data()$Change, '</td>',
                 '</tr>',
                 collapse = ""
@@ -210,14 +230,24 @@ game_server <- function(id) {
         print("Observe Battery Clicked")
       })
       
-      observeEvent(input$toggle1, {
-        selected_component("Toggle1")
-        print("Toggle1 Clicked")
+      observeEvent(input$PL1, {
+        selected_component("PL1")
       })
       
-      observeEvent(input$toggle2, {
-        selected_component("Toggle2")
-        print("Toggle2 Clicked")
+      observeEvent(input$PL2, {
+        selected_component("PL2")
+      })
+      
+      observeEvent(input$PL3, {
+        selected_component("PL3")
+      })
+      
+      observeEvent(input$PL4, {
+        selected_component("PL4")
+      })
+      
+      observeEvent(input$PL5, {
+        selected_component("PL5")
       })
       
       observeEvent(input$next_day, {
