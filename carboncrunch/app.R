@@ -92,7 +92,7 @@ server <- function(input, output, session) {
   leaderboard_server("leaderboard")
   credit_server("credits")
   analysis_server("analysis")
-  publish_server("analysis")
+  publish_server("publish")
 }
 
 # Run the application 
