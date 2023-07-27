@@ -18,9 +18,9 @@ game_page <- function(id) {
       column(8,
              align="center",
              ### Battery Indicator
-             div(class = "battery",
-                 progressBar(ns("battery_bar"), value = 10, total = 15),
-             ),
+             div(class="w3-light-grey",
+               div(class="w3-container w3-red w3-padding w3-center", style="width:25%",25)
+               ),
              
              ### Factory Floor
              div(class = "prodline",
@@ -31,8 +31,8 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 1"
                           ),
-                          "Production line 1",
-                          switchInput(inputId = ns("toggle1"), ## idk why this switch is not on the same level as the other elements even though they are in the same row. 
+                          "Production line 1 graphics placeholder",
+                          switchInput(inputId = ns("toggle1"), 
                                       offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
                                       onLabel = icon("oil-well"),
                                       offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
@@ -46,7 +46,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 2"
                           ),
-                          "Production line 2",
+                          "Production line 2 graphics placeholder",
                           switchInput(inputId = ns("toggle2"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -61,7 +61,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 3"
                           ),
-                          "Production line 3",
+                          "Production line 3 graphics placeholder",
                           switchInput(inputId = ns("toggle3"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -76,7 +76,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 4"
                           ),
-                          "Production line 4",
+                          "Production line 4 graphics placeholder",
                           switchInput(inputId = ns("toggle4"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -91,7 +91,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 5"
                           ),
-                          "Production line 5",
+                          "Production line 5 graphics placeholder",
                           switchInput(inputId = ns("toggle5"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -102,6 +102,8 @@ game_page <- function(id) {
                    ),
                  ),
              )),
+      
+      ### Side panel (day indicator and dashboard)
       column(4,
              align="center",
              ### Panel
