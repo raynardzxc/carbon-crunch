@@ -18,12 +18,13 @@ game_page <- function(id) {
       column(8,
              align="center",
              ### Battery Indicator
-             div(class="w3-light-grey",
-               div(class="w3-container w3-red w3-padding w3-center", style="width:25%",25)
+             div(class="battery-div",
+               uiOutput(ns("battery")),
+               textOutput(ns("battery_value"))
                ),
              
              ### Factory Floor
-             div(class = "prodline",
+             div(class = "prodline-div",
                  fluidRow(
                    column(12,
                           PrimaryButton.shinyInput(
@@ -128,8 +129,9 @@ game_server <- function(id) {
       day <- reactiveVal(1)
       cash <- reactiveVal(0)
       emissions <- reactiveVal(0)
-      battery_value <- reactiveVal(10)
+      battery_value <- reactiveVal(15)
       battery_cap <- reactiveVal(15)
+      sunlight <- reactiveVal(rgamma(1, shape = 2, scale = 3.5)) # This would give you a mean of 7 and a variance of 14.
       selected_component <- reactiveVal("None")
       summary_data <- reactiveVal() 
       
@@ -137,7 +139,7 @@ game_server <- function(id) {
         day(1)
         cash(0)
         emissions(0)
-        battery_value(10)
+        battery_value(15)
         battery_cap(15)
         selected_component("None")
         summary_data <- reactiveVal() 
@@ -153,11 +155,28 @@ game_server <- function(id) {
         )
       }
       
+      # Helper function to round if numeric
+      round_if_numeric <- function(x) {
+        if(is.numeric(x) && !is.na(x)) {
+          round(x, 1)
+        } else {
+          x  # keep x as it is if it's not numeric or it's NA
+        }
+      }
+      
       # update values shown
-      output$battery_value <- renderText({ paste("Battery:", battery_value(),"/",battery_cap()) })
+      output$battery_value <- renderText({ paste("Battery:", round_if_numeric(battery_value()),"/",battery_cap()) })
       output$day <- renderText({ paste("Day:", day()) })
       output$cash <- renderText({ paste("Cash:", cash()) })
       output$emissions <- renderText({ paste("Emissions:", emissions()) })
+      
+      output$battery <- renderUI({
+        if (battery_value() >= 0) {
+          actionButton(ns("battery"), img(src = "noun-battery-5868848.png", height = 100, width = 200))
+        } else {
+          actionButton(ns("battery"), img(src = "noun-battery-5868850.png", height = 100, width = 200)) # replace with your image source
+        }
+      })
       
       output$selected_component <- renderUI({
         req(selected_component())
@@ -171,27 +190,58 @@ game_server <- function(id) {
           generateUI("Production Line 4")
         } else if (selected_component() == "PL5") {
           generateUI("Production Line 5")
+        } else if (selected_component() == "Battery") {
+          generateUI("Battery")
         } else if (selected_component() == "NextDay") {
           req(summary_data())  # Make sure summary_data exists
           
           if (is.null(summary_data())) return()
           
+          # Generate row HTML strings for first 3 rows
+          rows1to3 <- paste0(
+            '<tr>',
+            '<td>', summary_data()[2:4, "Category"], '</td>',
+            '<td>', sapply(summary_data()[2:4, "Old.Value"], round_if_numeric), '</td>',
+            '<td> -> </td>',
+            '<td>', sapply(summary_data()[2:4, "New.Value"], round_if_numeric), '</td>',
+            '<td>', ifelse(summary_data()[2:4, "Change"] >= 0, "+", ""), sapply(summary_data()[2:4, "Change"], round_if_numeric), '</td>',
+            '</tr>',
+            collapse = ""
+          )
+          
+          # Generate row HTML strings for 'Solar gained' and 'Solar overflow' rows
+          rows4to5 <- paste0(
+            '<tr>',
+            '<td>', summary_data()[5:6, "Category"], '</td>',
+            '<td>', sapply(summary_data()[5:6, "New.Value"], round_if_numeric), '</td>',
+            '<td></td>',
+            '<td></td>',
+            '<td></td>',
+            '</tr>',
+            collapse = ""
+          )
+          
           HTML(
             paste0(
-              '<table border="1" style="width:100%">',
-              '<tr><th>Category</th><th>Old Value</th><th>New Value</th><th>Change</th></tr>',
-              paste0(
-                '<tr>',
-                '<td>', summary_data()$Category, '</td>',
-                '<td>', summary_data()$Old.Value, '</td>',
-                '<td>', summary_data()$New.Value, '</td>',
-                '<td>', summary_data()$Change, '</td>',
-                '</tr>',
-                collapse = ""
-              ),
+              '<style>',
+              'table {',
+              '  margin-left: auto;',
+              '  margin-right: auto;',
+              '}',
+              'table td, table th {',
+              '  text-align: center;',
+              '  vertical-align: middle;',
+              '}',
+              '</style>',
+              '<table style="width:100%; border: none;">',
+              '<tr><th></th><th>', round_if_numeric(summary_data()[1, "Old.Value"]), '</th><th> -> </th><th>', round_if_numeric(summary_data()[1, "New.Value"]), '</th><th></th></tr>',
+              rows1to3,
+              rows4to5,
               '</table>'
             )
           )
+          
+          
           
         } else {
           div(
@@ -201,14 +251,6 @@ game_server <- function(id) {
         }
       })
       
-      
-      output$battery_bar <- renderUI({
-        updateProgressBar(
-          session = session,
-          id = ns("battery_bar"),
-          value = battery_value()
-        )
-      })
       
       output$next_day_button <- renderUI({
         if (day() < 30) {
@@ -258,42 +300,60 @@ game_server <- function(id) {
         old_day <- day()
         old_cash <- cash()
         old_emissions <- emissions()
+        old_battery_value <- battery_value()
+        
+        # Generate new sunlight value for the next day
+        sunlight_value <- rgamma(1, shape = 2, scale = 3.5)
+        sunlight_value <- min(sunlight_value, 10) # Ensure that sunlight value is within a reasonable range (e.g., 1 to 10)
+        sunlight(sunlight_value)
         
         # Apply updates
         day(day() + 1)
         for(i in 1:5) {
           toggleValue <- input[[paste0("toggle", i)]]
           if(toggleValue == FALSE) {
-            cash(cash() + 10)
-            battery_value(battery_value()-2)
+            cash(cash() + 10) # Cash added
+            battery_value(battery_value()-2) # Battery amount used
             updateProgressBar(
               session = session,
               id = ns("battery_bar"),
               value = battery_value()
             )
           } else if(toggleValue == TRUE) {
-            cash(cash() + 15)
-            emissions(emissions() + 10)
+            cash(cash() + 15) # Cash added
+            emissions(emissions() + 10) # Emissions generated
           }
+        }
+        
+        # Add battery from sunlight
+        added_from_sunlight <- sunlight()
+        if (battery_value() + added_from_sunlight > battery_cap()) {
+          overflow <- battery_value() + added_from_sunlight - battery_cap()
+          battery_value(battery_cap())
+        } else {
+          battery_value(battery_value() + added_from_sunlight)
+          overflow <- 0
         }
         
         # Get the changes
         change_in_day <- day() - old_day
         change_in_cash <- cash() - old_cash
         change_in_emissions <- emissions() - old_emissions
+        change_in_battery <- battery_value() - old_battery_value
         
         # Create data frame
         summary_data(data.frame(
-          Category = c("Day", "Cash", "Emissions"), 
-          "Old Value" = c(old_day, old_cash, old_emissions),
-          "New Value" = c(day(), cash(), emissions()),
-          "Change" = c(change_in_day, change_in_cash, change_in_emissions)
+          Category = c("Day", "Cash", "Emissions", "Battery", "Solar gained", "Solar overflow"), 
+          "Old Value" = c(old_day, old_cash, old_emissions, old_battery_value, NA, NA),
+          "New Value" = c(day(), cash(), emissions(), battery_value(), added_from_sunlight, overflow),
+          "Change" = c(change_in_day, change_in_cash, change_in_emissions, change_in_battery, NA, NA)
         ))
-        
+  
         # Update summary
         selected_component("NextDay")
         
       })
+      
       
       observeEvent(input$finish_game, {
         # Reset the game and go back to the home page
