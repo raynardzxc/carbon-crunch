@@ -242,7 +242,6 @@ game_server <- function(id) {
           )
           
           
-          
         } else {
           div(
             h3("No Component Selected"),
