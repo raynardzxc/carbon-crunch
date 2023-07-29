@@ -78,7 +78,33 @@ getInitialCond <- function(){
   dbDisconnect(conn)
   result
 }
-some <- getInitialCond()
+
+# Retrieve battery information given current level[int] (can be used to get next level info and cost as well)
+getBatteryInfo <- function(currentlevel){
+  conn <- getAWSConnection()
+  # Crafting query
+  query <- "SELECT * FROM InitialCond WHERE batlevel ="
+  query <- paste0(query, currentlevel)
+  # Retrieve results
+  result <- dbGetQuery(conn,query)
+  dbDisconnect(conn)
+  result
+}
+
+# Retrieve battery information given current level[int] and line type[binary] (can be used to get next level info and cost as well)
+getLineInfo <- function(currentlevel, linetype){
+  conn <- getAWSConnection()
+  # Crafting query
+  query <- "SELECT * FROM InitialCond WHERE currentlevel ="
+  query <- paste0(query, currentlevel)
+  query <- paste0(query, "AND linetype=")
+  query <- paste0(query, linetype)
+  # Retrieve results
+  result <- dbGetQuery(conn,query)
+  dbDisconnect(conn)
+  result
+}
+
 # ------------------------------------------------------------------------------------
 
 # UI for Game
