@@ -1,6 +1,6 @@
 body {
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: red;
   margin: 0;
 }
 
@@ -23,7 +23,7 @@ a:hover {
   width: 30%;
   margin: 7px 0%;
   font-size: 16px;
-  color: black;
+  color: white;
   padding: 0px;
   display: inline-block;
   text-decoration: none;
