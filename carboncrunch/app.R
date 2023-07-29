@@ -8,6 +8,7 @@
 #
 
 source("usePackages.R")
+source("setAWSPassword.R")
 pkgnames <- c("tidyverse","shiny","shiny.fluent","shiny.router","DBI", "shinyWidgets")
 loadPkgs(pkgnames)
 
@@ -18,6 +19,18 @@ source("modules/leaderboard/leaderboardModule.R")
 source("modules/leaderboard/publishModule.R")
 source("modules/credits/creditModule.R")
 source("modules/analysis/analysisModule.R")
+
+# (Backend) Connect to database
+getAWSConnection <- function(){
+  conn <- dbConnect(
+    drv = RMySQL::MySQL(),
+    dbname = "student099",
+    host = "database-1.ceo4ehzjeeg0.ap-southeast-1.rds.amazonaws.com",
+    username = "student099",
+    password = getOption("AWSPassword"))
+  conn
+}
+
 
 home_page <- div(
   fluidRow(
