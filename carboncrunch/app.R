@@ -20,7 +20,7 @@ source("modules/leaderboard/publishModule.R")
 source("modules/credits/creditModule.R")
 source("modules/analysis/analysisModule.R")
 
-# (Backend) Connect to database
+# Initialise all functions related to communicating with database --------------------
 getAWSConnection <- function(){
   conn <- dbConnect(
     drv = RMySQL::MySQL(),
@@ -31,7 +31,57 @@ getAWSConnection <- function(){
   conn
 }
 
+# Push player's score into the Leaderboard table
+publishScore <- function(playerid,score){
+  conn <- getAWSConnection()
+  querytemplate <- "INSERT INTO LeaderScore (playerid,asoftime,score) VALUES (?id1,NOW(),?id2)"
+  query <- sqlInterpolate(conn, querytemplate,id1=playerid,id2=score)
+  #print(query) #for debug
+  success <- FALSE
+  tryCatch(
+    {  # This is not a SELECT query so we use dbExecute
+      result <- dbExecute(conn,query)
+      print("Score published")
+      success <- TRUE
+    }, error=function(cond){print("publishScore: ERROR")
+      print(cond)
+    }, 
+    warning=function(cond){print("publishScore: WARNING")
+      print(cond)},
+    finally = {}
+  )
+  dbDisconnect(conn)
+}
 
+# Retrieve leaderboard from database
+getLeaderBoard <- function(){
+  conn <- getAWSConnection()
+  
+  # Assemble the query
+  query <- "SELECT lp.playername,ls.score,ls.asoftime  FROM LeaderScore as ls INNER JOIN LeaderPlayer as lp"
+  query <- paste0(query," ON (ls.playerid=lp.playerid) WHERE ls.gamevariantid =")
+  query <- paste0(query,gamevariantid)
+  
+  # Sort in descending order
+  query <- paste0(query, " ORDER BY ls.score DESC,ls.asoftime ASC")
+  print(query) # for debugging
+  result <- dbGetQuery(conn,query)
+  dbDisconnect(conn)
+  result
+}
+
+# Retrieve initial game conditions
+getInitialCond <- function(){
+  conn <- getAWSConnection()
+  query <- "SELECT * FROM InitialCond"
+  result <- dbGetQuery(conn,query)
+  dbDisconnect(conn)
+  result
+}
+some <- getInitialCond()
+# ------------------------------------------------------------------------------------
+
+# UI for Game
 home_page <- div(
   fluidRow(
     column(12,  ## Column might be redundant here 
