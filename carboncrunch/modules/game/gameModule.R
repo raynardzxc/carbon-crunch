@@ -125,6 +125,8 @@ game_server <- function(id) {
     function(input, output, session) {
       ns <- session$ns
       
+      ## STATE AND LOGIC VALUES
+      
       # fixed values
       battery_df <- data.frame(level = 1:3,
                                capacity = c(10, 15, 20),
@@ -243,6 +245,8 @@ game_server <- function(id) {
         }
         total_energy_needed
       })
+      
+      ## FUNCTIONS
       
       resetGame <- function() {
         day(1)
