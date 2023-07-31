@@ -11,7 +11,7 @@ publish_page <- function(id) {
   )
 }
 
-publish_server <- function(id) {
+publish_server <- function(id, gameData) {
   moduleServer(
     id,
     function(input, output, session) {

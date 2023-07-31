@@ -1,10 +1,12 @@
+source("helper.R")
+
 game_page <- function(id) {
   ns <- NS(id)
   div(class = "game-page",
     fluidRow(
       column(6,
              align="center",
-             div(Text(variant = "xLarge", "Carbon Crunch Game!"), class = "big-text")),
+             p(class = "big-text", "Carbon Crunch Game!")),
       column(4),
       column(2,
              align="center",
@@ -32,7 +34,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 1"
                           ),
-                          "Production line 1 graphics placeholder",
+                          textOutput(ns("PL1_text")),
                           switchInput(inputId = ns("toggle1"), 
                                       offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
                                       onLabel = icon("oil-well"),
@@ -47,7 +49,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 2"
                           ),
-                          "Production line 2 graphics placeholder",
+                          textOutput(ns("PL2_text")),
                           switchInput(inputId = ns("toggle2"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -62,7 +64,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 3"
                           ),
-                          "Production line 3 graphics placeholder",
+                          textOutput(ns("PL3_text")),
                           switchInput(inputId = ns("toggle3"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -77,7 +79,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 4"
                           ),
-                          "Production line 4 graphics placeholder",
+                          textOutput(ns("PL4_text")),
                           switchInput(inputId = ns("toggle4"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -92,7 +94,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 5"
                           ),
-                          "Production line 5 graphics placeholder",
+                          textOutput(ns("PL5_text")),
                           switchInput(inputId = ns("toggle5"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -119,31 +121,33 @@ game_page <- function(id) {
   )
 }
 
-game_server <- function(id) {
+game_server <- function(id, gameData) {
   moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
       
-      # fixed values
-      battery_df <- data.frame(level = 1:3,
-                               capacity = c(10, 15, 20),
-                               cost = c(0, 10, 20))
+      ## STATE AND LOGIC VALUES
       
-      pl_df <- data.frame(level = 1:3,
-                          cash_generated = c(10, 15, 30),
-                          emissions = c(10, 15, 20),
-                          solar_consumption = c(2, 5, 10),
-                          cost = c(0, 15, 30))
+      # fixed values
+      battery_df <- getBatteryInfo()
+      
+      pl_df_temp <- getLineInfo()
+      
+      pl_df_typeA <- pl_df_temp[pl_df_temp$linetype == 0,]
+      pl_df_typeB <- pl_df_temp[pl_df_temp$linetype == 1,]
+      
+      initial_df <- getInitialCond()
       
       # initialize state values
       battery_level <- reactiveVal(1)
-      pl_levels <- reactiveVal(rep(1,5))
+      pl_levelsA <- reactiveVal(rep(1,3))
+      pl_levelsB <- reactiveVal(rep(1,2))
       
-      day <- reactiveVal(1)
-      cash <- reactiveVal(0)
-      emissions <- reactiveVal(0)
-      battery_value <- reactiveVal(5)
+      day <- reactiveVal(initial_df$day)
+      cash <- reactiveVal(initial_df$cash)
+      emissions <- reactiveVal(initial_df$emissions)
+      battery_value <- reactiveVal(initial_df$batteryvalue)
       
       sunlight <- reactiveVal(rgamma(1, shape = 2, scale = 3.5)) # This would give you a mean of 7 and a variance of 14.
       
@@ -151,18 +155,30 @@ game_server <- function(id) {
       summary_data <- reactiveVal() 
       
       battery_cap <- reactive({
-        battery_df$capacity[battery_level()]
+        battery_df$capacity[battery_df$level == battery_level()]
       })
       
       # Initialize cash generated, emissions, and solar consumption for each production line
-      cash_generated <- reactive({
-        pl_df$cash_generated[pl_levels()]
+      ## For Production Lines 1, 2 and 3
+      cash_generatedA <- reactive({
+        pl_df_typeA$cash_generated[pl_levelsA()]
       })
-      emissions_generated <- reactive({
-        pl_df$emissions[pl_levels()]
+      emissions_generatedA <- reactive({
+        pl_df_typeA$emissions[pl_levelsA()]
       })
-      solar_consumption <- reactive({
-        pl_df$solar_consumption[pl_levels()]
+      solar_consumptionA <- reactive({
+        pl_df_typeA$solar_consumption[pl_levelsA()]
+      })
+      
+      ## For Production Lines 4 and 5
+      cash_generatedB <- reactive({
+        pl_df_typeB$cash_generated[pl_levelsB()]
+      })
+      emissions_generatedB <- reactive({
+        pl_df_typeB$emissions[pl_levelsB()]
+      })
+      solar_consumptionB <- reactive({
+        pl_df_typeB$solar_consumption[pl_levelsB()]
       })
       
       # Check if the battery value is sufficient
@@ -175,10 +191,6 @@ game_server <- function(id) {
         battery_df[battery_df$level == battery_level(),]
       })
       
-      pl_stats <- reactive({
-        pl_df[pl_df$level == pl_levels()[1],]
-      })
-      
       upgrade_cost_Battery <- reactive({
         if (battery_level() < 3) {
           battery_df[battery_df$level == battery_level() + 1,]$cost
@@ -189,8 +201,8 @@ game_server <- function(id) {
       
       # For the first production line
       upgrade_cost_ProductionLine1 <- reactive({
-        if (pl_levels()[1] < 3) {
-          pl_df[pl_df$level == pl_levels()[1] + 1,]$cost
+        if (pl_levelsA()[1] < 3) {
+          pl_df_typeA[pl_df_typeA$level == pl_levelsA()[1] + 1,]$cost
         } else {
           NA
         }
@@ -198,8 +210,8 @@ game_server <- function(id) {
       
       # For the second production line
       upgrade_cost_ProductionLine2 <- reactive({
-        if (pl_levels()[2] < 3) {
-          pl_df[pl_df$level == pl_levels()[2] + 1,]$cost
+        if (pl_levelsA()[2] < 3) {
+          pl_df_typeA[pl_df_typeA$level == pl_levelsA()[2] + 1,]$cost
         } else {
           NA
         }
@@ -207,8 +219,8 @@ game_server <- function(id) {
       
       # For the third production line
       upgrade_cost_ProductionLine3 <- reactive({
-        if (pl_levels()[3] < 3) {
-          pl_df[pl_df$level == pl_levels()[3] + 1,]$cost
+        if (pl_levelsA()[3] < 3) {
+          pl_df_typeA[pl_df_typeA$level == pl_levelsA()[3] + 1,]$cost
         } else {
           NA
         }
@@ -216,8 +228,8 @@ game_server <- function(id) {
       
       # For the fourth production line
       upgrade_cost_ProductionLine4 <- reactive({
-        if (pl_levels()[4] < 3) {
-          pl_df[pl_df$level == pl_levels()[4] + 1,]$cost
+        if (pl_levelsB()[1] < 3) {
+          pl_df_typeB[pl_df_typeB$level == pl_levelsB()[1] + 1,]$cost
         } else {
           NA
         }
@@ -225,8 +237,8 @@ game_server <- function(id) {
       
       # For the fifth production line
       upgrade_cost_ProductionLine5 <- reactive({
-        if (pl_levels()[5] < 3) {
-          pl_df[pl_df$level == pl_levels()[5] + 1,]$cost
+        if (pl_levelsB()[2] < 3) {
+          pl_df_typeB[pl_df_typeB$level == pl_levelsB()[5] + 1,]$cost
         } else {
           NA
         }
@@ -235,24 +247,39 @@ game_server <- function(id) {
       # Compute the total required solar energy
       total_required_energy <- reactive({
         total_energy_needed = 0
-        for (i in 1:5) {
+        
+        # process the first array (A)
+        for (i in 1:length(pl_levelsA())) {
           toggleValue <- input[[paste0("toggle", i)]]
           if (toggleValue == FALSE) {  # the production line is using solar energy
-            total_energy_needed = total_energy_needed + solar_consumption()[i]
+            total_energy_needed = total_energy_needed + solar_consumptionA()[i]
           }
         }
+        
+        # process the second array (B)
+        for (i in 1:length(pl_levelsB())) {
+          toggleValue <- input[[paste0("toggle", i + length(pl_levelsA()))]]  # Offset i by the length of the first array
+          if (toggleValue == FALSE) {  # the production line is using solar energy
+            total_energy_needed = total_energy_needed + solar_consumptionB()[i]
+          }
+        }
+        
         total_energy_needed
       })
       
+      ## FUNCTIONS
+      
       resetGame <- function() {
-        day(1)
-        cash(0)
-        emissions(0)
-        battery_value(5)
+        day <- reactiveVal(initial_df$day)
+        cash <- reactiveVal(initial_df$cash)
+        emissions <- reactiveVal(initial_df$emissions)
+        battery_value <- reactiveVal(initial_df$batteryvalue)
         battery_level <- reactiveVal(1)
-        pl_levels <- reactiveVal(rep(1,5))
+        pl_levelsA <- reactiveVal(rep(1,3))
+        pl_levelsB <- reactiveVal(rep(1,2))
         selected_component("None")
         summary_data <- reactiveVal() 
+        gameData <- reactiveVal() 
         print("resetGame")
       }
       
@@ -307,14 +334,28 @@ game_server <- function(id) {
           )
           
         } else if (startsWith(name, "Production Line")) {
-          print(name)
           pl_index <- as.integer(substr(name, nchar(name), nchar(name)))
-          print(pl_index)
-          cur_pl_stats <- pl_df[pl_df$level == pl_levels()[pl_index],]
-          next_pl_stats <- if (pl_levels()[pl_index] < 3) {
-            pl_df[pl_df$level == pl_levels()[pl_index] + 1,]
-          } else {
-            NULL
+          
+          # Define the upgrade button ID here
+          upgrade_button_id <- paste0("upgrade_PL", pl_index)
+          
+          if (pl_index <= 3) {  # if the production line is of type A
+            cur_pl_stats <- pl_df_typeA[pl_df_typeA$level == pl_levelsA()[pl_index],]
+            next_pl_stats <- if (pl_levelsA()[pl_index] < 3) {
+              pl_df_typeA[pl_df_typeA$level == pl_levelsA()[pl_index] + 1,]
+            } else {
+              NULL
+            }
+          } else {  # if the production line is of type B
+            # Adjust pl_index for pl_levelsB and pl_df_typeB
+            pl_index <- pl_index - length(pl_levelsA())
+            
+            cur_pl_stats <- pl_df_typeB[pl_df_typeB$level == pl_levelsB()[pl_index],]
+            next_pl_stats <- if (pl_levelsB()[pl_index] < 3) {
+              pl_df_typeB[pl_df_typeB$level == pl_levelsB()[pl_index] + 1,]
+            } else {
+              NULL
+            }
           }
           
           # Generate production line stats HTML
@@ -364,7 +405,7 @@ game_server <- function(id) {
             ),
             if (!is.null(next_pl_stats)) {
               if (cash() >= next_pl_stats$cost) {
-                actionButton(ns(paste0("upgrade_PL", pl_index)), "Upgrade")
+                actionButton(ns(upgrade_button_id), "Upgrade")
               }
             },
             actionButton(ns("cancel_upgrade"), "Cancel")
@@ -389,6 +430,11 @@ game_server <- function(id) {
       output$day <- renderText({ paste("Day:", day()) })
       output$cash <- renderText({ paste("Cash:", cash()) })
       output$emissions <- renderText({ paste("Emissions:", emissions()) })
+      output$PL1_text <- renderText({ paste("Production Line 1:", pl_levelsA()[1],"/","3") })
+      output$PL2_text <- renderText({ paste("Production Line 2:", pl_levelsA()[2],"/","3") })
+      output$PL3_text <- renderText({ paste("Production Line 3:", pl_levelsA()[3],"/","3") })
+      output$PL4_text <- renderText({ paste("Production Line 4:", pl_levelsB()[1],"/","3") })
+      output$PL5_text <- renderText({ paste("Production Line 5:", pl_levelsB()[2],"/","3") })
       
       output$battery <- renderUI({
         if (battery_value() >= 0) {
@@ -532,20 +578,17 @@ game_server <- function(id) {
       
       # For the first production line
       observeEvent(input$upgrade_PL1, {
-        print("Upgrade button clicked")
-        upgrade_cost <- if (pl_levels()[1] < 3) {
-          pl_df[pl_df$level == pl_levels()[1] + 1,]$cost
+        upgrade_cost <- if (pl_levelsA()[1] < 3) {
+          pl_df_typeA[pl_df_typeA$level == pl_levelsA()[1] + 1,]$cost
         } else {
           NA
         }
         
-        print(paste("Upgrade cost:", upgrade_cost))
         if (!is.na(upgrade_cost) && cash() >= upgrade_cost) {
-          print("Upgrading...")
           cash(cash() - upgrade_cost) # deduct cost
-          tmp <- pl_levels() # Get a copy of the current levels
+          tmp <- pl_levelsA() # Get a copy of the current levels
           tmp[1] <- tmp[1] + 1 # Increase the level of the first production line
-          pl_levels(tmp) # Update the production levels
+          pl_levelsA(tmp) # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
           selected_component("None") # reset selected component
         }
@@ -553,17 +596,17 @@ game_server <- function(id) {
       
       # For the second production line
       observeEvent(input$upgrade_PL2, {
-        upgrade_cost <- if (pl_levels()[2] < 3) {
-          pl_df[pl_df$level == pl_levels()[2] + 1,]$cost
+        upgrade_cost <- if (pl_levelsA()[2] < 3) {
+          pl_df_typeA[pl_df_typeA$level == pl_levelsA()[2] + 1,]$cost
         } else {
           NA
         }
         
         if (!is.na(upgrade_cost) && cash() >= upgrade_cost) {
           cash(cash() - upgrade_cost) # deduct cost
-          tmp <- pl_levels() # Get a copy of the current levels
+          tmp <- pl_levelsA() # Get a copy of the current levels
           tmp[2] <- tmp[2] + 1 # Increase the level of the first production line
-          pl_levels(tmp) # Update the production levels
+          pl_levelsA(tmp) # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
           selected_component("None") # reset selected component
         }
@@ -571,17 +614,17 @@ game_server <- function(id) {
       
       # For the third production line
       observeEvent(input$upgrade_PL3, {
-        upgrade_cost <- if (pl_levels()[3] < 3) {
-          pl_df[pl_df$level == pl_levels()[3] + 1,]$cost
+        upgrade_cost <- if (pl_levelsA()[3] < 3) {
+          pl_df_typeA[pl_df_typeA$level == pl_levelsA()[3] + 1,]$cost
         } else {
           NA
         }
         
         if (!is.na(upgrade_cost) && cash() >= upgrade_cost) {
           cash(cash() - upgrade_cost) # deduct cost
-          tmp <- pl_levels() # Get a copy of the current levels
+          tmp <- pl_levelsA() # Get a copy of the current levels
           tmp[3] <- tmp[3] + 1 # Increase the level of the first production line
-          pl_levels(tmp) # Update the production levels
+          pl_levelsA(tmp) # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
           selected_component("None") # reset selected component
         }
@@ -589,17 +632,17 @@ game_server <- function(id) {
       
       # For the fourth production line
       observeEvent(input$upgrade_PL4, {
-        upgrade_cost <- if (pl_levels()[4] < 3) {
-          pl_df[pl_df$level == pl_levels()[4] + 1,]$cost
+        upgrade_cost <- if (pl_levelsB()[1] < 3) {
+          pl_df_typeB[pl_df_typeB$level == pl_levelsB()[1] + 1,]$cost
         } else {
           NA
         }
         
         if (!is.na(upgrade_cost) && cash() >= upgrade_cost) {
           cash(cash() - upgrade_cost) # deduct cost
-          tmp <- pl_levels() # Get a copy of the current levels
-          tmp[4] <- tmp[4] + 1 # Increase the level of the first production line
-          pl_levels(tmp) # Update the production levels
+          tmp <- pl_levelsB() # Get a copy of the current levels
+          tmp[1] <- tmp[1] + 1 # Increase the level of the first production line
+          pl_levelsB(tmp) # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
           selected_component("None") # reset selected component
         }
@@ -607,17 +650,17 @@ game_server <- function(id) {
       
       # For the fifth production line
       observeEvent(input$upgrade_PL5, {
-        upgrade_cost <- if (pl_levels()[5] < 3) {
-          pl_df[pl_df$level == pl_levels()[5] + 1,]$cost
+        upgrade_cost <- if (pl_levelsB()[2] < 3) {
+          pl_df_typeB[pl_df_typeB$level == pl_levelsB()[2] + 1,]$cost
         } else {
           NA
         }
         
         if (!is.na(upgrade_cost) && cash() >= upgrade_cost) {
           cash(cash() - upgrade_cost) # deduct cost
-          tmp <- pl_levels() # Get a copy of the current levels
-          tmp[5] <- tmp[5] + 1 # Increase the level of the first production line
-          pl_levels(tmp) # Update the production levels
+          tmp <- pl_levelsB() # Get a copy of the current levels
+          tmp[2] <- tmp[2] + 1 # Increase the level of the first production line
+          pl_levelsB(tmp) # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
           selected_component("None") # reset selected component
         }
@@ -645,43 +688,43 @@ game_server <- function(id) {
         day(day() + 1)
         # Production Line 1
         if(input$toggle1 == FALSE) {
-          cash(cash() + cash_generated()[1]) # Cash added
-          battery_value(battery_value()-solar_consumption()[1]) # Battery amount used
+          cash(cash() + cash_generatedA()[1]) # Cash added
+          battery_value(battery_value()-solar_consumptionA()[1]) # Battery amount used
         } else if(input$toggle1 == TRUE) {
-          cash(cash() + cash_generated()[1]) # Cash added
-          emissions(emissions() + emissions_generated()[1]) # Emissions generated
+          cash(cash() + cash_generatedA()[1]) # Cash added
+          emissions(emissions() + emissions_generatedA()[1]) # Emissions generated
         }
         # Production Line 2
         if(input$toggle2 == FALSE) {
-          cash(cash() + cash_generated()[2]) # Cash added
-          battery_value(battery_value()-solar_consumption()[2]) # Battery amount used
+          cash(cash() + cash_generatedA()[2]) # Cash added
+          battery_value(battery_value()-solar_consumptionA()[2]) # Battery amount used
         } else if(input$toggle2 == TRUE) {
-          cash(cash() + cash_generated()[2]) # Cash added
-          emissions(emissions() + emissions_generated()[2]) # Emissions generated
+          cash(cash() + cash_generatedA()[2]) # Cash added
+          emissions(emissions() + emissions_generatedA()[2]) # Emissions generated
         }
         # Production Line 3
         if(input$toggle3 == FALSE) {
-          cash(cash() + cash_generated()[3]) # Cash added
-          battery_value(battery_value()-solar_consumption()[3]) # Battery amount used
+          cash(cash() + cash_generatedA()[3]) # Cash added
+          battery_value(battery_value()-solar_consumptionA()[3]) # Battery amount used
         } else if(input$toggle3 == TRUE) {
-          cash(cash() + cash_generated()[3]) # Cash added
-          emissions(emissions() + emissions_generated()[3]) # Emissions generated
+          cash(cash() + cash_generatedA()[3]) # Cash added
+          emissions(emissions() + emissions_generatedA()[3]) # Emissions generated
         }
         # Production Line 4
         if(input$toggle4 == FALSE) {
-          cash(cash() + cash_generated()[4]) # Cash added
-          battery_value(battery_value()-solar_consumption()[4]) # Battery amount used
+          cash(cash() + cash_generatedB()[1]) # Cash added
+          battery_value(battery_value()-solar_consumptionB()[1]) # Battery amount used
         } else if(input$toggle4 == TRUE) {
-          cash(cash() + cash_generated()[4]) # Cash added
-          emissions(emissions() + emissions_generated()[4]) # Emissions generated
+          cash(cash() + cash_generatedB()[1]) # Cash added
+          emissions(emissions() + emissions_generatedB()[1]) # Emissions generated
         }
         # Production Line 5
         if(input$toggle5 == FALSE) {
-          cash(cash() + cash_generated()[5]) # Cash added
-          battery_value(battery_value()-solar_consumption()[5]) # Battery amount used
+          cash(cash() + cash_generatedB()[2]) # Cash added
+          battery_value(battery_value()-solar_consumptionB()[2]) # Battery amount used
         } else if(input$toggle5 == TRUE) {
-          cash(cash() + cash_generated()[5]) # Cash added
-          emissions(emissions() + emissions_generated()[5]) # Emissions generated
+          cash(cash() + cash_generatedB()[2]) # Cash added
+          emissions(emissions() + emissions_generatedB()[2]) # Emissions generated
         }
         
         # Add battery from sunlight
@@ -717,6 +760,8 @@ game_server <- function(id) {
       observeEvent(input$finish_game, {
         # Reset the game and go back to the home page
         print("Finish Game")
+        result <- reactiveVal(list(cash = cash(), emissions = emissions()))
+        gameData(result())
         resetGame()
         change_page("analysis")
       })
