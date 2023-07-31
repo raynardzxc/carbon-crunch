@@ -213,6 +213,11 @@ game_server <- function(id) {
       # fixed values
       battery_df <- getBatteryInfo()
       
+      pl_df_temp <- getLineInfo()
+      
+      pl_df_typeA <- pl_df_temp[pl_df_temp$linetype == 0,]
+      pl_df_typeB <- pl_df_temp[pl_df_temp$linetype == 1,]
+      
       pl_df <- data.frame(level = 1:3,
                           cash_generated = c(10, 15, 30),
                           emissions = c(10, 15, 20),
@@ -236,7 +241,7 @@ game_server <- function(id) {
       summary_data <- reactiveVal() 
       
       battery_cap <- reactive({
-        battery_df$capacity[battery_level()]
+        battery_df$capacity[battery_df$level == battery_level()]
       })
       
       # Initialize cash generated, emissions, and solar consumption for each production line
