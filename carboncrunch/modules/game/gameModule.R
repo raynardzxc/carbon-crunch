@@ -1,4 +1,3 @@
-source("helper.R")
 
 game_page <- function(id) {
   ns <- NS(id)
@@ -176,7 +175,7 @@ game_server <- function(id, gameData) {
       
       game_state_df <- reactiveVal(initial_game_state)
       
-      sunlight <- reactiveVal(rgamma(1, shape = 2, scale = 3.5)) # This would give you a mean of 7 and a variance of 14.
+      sunlight <- reactiveVal(rgamma(1, shape = 4, scale = 2.5)) # This should give you a mean of 10 and a variance of 9.
       
       selected_component <- reactiveVal("None")
       summary_data <- reactiveVal() 
@@ -464,10 +463,18 @@ game_server <- function(id, gameData) {
       output$PL5_text <- renderText({ paste("Production Line 5:", pl_levelsB()[2],"/ 3") })
       
       output$battery <- renderUI({
-        if (battery_value() >= 0) {
-          actionButton(ns("battery"), img(src = "noun-battery-5868848.png", height = 100, width = 200))
+        if (battery_value()/battery_cap() >= 0.8) {
+          actionButton(ns("battery"), img(src = "battery_5.png", height = 100, width = 500))
+        } else if (battery_value()/battery_cap() >= 0.6 && battery_value()/battery_cap() < 0.8) {
+          actionButton(ns("battery"), img(src = "battery_4.png", height = 100, width = 500)) # replace with your image source
+        } else if (battery_value()/battery_cap() >= 0.4 && battery_value()/battery_cap() < 0.6) {
+          actionButton(ns("battery"), img(src = "battery_3.png", height = 100, width = 500)) # replace with your image source
+        } else if (battery_value()/battery_cap() >= 0.2 && battery_value()/battery_cap() < 0.4) {
+          actionButton(ns("battery"), img(src = "battery_2.png", height = 100, width = 500)) # replace with your image source
+        } else if (battery_value()/battery_cap() > 0 && battery_value()/battery_cap() < 0.2) {
+          actionButton(ns("battery"), img(src = "battery_1.png", height = 100, width = 500)) # replace with your image source
         } else {
-          actionButton(ns("battery"), img(src = "noun-battery-5868850.png", height = 100, width = 200)) # replace with your image source
+          actionButton(ns("battery"), img(src = "battery_0.png", height = 100, width = 500)) # replace with your image source
         }
       })
       
@@ -710,8 +717,7 @@ game_server <- function(id, gameData) {
         old_battery_value <- battery_value()
         
         # Generate new sunlight value for the next day
-        sunlight_value <- rgamma(1, shape = 2, scale = 3.5)
-        sunlight_value <- min(sunlight_value, 10) # Ensure that sunlight value is within a reasonable range (e.g., 1 to 10)
+        sunlight_value <- rgamma(1, shape = 4, scale = 2.5)
         sunlight(sunlight_value)
         
         # Apply updates
