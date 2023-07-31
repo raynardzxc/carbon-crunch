@@ -428,13 +428,13 @@ game_server <- function(id, gameData) {
       # update values shown
       output$battery_value <- renderText({ paste("Battery:", round_if_numeric(battery_value()),"/",battery_cap()) })
       output$day <- renderText({ paste("Day:", day()) })
-      output$cash <- renderText({ paste("Cash:", cash()) })
-      output$emissions <- renderText({ paste("Emissions:", emissions()) })
-      output$PL1_text <- renderText({ paste("Production Line 1:", pl_levelsA()[1],"/","3") })
-      output$PL2_text <- renderText({ paste("Production Line 2:", pl_levelsA()[2],"/","3") })
-      output$PL3_text <- renderText({ paste("Production Line 3:", pl_levelsA()[3],"/","3") })
-      output$PL4_text <- renderText({ paste("Production Line 4:", pl_levelsB()[1],"/","3") })
-      output$PL5_text <- renderText({ paste("Production Line 5:", pl_levelsB()[2],"/","3") })
+      output$cash <- renderText({ paste("Cash ($):", cash()) })
+      output$emissions <- renderText({ paste("Emissions (CO2e):", emissions(),"/ 6000") })
+      output$PL1_text <- renderText({ paste("Production Line 1:", pl_levelsA()[1],"/ 3") })
+      output$PL2_text <- renderText({ paste("Production Line 2:", pl_levelsA()[2],"/ 3") })
+      output$PL3_text <- renderText({ paste("Production Line 3:", pl_levelsA()[3],"/ 3") })
+      output$PL4_text <- renderText({ paste("Production Line 4:", pl_levelsB()[1],"/ 3") })
+      output$PL5_text <- renderText({ paste("Production Line 5:", pl_levelsB()[2],"/ 3") })
       
       output$battery <- renderUI({
         if (battery_value() >= 0) {
@@ -524,11 +524,14 @@ game_server <- function(id, gameData) {
             disabled=FALSE # Ensure button is enabled again
           )
         } else if (!battery_is_sufficient()) {
-          PrimaryButton.shinyInput(
-            inputId = ns("next_day"),
-            class=".btn",
-            text="Next Day",
-            disabled = TRUE  # Disable the button
+          div(
+            p("Insufficient Solar Energy"),
+            PrimaryButton.shinyInput(
+              inputId = ns("next_day"),
+              class=".btn",
+              text="Next Day",
+              disabled = TRUE  # Disable the button
+            )
           )
         } else {
           PrimaryButton.shinyInput(
