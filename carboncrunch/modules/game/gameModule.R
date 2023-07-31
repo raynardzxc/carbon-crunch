@@ -4,7 +4,7 @@ game_page <- function(id) {
     fluidRow(
       column(6,
              align="center",
-             div(Text(variant = "xLarge", "Carbon Crunch Game!"), class = "big-text")),
+             p(class = "big-text", "Carbon Crunch Game!")),
       column(4),
       column(2,
              align="center",
@@ -32,7 +32,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 1"
                           ),
-                          "Production line 1 graphics placeholder",
+                          textOutput(ns("PL1_text")),
                           switchInput(inputId = ns("toggle1"), 
                                       offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
                                       onLabel = icon("oil-well"),
@@ -47,7 +47,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 2"
                           ),
-                          "Production line 2 graphics placeholder",
+                          textOutput(ns("PL2_text")),
                           switchInput(inputId = ns("toggle2"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -62,7 +62,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 3"
                           ),
-                          "Production line 3 graphics placeholder",
+                          textOutput(ns("PL3_text")),
                           switchInput(inputId = ns("toggle3"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -77,7 +77,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 4"
                           ),
-                          "Production line 4 graphics placeholder",
+                          textOutput(ns("PL4_text")),
                           switchInput(inputId = ns("toggle4"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -92,7 +92,7 @@ game_page <- function(id) {
                             class=".btn",
                             text="Upgrade 5"
                           ),
-                          "Production line 5 graphics placeholder",
+                          textOutput(ns("PL5_text")),
                           switchInput(inputId = ns("toggle5"), 
                                       offLabel = icon("sun","fa-solid"), 
                                       onLabel = icon("oil-well"),
@@ -481,6 +481,11 @@ game_server <- function(id, gameData) {
       output$day <- renderText({ paste("Day:", day()) })
       output$cash <- renderText({ paste("Cash:", cash()) })
       output$emissions <- renderText({ paste("Emissions:", emissions()) })
+      output$PL1_text <- renderText({ paste("Production Line 1:", pl_levels()[1],"/","3") })
+      output$PL2_text <- renderText({ paste("Production Line 2:", pl_levels()[2],"/","3") })
+      output$PL3_text <- renderText({ paste("Production Line 3:", pl_levels()[3],"/","3") })
+      output$PL4_text <- renderText({ paste("Production Line 4:", pl_levels()[4],"/","3") })
+      output$PL5_text <- renderText({ paste("Production Line 5:", pl_levels()[5],"/","3") })
       
       output$battery <- renderUI({
         if (battery_value() >= 0) {
