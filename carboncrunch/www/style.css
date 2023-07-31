@@ -78,3 +78,9 @@ a:hover {
 .btn:hover {
     background-color: #0056b3;
 }
+
+.my-class {
+  color: red;
+  font-size: 20px;
+  /* add more styles as needed */
+}
