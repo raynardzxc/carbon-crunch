@@ -119,7 +119,7 @@ game_page <- function(id) {
   )
 }
 
-game_server <- function(id) {
+game_server <- function(id, gameData) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -809,6 +809,8 @@ game_server <- function(id) {
       observeEvent(input$finish_game, {
         # Reset the game and go back to the home page
         print("Finish Game")
+        result <- reactiveVal(list(cash = cash(), emissions = emissions()))
+        gameData(result())
         resetGame()
         change_page("analysis")
       })

@@ -22,7 +22,6 @@ source("modules/credits/creditModule.R")
 source("modules/analysis/analysisModule.R")
 
 
-
 # UI for Game
 home_page <- div(
   fluidRow(
@@ -92,12 +91,15 @@ server <- function(input, output, session) {
   observeEvent(input$credits, change_page("credits"))
   observeEvent(input$quit, stopApp())
   
+  # Define reactive value for game data
+  gameData <- reactiveVal()
+  
   tutorial_server("tutorial")
-  game_server("game")
+  game_server("game", gameData)
   leaderboard_server("leaderboard")
   credit_server("credits")
-  analysis_server("analysis")
-  publish_server("publish")
+  analysis_server("analysis", gameData)
+  publish_server("publish", gameData)
 }
 
 # Run the application 
