@@ -36,8 +36,6 @@ analysis_server <- function(id, gameData) {
           output$emissionsValue <- renderText({ final_emissions })
           output$finalScore <- renderText({ final_score })
           
-          print(game_state_df)
-          
           # Ensure that there is data to work with
           # Plot cash, emissions, battery, and solar gained over the days
           output$summaryPlot <- renderPlot({

@@ -20,7 +20,7 @@ source("modules/leaderboard/leaderboardModule.R")
 source("modules/leaderboard/publishModule.R")
 source("modules/credits/creditModule.R")
 source("modules/analysis/analysisModule.R")
-
+source("helper.R")
 
 # UI for Game
 home_page <- div(
