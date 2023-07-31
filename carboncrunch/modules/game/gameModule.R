@@ -149,6 +149,33 @@ game_server <- function(id, gameData) {
       emissions <- reactiveVal(initial_df$emissions)
       battery_value <- reactiveVal(initial_df$batteryvalue)
       
+      # Initial state of the game
+      initial_game_state <- data.frame(
+        Day = initial_df$day,
+        Cash = initial_df$cash,
+        Emissions = initial_df$emissions,
+        Battery = initial_df$batteryvalue,
+        SolarGained = 0,
+        SolarOverflow = 0,
+        CashGeneratedA1 = 0,
+        CashGeneratedA2 = 0,
+        CashGeneratedA3 = 0,
+        CashGeneratedB1 = 0,
+        CashGeneratedB2 = 0,
+        EmissionsGeneratedA1 = 0,
+        EmissionsGeneratedA2 = 0,
+        EmissionsGeneratedA3 = 0,
+        EmissionsGeneratedB1 = 0,
+        EmissionsGeneratedB2 = 0,
+        SolarConsumedA1 = 0,
+        SolarConsumedA2 = 0,
+        SolarConsumedA3 = 0,
+        SolarConsumedB1 = 0,
+        SolarConsumedB2 = 0
+      )
+      
+      game_state_df <- reactiveVal(initial_game_state)
+      
       sunlight <- reactiveVal(rgamma(1, shape = 2, scale = 3.5)) # This would give you a mean of 7 and a variance of 14.
       
       selected_component <- reactiveVal("None")
@@ -428,13 +455,13 @@ game_server <- function(id, gameData) {
       # update values shown
       output$battery_value <- renderText({ paste("Battery:", round_if_numeric(battery_value()),"/",battery_cap()) })
       output$day <- renderText({ paste("Day:", day()) })
-      output$cash <- renderText({ paste("Cash:", cash()) })
-      output$emissions <- renderText({ paste("Emissions:", emissions()) })
-      output$PL1_text <- renderText({ paste("Production Line 1:", pl_levelsA()[1],"/","3") })
-      output$PL2_text <- renderText({ paste("Production Line 2:", pl_levelsA()[2],"/","3") })
-      output$PL3_text <- renderText({ paste("Production Line 3:", pl_levelsA()[3],"/","3") })
-      output$PL4_text <- renderText({ paste("Production Line 4:", pl_levelsB()[1],"/","3") })
-      output$PL5_text <- renderText({ paste("Production Line 5:", pl_levelsB()[2],"/","3") })
+      output$cash <- renderText({ paste("Cash ($):", cash()) })
+      output$emissions <- renderText({ paste("Emissions (CO2e):", emissions(),"/ 6000") })
+      output$PL1_text <- renderText({ paste("Production Line 1:", pl_levelsA()[1],"/ 3") })
+      output$PL2_text <- renderText({ paste("Production Line 2:", pl_levelsA()[2],"/ 3") })
+      output$PL3_text <- renderText({ paste("Production Line 3:", pl_levelsA()[3],"/ 3") })
+      output$PL4_text <- renderText({ paste("Production Line 4:", pl_levelsB()[1],"/ 3") })
+      output$PL5_text <- renderText({ paste("Production Line 5:", pl_levelsB()[2],"/ 3") })
       
       output$battery <- renderUI({
         if (battery_value() >= 0) {
@@ -524,11 +551,14 @@ game_server <- function(id, gameData) {
             disabled=FALSE # Ensure button is enabled again
           )
         } else if (!battery_is_sufficient()) {
-          PrimaryButton.shinyInput(
-            inputId = ns("next_day"),
-            class=".btn",
-            text="Next Day",
-            disabled = TRUE  # Disable the button
+          div(
+            p("Insufficient Solar Energy"),
+            PrimaryButton.shinyInput(
+              inputId = ns("next_day"),
+              class=".btn",
+              text="Next Day",
+              disabled = TRUE  # Disable the button
+            )
           )
         } else {
           PrimaryButton.shinyInput(
@@ -750,7 +780,34 @@ game_server <- function(id, gameData) {
           "New Value" = c(day(), cash(), emissions(), battery_value(), added_from_sunlight, overflow),
           "Change" = c(change_in_day, change_in_cash, change_in_emissions, change_in_battery, NA, NA)
         ))
-  
+        
+        # Create new row
+        new_day <- data.frame(
+          Day = day(),
+          Cash = cash(),
+          Emissions = emissions(),
+          Battery = battery_value(),
+          SolarGained = added_from_sunlight,
+          SolarOverflow = overflow,
+          CashGeneratedA1 = cash_generatedA()[1],
+          CashGeneratedA2 = cash_generatedA()[2],
+          CashGeneratedA3 = cash_generatedA()[3],
+          CashGeneratedB1 = cash_generatedB()[1],
+          CashGeneratedB2 = cash_generatedB()[2],
+          EmissionsGeneratedA1 = if (input$toggle1 == TRUE) { emissions_generatedA()[1] } else { 0 },
+          EmissionsGeneratedA2 = if (input$toggle2 == TRUE) { emissions_generatedA()[2] } else { 0 },
+          EmissionsGeneratedA3 = if (input$toggle3 == TRUE) { emissions_generatedA()[3] } else { 0 },
+          EmissionsGeneratedB1 = if (input$toggle4 == TRUE) { emissions_generatedB()[1] } else { 0 },
+          EmissionsGeneratedB2 = if (input$toggle5 == TRUE) { emissions_generatedB()[2] } else { 0 },
+          SolarConsumedA1 = if (input$toggle1 == FALSE) { solar_consumptionA()[1] } else { 0 },
+          SolarConsumedA2 = if (input$toggle2 == FALSE) { solar_consumptionA()[2] } else { 0 },
+          SolarConsumedA3 = if (input$toggle3 == FALSE) { solar_consumptionA()[3] } else { 0 },
+          SolarConsumedB1 = if (input$toggle4 == FALSE) { solar_consumptionB()[1] } else { 0 },
+          SolarConsumedB2 = if (input$toggle5 == FALSE) { solar_consumptionB()[2] } else { 0 }
+        )
+        
+        # Update game state data frame
+        game_state_df(rbind(game_state_df(), new_day))
         # Update summary
         selected_component("NextDay")
         
@@ -760,8 +817,11 @@ game_server <- function(id, gameData) {
       observeEvent(input$finish_game, {
         # Reset the game and go back to the home page
         print("Finish Game")
-        result <- reactiveVal(list(cash = cash(), emissions = emissions()))
-        gameData(result())
+        gameData(list(
+          game_state = game_state_df(),
+          final_cash = cash(),
+          final_emissions = emissions()
+        ))
         resetGame()
         change_page("analysis")
       })
