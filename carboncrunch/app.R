@@ -52,6 +52,11 @@ home_page <- div(
              "quit",
              class="home-button",
              text = "Quit Game"
+           ),
+           PrimaryButton.shinyInput(
+             "publish",
+             class="home-button",
+             text = "test publish"
            )
            )
   )
@@ -89,6 +94,7 @@ server <- function(input, output, session) {
   observeEvent(input$play, change_page("game"))
   observeEvent(input$lb, change_page("leaderboard"))
   observeEvent(input$credits, change_page("credits"))
+  observeEvent(input$publish, change_page("publish"))
   observeEvent(input$quit, stopApp())
   
   # Define reactive value for game data
