@@ -111,6 +111,120 @@ body {
   border: none;
 }
 
+.battery5 {
+  background: url("battery_5.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 500px; /* adjust width and height according to your image dimensions */
+  height: 100px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.battery5:hover {
+  transform: scale(1.05);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.battery4 {
+  background: url("battery_4.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 500px; /* adjust width and height according to your image dimensions */
+  height: 100px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.battery4:hover {
+  transform: scale(1.05);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.battery3 {
+  background: url("battery_3.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 500px; /* adjust width and height according to your image dimensions */
+  height: 100px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.battery3:hover {
+  transform: scale(1.05);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.battery2 {
+  background: url("battery_2.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 500px; /* adjust width and height according to your image dimensions */
+  height: 100px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.battery2:hover {
+  transform: scale(1.05);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.battery1 {
+  background: url("battery_1.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 500px; /* adjust width and height according to your image dimensions */
+  height: 100px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.battery1:hover {
+  transform: scale(1.05);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.battery0 {
+  background: url("battery_0.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 500px; /* adjust width and height according to your image dimensions */
+  height: 100px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.battery0:hover {
+  transform: scale(1.05);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
 .modal-content {
   background-color: #f9f9f9;
   color: black;
