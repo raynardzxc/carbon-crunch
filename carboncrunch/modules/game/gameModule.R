@@ -29,11 +29,7 @@ game_page <- function(id) {
              div(class = "prodline-div",
                  fluidRow(
                    column(12,
-                          PrimaryButton.shinyInput(
-                            inputId = ns("PL1"),
-                            class=".btn",
-                            text="Upgrade 1"
-                          ),
+                          uiOutput(ns("PL1")),
                           textOutput(ns("PL1_text")),
                           switchInput(inputId = ns("toggle1"), 
                                       offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
@@ -44,11 +40,7 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          PrimaryButton.shinyInput(
-                            inputId = ns("PL2"),
-                            class=".btn",
-                            text="Upgrade 2"
-                          ),
+                          uiOutput(ns("PL2")),
                           textOutput(ns("PL2_text")),
                           switchInput(inputId = ns("toggle2"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -59,11 +51,7 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          PrimaryButton.shinyInput(
-                            inputId = ns("PL3"),
-                            class=".btn",
-                            text="Upgrade 3"
-                          ),
+                          uiOutput(ns("PL3")),
                           textOutput(ns("PL3_text")),
                           switchInput(inputId = ns("toggle3"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -74,11 +62,7 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          PrimaryButton.shinyInput(
-                            inputId = ns("PL4"),
-                            class=".btn",
-                            text="Upgrade 4"
-                          ),
+                          uiOutput(ns("PL4")),
                           textOutput(ns("PL4_text")),
                           switchInput(inputId = ns("toggle4"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -89,11 +73,7 @@ game_page <- function(id) {
                                       inline = TRUE),
                    ),
                    column(12,
-                          PrimaryButton.shinyInput(
-                            inputId = ns("PL5"),
-                            class=".btn",
-                            text="Upgrade 5"
-                          ),
+                          uiOutput(ns("PL5")),
                           textOutput(ns("PL5_text")),
                           switchInput(inputId = ns("toggle5"), 
                                       offLabel = icon("sun","fa-solid"), 
@@ -468,6 +448,96 @@ game_server <- function(id, gameData) {
           "Warning: Battery value is low. Cash generation from production lines is halved!"
         } else {
           ""  # No warning when production is not nerfed
+        }
+      })
+      
+      output$PL1 <- renderUI({
+        if (input$toggle1==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL1"),
+            class=".btn",
+            text=paste0("Line 1 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$solar_consumption, " Units")
+          )
+        } else {
+          CompoundButton.shinyInput(
+            inputId = ns("PL1"),
+            class=".btn",
+            text=paste0("Line 1 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$emissions, " CO2e")
+          )
+        }
+      })
+      
+      output$PL2 <- renderUI({
+        if (input$toggle2==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL2"),
+            class=".btn",
+            text=paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$solar_consumption, " Units")
+          )
+        } else {
+          CompoundButton.shinyInput(
+            inputId = ns("PL2"),
+            class=".btn",
+            text=paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$emissions, " CO2e")
+          )
+        }
+      })
+      
+      output$PL3 <- renderUI({
+        if (input$toggle3==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL3"),
+            class=".btn",
+            text=paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$solar_consumption, " Units")
+          )
+        } else {
+          CompoundButton.shinyInput(
+            inputId = ns("PL3"),
+            class=".btn",
+            text=paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$emissions, " CO2e")
+          )
+        }
+      })
+      
+      output$PL4 <- renderUI({
+        if (input$toggle4==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL4"),
+            class=".btn",
+            text=paste0("Line 4 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$solar_consumption, " Units")
+          )
+        } else {
+          CompoundButton.shinyInput(
+            inputId = ns("PL4"),
+            class=".btn",
+            text=paste0("Line 4 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$emissions, " CO2e")
+          )
+        }
+      })
+      
+      output$PL5 <- renderUI({
+        if (input$toggle5==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL5"),
+            class=".btn",
+            text=paste0("Line 5 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$solar_consumption, " Units")
+          )
+        } else {
+          CompoundButton.shinyInput(
+            inputId = ns("PL5"),
+            class=".btn",
+            text=paste0("Line 5 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$emissions, " CO2e")
+          )
         }
       })
       
