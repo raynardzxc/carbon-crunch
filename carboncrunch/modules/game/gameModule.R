@@ -544,18 +544,35 @@ game_server <- function(id, gameData) {
       
       output$battery <- renderUI({
         if (values$battery_value/battery_cap() >= 0.8) {
-          actionButton(ns("battery"), img(src = "battery_5.png", height = 100, width = 500))
+          PrimaryButton.shinyInput(
+            ns("battery"),
+            class="battery5"
+          )
         } else if (values$battery_value/battery_cap() >= 0.6 && values$battery_value/battery_cap() < 0.8) {
-          actionButton(ns("battery"), img(src = "battery_4.png", height = 100, width = 500)) # replace with your image source
+          PrimaryButton.shinyInput(
+            ns("battery"),
+            class="battery4"
+          )
         } else if (values$battery_value/battery_cap() >= 0.4 && values$battery_value/battery_cap() < 0.6) {
-          actionButton(ns("battery"), img(src = "battery_3.png", height = 100, width = 500)) # replace with your image source
+          PrimaryButton.shinyInput(
+            ns("battery"),
+            class="battery3"
+          )
         } else if (values$battery_value/battery_cap() >= 0.2 && values$battery_value/battery_cap() < 0.4) {
-          actionButton(ns("battery"), img(src = "battery_2.png", height = 100, width = 500)) # replace with your image source
+          PrimaryButton.shinyInput(
+            ns("battery"),
+            class="battery2"
+          )
         } else if (values$battery_value/battery_cap() > 0 && values$battery_value/battery_cap() < 0.2) {
-          actionButton(ns("battery"), img(src = "battery_1.png", height = 100, width = 500)) # replace with your image source
+          PrimaryButton.shinyInput(
+            ns("battery"),
+            class="battery1"
+          )
         } else {
-          actionButton(ns("battery"), img(src = "battery_0.png", height = 100, width = 500)) # replace with your image source
-        }
+          PrimaryButton.shinyInput(
+            ns("battery"),
+            class="battery0"
+          )}
       })
       
       output$selected_component <- renderUI({
