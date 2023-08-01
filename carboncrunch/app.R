@@ -28,6 +28,7 @@ home_page <- div(
     column(12,  ## Column might be redundant here 
            align="center",
            h1("Welcome to Carbon Crunch", class = "title-text"),
+           
            PrimaryButton.shinyInput(
              "tutorial",
              class="home-button",

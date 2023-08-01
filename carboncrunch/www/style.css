@@ -1,5 +1,5 @@
 body {
-  background-color: white;
+  background-color: #555555;
   color: red;
   margin: 0;
 }
@@ -17,16 +17,15 @@ a:hover {
   transition: 0.7s;
 }
 
-.home-button {
-  text-align: center;
+.home-button {  
+  /* background: url("menubuttons-22.png"); */
+  background-size: contain; 
+  background-position: center;
+  background-color: transparent;
   padding: 15px 32px;
   width: 30%;
   margin: 7px 0%;
-  font-size: 16px;
-  color: white;
-  padding: 0px;
   display: inline-block;
-  text-decoration: none;
 }
 
 .modal-content {
@@ -59,24 +58,6 @@ a:hover {
   font-size: 24px;
   padding: 10px;
   margin: 10px;
-}
-
-.btn {
-  display: inline-block;
-  font-size: 18px;
-  padding: 10px 20px; 
-  margin: 10px;
-  background-color: #007BFF; 
-  color: white;
-  border: none;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-.btn:hover {
-    background-color: #0056b3;
 }
 
 .my-class {
