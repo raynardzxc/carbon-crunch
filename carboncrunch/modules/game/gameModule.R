@@ -647,7 +647,7 @@ game_server <- function(id, gameData) {
       })
       
       output$next_day_button <- renderUI({
-        if (values$day < 30 && battery_is_sufficient()) {
+        if (values$day < 30 && battery_is_sufficient()) { 
           PrimaryButton.shinyInput(
             inputId = ns("next_day"),
             class=".btn",

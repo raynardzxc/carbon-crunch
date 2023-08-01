@@ -1,4 +1,6 @@
-#source("helper.R")
+source("helper.R")
+
+
 
 publish_page <- function(id) {
   ns <- NS(id)
@@ -6,17 +8,24 @@ publish_page <- function(id) {
     uiOutput(ns("leaderBoard")),
     uiOutput(ns("publishControls")),
     uiOutput(ns("logregControls")),
-    
+    actionButton(ns("back"), label = "Back")
   )
 }
 
 publish_server <- function(id, gameData) {
+  
   moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
       
-      vals <- reactiveValues(password = NULL, playerid = NULL, playername = NULL, score = 20) ##placeholder score
+      
+      vals <- reactiveValues(password = NULL, playerid = NULL, playername = NULL, score = NULL) ##placeholder score
+      
+      
+      observeEvent(input$test, {
+        showModal(publishModal(ns,failed=FALSE))
+      })
       
       #Fire some code if the user clicks the Register button
       observeEvent(input$register, {
@@ -86,12 +95,20 @@ publish_server <- function(id, gameData) {
       })
       
       output$publishControls <- renderUI({
+        data <- gameData()
+        final_cash <- data$final_cash
+        final_emissions <- data$final_emissions
+        final_score <- final_cash - final_emissions
+        vals$score <- final_score
         if (is.null(vals$playername)) ## player have not logged in yet
           tagList(
-            paste0("Your score is: ", vals$score, ". Please login if you want to publish your score.")
+            paste0("Your score is: ", final_score, ". Please login if you want to publish your score.")
           )
-        else
-          actionButton(inputId = ns("publishok"), "Publish")
+        else 
+          tagList(
+            paste0("Your score is: ", final_score, "."),
+            actionButton(inputId = ns("publishok"), "Publish")
+          )
       })
       
       output$logregControls <- renderUI({
@@ -104,8 +121,9 @@ publish_server <- function(id, gameData) {
           paste0("Logged in as: ",vals$playername)
       })
       
-      ns <- session$ns
-      observeEvent(input$back, change_page("/"))
+      observeEvent(input$back, {
+        change_page("analysis")
+      })
     }
   )
 }

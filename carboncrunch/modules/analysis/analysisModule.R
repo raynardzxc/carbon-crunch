@@ -10,7 +10,8 @@ analysis_page <- function(id) {
     plotOutput(ns("cashBarPlot"), height = "400px"),
     plotOutput(ns("emissionsBarPlot"), height = "400px"),
     plotOutput(ns("solarBarPlot"), height = "400px"),
-    actionButton(inputId = ns("back"), label = "Back to Home")
+    actionButton(inputId = ns("back"), label = "Back to Home"),
+    actionButton(inputId = ns("publish"), label = "Publish"),
   )
 }
 
@@ -69,6 +70,12 @@ analysis_server <- function(id, gameData) {
           })
         }
       })
+      
+      observeEvent(input$publish, {
+        change_page("publish")
+      })
+      
+      
     }
   )
 }

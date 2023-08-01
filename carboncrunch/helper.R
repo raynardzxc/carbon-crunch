@@ -107,7 +107,7 @@ getPlayerID <- function(playername,password){
   #Create a template for the query with placeholders for playername and password
   querytemplate <- "SELECT * FROM LeaderPlayer WHERE playername=?id1 AND password=?id2;"
   query<- sqlInterpolate(conn, querytemplate,id1=playername,id2=password)
-  print(query) #for debug
+  #print(query) #for debug
   result <- dbGetQuery(conn,query)
   # If the query is successful, result should be a dataframe with one row
   if (nrow(result)==1){
@@ -161,8 +161,9 @@ getLeaderBoard <- function(){
   query <- "SELECT lp.playername,ls.score,ls.asoftime  FROM LeaderScore as ls INNER JOIN LeaderPlayer as lp ON (ls.playerid=lp.playerid)"
   # Sort in descending order
   query <- paste0(query, " ORDER BY ls.score DESC,ls.asoftime ASC")
-  print(query) # for debugging
+  #print(query) # for debugging
   result <- dbGetQuery(conn,query)
   dbDisconnect(conn)
+  colnames(result) <- c("Player", "Score", "Date Achieved")
   result
 }
