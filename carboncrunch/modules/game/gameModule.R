@@ -118,6 +118,7 @@ game_server <- function(id, gameData) {
       pl_df_typeB <- pl_df_temp[pl_df_temp$linetype == 1,]
       
       initial_df <- getInitialCond()
+      carbon_limit <- initial_df$carbonlimit
       
       # Initial state of the game
       initial_game_state <- data.frame(
@@ -436,7 +437,7 @@ game_server <- function(id, gameData) {
       output$battery_value <- renderText({ paste("Battery:", round_if_numeric(values$battery_value),"/",battery_cap()) })
       output$day <- renderText({ paste("Day:", values$day) })
       output$cash <- renderText({ paste("Cash ($):", values$cash) })
-      output$emissions <- renderText({ paste("Emissions (CO2e):", values$emissions,"/ 6000") })
+      output$emissions <- renderText({ paste("Emissions (CO2e):", values$emissions,"/", carbon_limit) })
       output$PL1_text <- renderText({ paste("Production Line 1:", values$pl_levelsA[1],"/ 3") })
       output$PL2_text <- renderText({ paste("Production Line 2:", values$pl_levelsA[2],"/ 3") })
       output$PL3_text <- renderText({ paste("Production Line 3:", values$pl_levelsA[3],"/ 3") })
