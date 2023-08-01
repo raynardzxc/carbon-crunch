@@ -34,7 +34,7 @@ home_page <- div(
            ),
            PrimaryButton.shinyInput(
              "play",
-             class="home-button"
+             class="play-button"
            ),
            PrimaryButton.shinyInput(
              "lb",
