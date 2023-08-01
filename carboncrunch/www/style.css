@@ -17,6 +17,15 @@ a:hover {
   transition: 0.7s;
 }
 
+.tut-button {
+  background: url("tutorial.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 30%; /* adjust width and height according to your image dimensions */
+  height: 35px;
+  padding: 0;
+}
 .home-button {  
   /* background: url("menubuttons-22.png"); */
   background-size: contain; 

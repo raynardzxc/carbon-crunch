@@ -31,8 +31,7 @@ home_page <- div(
            
            PrimaryButton.shinyInput(
              "tutorial",
-             class="home-button",
-             text = "Tutorial"
+             class="tut-button"
            ),
            PrimaryButton.shinyInput(
              "play",
