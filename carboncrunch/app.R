@@ -27,35 +27,29 @@ home_page <- div(
   fluidRow(
     column(12,  ## Column might be redundant here 
            align="center",
-           h1("Welcome to Carbon Crunch", class = "title-text"),
-           
+           img(class="title-text", src="title.png"),
            PrimaryButton.shinyInput(
              "tutorial",
              class="tut-button"
            ),
            PrimaryButton.shinyInput(
              "play",
-             class="home-button",
-             text = "Play Game"
+             class="home-button"
            ),
            PrimaryButton.shinyInput(
              "lb",
-             class="home-button",
-             text = "Leaderboard"
+             class="lb-button"
            ),
            PrimaryButton.shinyInput(
              "credits",
-             class="home-button",
-             text = "Credits"
+             class="credit-button"
            ),
            PrimaryButton.shinyInput(
              "quit",
-             class="home-button",
-             text = "Quit Game"
+             class="quit-button"
            ),
            PrimaryButton.shinyInput(
              "publish",
-             class="home-button",
              text = "test publish"
            )
            )
