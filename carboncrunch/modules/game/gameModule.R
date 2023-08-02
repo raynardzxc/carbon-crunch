@@ -572,7 +572,6 @@ game_server <- function(id, gameData) {
       }
 
       ## OUTPUT RENDERING
-
       # update values shown
       output$battery_value <- renderText({
         paste("Battery:", round_if_numeric(values$battery_value), "/", battery_cap())
