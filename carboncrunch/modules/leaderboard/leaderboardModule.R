@@ -8,7 +8,7 @@ leaderboard_page <- function(id) {
     div(style = "text-align: center; margin-bottom: 20px;", tableOutput(ns("leaderboard_table"))), # Center the leaderboard table
     PrimaryButton.shinyInput(
       ns("back"),
-      class = ".btn",
+      class = "general-button",
       text = "Back to Home"
     )
   )
