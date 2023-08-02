@@ -203,6 +203,13 @@ game_server <- function(id, gameData) {
 
       ## STATE AND LOGIC VALUES
 
+      #math
+      mean <- 23
+      sd <- 8
+
+      shape <- (mean / sd)^2
+      scale <- mean / shape
+
       # fixed values
       battery_df <- getBatteryInfo()
 
@@ -248,7 +255,7 @@ game_server <- function(id, gameData) {
       values$cash <- initial_df$cash
       values$emissions <- initial_df$emissions
       values$battery_value <- initial_df$batteryvalue
-      values$sunlight <- rgamma(1, shape = 4, scale = 2.5) # This should give you a mean of 10 and a variance of 9.
+      values$sunlight <- rgamma(1, shape = shape, scale = scale)
       values$selected_component <- "None"
       values$game_state_df <- initial_game_state
       values$summary_data <- NULL
@@ -381,7 +388,7 @@ game_server <- function(id, gameData) {
         values$cash <- initial_df$cash
         values$emissions <- initial_df$emissions
         values$battery_value <- initial_df$batteryvalue
-        values$sunlight <- rgamma(1, shape = 4, scale = 2.5) # This should give you a mean of 10 and a variance of 9.
+        values$sunlight <- rgamma(1, shape = shape, scale = scale) # This should give you a mean of 10 and a variance of 9.
         values$selected_component <- "None"
         values$summary_data <- NULL
         gameData <- reactiveVal()
@@ -1031,7 +1038,7 @@ game_server <- function(id, gameData) {
         old_battery_value <- values$battery_value
 
         # Generate new sunlight value for the next day
-        sunlight_value <- rgamma(1, shape = 4, scale = 2.5)
+        sunlight_value <- rgamma(1, shape = shape, scale = scale)
         values$sunlight <- sunlight_value
 
         # Apply updates
