@@ -73,6 +73,9 @@ analysis_server <- function(id, gameData) {
           final_cash <- data$final_cash
           final_emissions <- data$final_emissions
           final_score <- ifelse(final_emissions > limit, final_cash - 5 * (final_emissions - limit), final_cash + 10 * (limit - final_emissions))
+          # Add final_score to the existing data
+          data$final_score <- final_score
+          gameData(data)  # Update gameData
 
           # Calculate cumulative values
           game_state_df$CumulativeSolarGained <- cumsum(game_state_df$SolarGained)
