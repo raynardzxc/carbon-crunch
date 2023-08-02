@@ -3,20 +3,24 @@ game_page <- function(id) {
   div(
     class = "game-page",
     fluidRow(
-      column(10,
-        tags$div(class="battery-div",
+      column(
+        10,
+        tags$div(
+          class = "battery-div",
           ### Battery Indicator
           uiOutput(ns("battery")),
           textOutput(ns("battery_value")),
           textOutput(ns("productionNerfWarning"))
         )
       ),
-      column(2,
-        tags$div(class="exit-div",
+      column(
+        2,
+        tags$div(
+          class = "exit-div",
           PrimaryButton.shinyInput(
-          inputId = ns("back"),
-          class = ".btn",
-          text = "X"
+            inputId = ns("back"),
+            class = "exit-button",
+            text = "X"
           )
         )
       )
@@ -28,9 +32,12 @@ game_page <- function(id) {
         fluidRow(
           column(
             4,
-            textOutput(ns("PL1_text1")),
-            textOutput(ns("PL1_text2")),
-            textOutput(ns("PL1_text3"))
+            tags$div(
+              class = "pl-div",
+              textOutput(ns("PL1_text1")),
+              textOutput(ns("PL1_text2")),
+              textOutput(ns("PL1_text3"))
+            )
           ),
           column(
             6,
@@ -52,9 +59,12 @@ game_page <- function(id) {
         fluidRow(
           column(
             4,
-            textOutput(ns("PL2_text1")),
-            textOutput(ns("PL2_text2")),
-            textOutput(ns("PL2_text3"))
+            tags$div(
+              class = "pl-div",
+              textOutput(ns("PL2_text1")),
+              textOutput(ns("PL2_text2")),
+              textOutput(ns("PL2_text3"))
+            )
           ),
           column(
             6,
@@ -76,9 +86,12 @@ game_page <- function(id) {
         fluidRow(
           column(
             4,
-            textOutput(ns("PL3_text1")),
-            textOutput(ns("PL3_text2")),
-            textOutput(ns("PL3_text3"))
+            tags$div(
+              class = "pl-div",
+              textOutput(ns("PL3_text1")),
+              textOutput(ns("PL3_text2")),
+              textOutput(ns("PL3_text3"))
+            )
           ),
           column(
             6,
@@ -100,9 +113,12 @@ game_page <- function(id) {
         fluidRow(
           column(
             4,
-            textOutput(ns("PL4_text1")),
-            textOutput(ns("PL4_text2")),
-            textOutput(ns("PL4_text3"))
+            tags$div(
+              class = "pl-div",
+              textOutput(ns("PL4_text1")),
+              textOutput(ns("PL4_text2")),
+              textOutput(ns("PL4_text3"))
+            )
           ),
           column(
             6,
@@ -124,9 +140,12 @@ game_page <- function(id) {
         fluidRow(
           column(
             4,
-            textOutput(ns("PL5_text1")),
-            textOutput(ns("PL5_text2")),
-            textOutput(ns("PL5_text3"))
+            tags$div(
+              class = "pl-div",
+              textOutput(ns("PL5_text1")),
+              textOutput(ns("PL5_text2")),
+              textOutput(ns("PL5_text3"))
+            )
           ),
           column(
             6,
