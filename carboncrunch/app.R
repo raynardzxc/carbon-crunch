@@ -10,7 +10,7 @@
 
 source("usePackages.R")
 source("setAWSPassword.R")
-pkgnames <- c("tidyverse","shiny","shiny.fluent","shiny.router","DBI", "shinyWidgets","ggplot2","dplyr")
+pkgnames <- c("tidyverse", "shiny", "shiny.fluent", "shiny.router", "DBI", "shinyWidgets", "ggplot2", "dplyr")
 loadPkgs(pkgnames)
 
 # import modules
@@ -25,34 +25,34 @@ source("helper.R")
 # UI for Game
 home_page <- div(
   fluidRow(
-    column(12,  ## Column might be redundant here 
-           align="center",
-           img(class="title-text", src="title.png"),
-           PrimaryButton.shinyInput(
-             "tutorial",
-             class="tut-button"
-           ),
-           PrimaryButton.shinyInput(
-             "play",
-             class="play-button"
-           ),
-           PrimaryButton.shinyInput(
-             "lb",
-             class="lb-button"
-           ),
-           PrimaryButton.shinyInput(
-             "credits",
-             class="credit-button"
-           ),
-           PrimaryButton.shinyInput(
-             "quit",
-             class="quit-button"
-           ),
-           # PrimaryButton.shinyInput( ## placeholder to test
-           #   "publish",
-           #   text = "test publish"
-           # )
-           )
+    column(12, ## Column might be redundant here
+      align = "center",
+      img(class = "title-text", src = "title.png"),
+      PrimaryButton.shinyInput(
+        "tutorial",
+        class = "tut-button"
+      ),
+      PrimaryButton.shinyInput(
+        "play",
+        class = "play-button"
+      ),
+      PrimaryButton.shinyInput(
+        "lb",
+        class = "lb-button"
+      ),
+      PrimaryButton.shinyInput(
+        "credits",
+        class = "credit-button"
+      ),
+      PrimaryButton.shinyInput(
+        "quit",
+        class = "quit-button"
+      ),
+      # PrimaryButton.shinyInput( ## placeholder to test
+      #   "publish",
+      #   text = "test publish"
+      # )
+    )
   )
 )
 
@@ -62,20 +62,25 @@ ui <- fluidPage(
     route("/", home_page),
     route("tutorial", tutorial_page("tutorial")),
     route("game", game_page("game")),
-    route("leaderboard",leaderboard_page("leaderboard")),
+    route("leaderboard", leaderboard_page("leaderboard")),
     route("credits", credit_page("credits")),
     route("analysis", analysis_page("analysis")),
     route("publish", publish_page("publish"))
   ),
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
-  )
+  ),
+  # tags$script("
+  # $(document).on('shiny:sessioninitialized', function(e) {
+  #   window.resizeTo(1000, 800);
+  # });"
+  # )
 )
 
 # Define server logic
 server <- function(input, output, session) {
   router_server()
-  
+
   # catch routing from URL
   component <- reactive({
     if (is.null(get_query_param()$add)) {
@@ -90,10 +95,10 @@ server <- function(input, output, session) {
   observeEvent(input$credits, change_page("credits"))
   observeEvent(input$publish, change_page("publish"))
   observeEvent(input$quit, stopApp())
-  
+
   # Define reactive value for game data
   gameData <- reactiveVal()
-  
+
   tutorial_server("tutorial")
   game_server("game", gameData)
   leaderboard_server("leaderboard")
@@ -102,5 +107,5 @@ server <- function(input, output, session) {
   publish_server("publish", gameData)
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)

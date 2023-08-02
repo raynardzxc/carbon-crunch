@@ -11,6 +11,19 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+
+.battery-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.exit-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  line-height: 120px;
+}
             
 .title-text {
   max-width: 90%; /* This will make the image's width up to 100% of the container's width */
