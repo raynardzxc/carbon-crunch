@@ -133,7 +133,7 @@ game_page <- function(id) {
                 onLabel = icon("oil-well"),
                 offStatus = "success",
                 onStatus = "danger",
-                value = FALSE,
+                value = TRUE,
                 inline = TRUE
               )
             )
@@ -160,7 +160,7 @@ game_page <- function(id) {
                 onLabel = icon("oil-well"),
                 offStatus = "success",
                 onStatus = "danger",
-                value = FALSE,
+                value = TRUE,
                 inline = TRUE
               )
             )
