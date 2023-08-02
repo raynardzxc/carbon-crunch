@@ -562,7 +562,6 @@ game_server <- function(id, gameData) {
         }
       }
 
-
       # Helper function to round if numeric
       round_if_numeric <- function(x) {
         if (is.numeric(x) && !is.na(x)) {

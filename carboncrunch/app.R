@@ -10,7 +10,7 @@
 
 source("usePackages.R")
 source("setAWSPassword.R")
-pkgnames <- c("tidyverse", "shiny", "shiny.fluent", "shiny.router", "DBI", "shinyWidgets", "ggplot2", "dplyr")
+pkgnames <- c("tidyverse", "shiny", "shiny.fluent", "shiny.router", "shinyBS","DBI", "shinyWidgets", "ggplot2", "dplyr")
 loadPkgs(pkgnames)
 
 # import modules
