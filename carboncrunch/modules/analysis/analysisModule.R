@@ -35,6 +35,9 @@ analysis_server <- function(id, gameData) {
     function(input, output, session) {
       ns <- session$ns
 
+      # constants
+      limit <- 350
+
       observeEvent(input$back, change_page("/"))
 
       observe({
@@ -43,7 +46,7 @@ analysis_server <- function(id, gameData) {
           game_state_df <- data$game_state
           final_cash <- data$final_cash
           final_emissions <- data$final_emissions
-          final_score <- final_cash - final_emissions
+          final_score <- ifelse(final_emissions>limit,final_cash-5*(final_emissions-limit),final_cash+10*(limit-final_emissions))
 
           # Calculate cumulative values
           game_state_df$CumulativeSolarGained <- cumsum(game_state_df$SolarGained)
