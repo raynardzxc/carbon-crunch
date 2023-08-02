@@ -26,168 +26,174 @@ game_page <- function(id) {
       )
     ),
     fluidRow(
-      column(8,
-        align = "center",
+      column(
+        8,
         ### Factory Floor
-        fluidRow(
-          column(
-            4,
-            tags$div(
-              class = "pl-div",
-              textOutput(ns("PL1_text1")),
-              textOutput(ns("PL1_text2")),
-              textOutput(ns("PL1_text3"))
+        tags$div(
+          class = "factory-floor",
+          fluidRow(
+            column(
+              4,
+              tags$div(
+                class = "pl-div",
+                textOutput(ns("PL1_text1")),
+                textOutput(ns("PL1_text2")),
+                textOutput(ns("PL1_text3"))
+              )
+            ),
+            column(
+              6,
+              uiOutput(ns("PL1"))
+            ),
+            column(
+              2,
+              switchInput(
+                inputId = ns("toggle1"),
+                offLabel = icon("sun", "fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
+                onLabel = icon("oil-well"),
+                offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
+                onStatus = "danger",
+                value = TRUE,
+                inline = TRUE
+              )
             )
           ),
-          column(
-            6,
-            uiOutput(ns("PL1"))
-          ),
-          column(
-            2,
-            switchInput(
-              inputId = ns("toggle1"),
-              offLabel = icon("sun", "fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
-              onLabel = icon("oil-well"),
-              offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
-              onStatus = "danger",
-              value = TRUE,
-              inline = TRUE
-            )
-          )
-        ),
-        fluidRow(
-          column(
-            4,
-            tags$div(
-              class = "pl-div",
-              textOutput(ns("PL2_text1")),
-              textOutput(ns("PL2_text2")),
-              textOutput(ns("PL2_text3"))
-            )
-          ),
-          column(
-            6,
-            uiOutput(ns("PL2"))
-          ),
-          column(
-            2,
-            switchInput(
-              inputId = ns("toggle2"),
-              offLabel = icon("sun", "fa-solid"),
-              onLabel = icon("oil-well"),
-              offStatus = "success",
-              onStatus = "danger",
-              value = TRUE,
-              inline = TRUE
-            )
-          )
-        ),
-        fluidRow(
-          column(
-            4,
-            tags$div(
-              class = "pl-div",
-              textOutput(ns("PL3_text1")),
-              textOutput(ns("PL3_text2")),
-              textOutput(ns("PL3_text3"))
+          fluidRow(
+            column(
+              4,
+              tags$div(
+                class = "pl-div",
+                textOutput(ns("PL2_text1")),
+                textOutput(ns("PL2_text2")),
+                textOutput(ns("PL2_text3"))
+              )
+            ),
+            column(
+              6,
+              uiOutput(ns("PL2"))
+            ),
+            column(
+              2,
+              switchInput(
+                inputId = ns("toggle2"),
+                offLabel = icon("sun", "fa-solid"),
+                onLabel = icon("oil-well"),
+                offStatus = "success",
+                onStatus = "danger",
+                value = TRUE,
+                inline = TRUE
+              )
             )
           ),
-          column(
-            6,
-            uiOutput(ns("PL3"))
-          ),
-          column(
-            2,
-            switchInput(
-              inputId = ns("toggle3"),
-              offLabel = icon("sun", "fa-solid"),
-              onLabel = icon("oil-well"),
-              offStatus = "success",
-              onStatus = "danger",
-              value = TRUE,
-              inline = TRUE
-            )
-          )
-        ),
-        fluidRow(
-          column(
-            4,
-            tags$div(
-              class = "pl-div",
-              textOutput(ns("PL4_text1")),
-              textOutput(ns("PL4_text2")),
-              textOutput(ns("PL4_text3"))
-            )
-          ),
-          column(
-            6,
-            uiOutput(ns("PL4"))
-          ),
-          column(
-            2,
-            switchInput(
-              inputId = ns("toggle4"),
-              offLabel = icon("sun", "fa-solid"),
-              onLabel = icon("oil-well"),
-              offStatus = "success",
-              onStatus = "danger",
-              value = FALSE,
-              inline = TRUE
-            )
-          )
-        ),
-        fluidRow(
-          column(
-            4,
-            tags$div(
-              class = "pl-div",
-              textOutput(ns("PL5_text1")),
-              textOutput(ns("PL5_text2")),
-              textOutput(ns("PL5_text3"))
+          fluidRow(
+            column(
+              4,
+              tags$div(
+                class = "pl-div",
+                textOutput(ns("PL3_text1")),
+                textOutput(ns("PL3_text2")),
+                textOutput(ns("PL3_text3"))
+              )
+            ),
+            column(
+              6,
+              uiOutput(ns("PL3"))
+            ),
+            column(
+              2,
+              switchInput(
+                inputId = ns("toggle3"),
+                offLabel = icon("sun", "fa-solid"),
+                onLabel = icon("oil-well"),
+                offStatus = "success",
+                onStatus = "danger",
+                value = TRUE,
+                inline = TRUE
+              )
             )
           ),
-          column(
-            6,
-            uiOutput(ns("PL5"))
+          fluidRow(
+            column(
+              4,
+              tags$div(
+                class = "pl-div",
+                textOutput(ns("PL4_text1")),
+                textOutput(ns("PL4_text2")),
+                textOutput(ns("PL4_text3"))
+              )
+            ),
+            column(
+              6,
+              uiOutput(ns("PL4"))
+            ),
+            column(
+              2,
+              switchInput(
+                inputId = ns("toggle4"),
+                offLabel = icon("sun", "fa-solid"),
+                onLabel = icon("oil-well"),
+                offStatus = "success",
+                onStatus = "danger",
+                value = FALSE,
+                inline = TRUE
+              )
+            )
           ),
-          column(
-            2,
-            switchInput(
-              inputId = ns("toggle5"),
-              offLabel = icon("sun", "fa-solid"),
-              onLabel = icon("oil-well"),
-              offStatus = "success",
-              onStatus = "danger",
-              value = FALSE,
-              inline = TRUE
+          fluidRow(
+            column(
+              4,
+              tags$div(
+                class = "pl-div",
+                textOutput(ns("PL5_text1")),
+                textOutput(ns("PL5_text2")),
+                textOutput(ns("PL5_text3"))
+              )
+            ),
+            column(
+              6,
+              uiOutput(ns("PL5"))
+            ),
+            column(
+              2,
+              switchInput(
+                inputId = ns("toggle5"),
+                offLabel = icon("sun", "fa-solid"),
+                onLabel = icon("oil-well"),
+                offStatus = "success",
+                onStatus = "danger",
+                value = FALSE,
+                inline = TRUE
+              )
             )
           )
         )
       ),
 
       ### Side panel (day indicator and dashboard)
-      column(4,
-        align = "center",
+      column(
+        4,
         ### Panel
-        fluidRow(
-          tags$div(
-            class = "stats-div",
-            textOutput(ns("day")),
-            textOutput(ns("cash")),
-            textOutput(ns("emissions"))
-          )
-        ),
-        fluidRow(
-          tags$div(
-            class = "align-div",
-            uiOutput(ns("selected_component"))
-          )
-        ),
-        fluidRow(
-          tags$div(
-            class = "align-div",
-            uiOutput(ns("next_day_button"))
+        tags$div(
+          class = "side-panel",
+          fluidRow(
+            tags$div(
+              class = "stats-div",
+              textOutput(ns("day")),
+              textOutput(ns("cash")),
+              textOutput(ns("emissions"))
+            )
+          ),
+          fluidRow(
+            tags$div(
+              class = "align-div",
+              uiOutput(ns("selected_component"))
+            )
+          ),
+          fluidRow(
+            tags$div(
+              class = "align-div",
+              uiOutput(ns("next_day_button"))
+            )
           )
         )
       )
@@ -203,7 +209,7 @@ game_server <- function(id, gameData) {
 
       ## STATE AND LOGIC VALUES
 
-      #math
+      # math
       mean <- 23
       sd <- 8
 

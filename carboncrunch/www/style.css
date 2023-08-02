@@ -1,3 +1,11 @@
+.container-fluid {
+  height: 100vh;
+  display: flex;
+  justify-content: center; /* Align items horizontally */
+  align-items: center;     /* Align items vertically */
+  flex-direction: column;  /* Stack items vertically */
+}
+
 body {
   background-color: #243644;
   color: red;
@@ -37,6 +45,18 @@ body::-webkit-scrollbar {
   margin-left: 30px;
   text-align: center;
   white-space: nowrap;
+}
+
+.factory-floor {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.side-panel {
+  margin: auto;
+  align-items: center;
+  text-align: center;
 }
             
 .title-text {
