@@ -1,6 +1,6 @@
 game_page <- function(id) {
   ns <- NS(id)
-  div(
+  tags$div(
     class = "game-page",
     fluidRow(
       column(
@@ -184,7 +184,7 @@ game_page <- function(id) {
           ),
           fluidRow(
             tags$div(
-              class = "align-div",
+              class = "board-div",
               uiOutput(ns("selected_component"))
             )
           ),
@@ -773,7 +773,7 @@ game_server <- function(id, gameData) {
             "<tr>",
             "<td>", values$summary_data[2:4, "Category"], "</td>",
             "<td>", sapply(values$summary_data[2:4, "Old.Value"], round_if_numeric), "</td>",
-            "<td> -> </td>",
+            "<td> &#x2B95; </td>",
             "<td>", sapply(values$summary_data[2:4, "New.Value"], round_if_numeric), "</td>",
             "<td>", ifelse(values$summary_data[2:4, "Change"] >= 0, "+", ""), sapply(values$summary_data[2:4, "Change"], round_if_numeric), "</td>",
             "</tr>",
@@ -805,7 +805,7 @@ game_server <- function(id, gameData) {
               "}",
               "</style>",
               '<table style="width:100%; border: none;">',
-              "<tr><th></th><th>", round_if_numeric(values$summary_data[1, "Old.Value"]), "</th><th> -> </th><th>", round_if_numeric(values$summary_data[1, "New.Value"]), "</th><th></th></tr>",
+              "<tr><th>", values$summary_data[1, "Category"], "</th><th>", round_if_numeric(values$summary_data[1, "Old.Value"]), "</th><th> &#x2B95; </th><th>", round_if_numeric(values$summary_data[1, "New.Value"]), "</th><th></th></tr>",
               rows1to3,
               rows4to5,
               "</table>"
