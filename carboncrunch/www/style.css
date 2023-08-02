@@ -4,6 +4,10 @@ body {
   margin: 0;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .title-text {
   max-width: 90%; /* This will make the image's width up to 100% of the container's width */
   height: auto; /* This will maintain the image's aspect ratio as it scales */
@@ -224,6 +228,14 @@ body {
   cursor: pointer;
   outline: none;
   border: none;
+}
+
+#PL1_text {
+  font-family: Arial, sans-serif;
+  white-space: pre-wrap;
+  background-color: blue;  /* change this to your preferred color */
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .modal-content {
