@@ -2,8 +2,7 @@ tutorial_page <- function(id) {
   ns <- NS(id)
   div(
     div(
-      img(src = "tutorial.png", height = "40px", width = "160px", style = "margin: 20px auto; display: block;"),
-    div(
+      h1("Tutorial", style = "text-align: center; margin-top: 50px;"),
       h3("Objective", style = "text-align: left; margin-top: 10px;"),
       p("To balance between investing in sustainable technology (solar power) and maximizing profit at the end of 30 days while adhering to carbon emission levels."),
       h3("How to Play", style = "text-align: left; margin-top: 10px;"),
@@ -50,7 +49,6 @@ tutorial_page <- function(id) {
         )
       )
     )
-  )
   )
 }
 
