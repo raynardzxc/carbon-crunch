@@ -6,7 +6,7 @@ game_page <- function(id) {
       column(
         10,
         tags$div(
-          class = "battery-div",
+          class = "align-div",
           ### Battery Indicator
           uiOutput(ns("battery")),
           textOutput(ns("battery_value")),
@@ -171,15 +171,24 @@ game_page <- function(id) {
         align = "center",
         ### Panel
         fluidRow(
-          textOutput(ns("day")),
-          textOutput(ns("cash")),
-          textOutput(ns("emissions"))
+          tags$div(
+            class = "stats-div",
+            textOutput(ns("day")),
+            textOutput(ns("cash")),
+            textOutput(ns("emissions"))
+          )
         ),
         fluidRow(
-          uiOutput(ns("selected_component"))
+          tags$div(
+            class = "align-div",
+            uiOutput(ns("selected_component"))
+          )
         ),
         fluidRow(
-          uiOutput(ns("next_day_button"))
+          tags$div(
+            class = "align-div",
+            uiOutput(ns("next_day_button"))
+          )
         )
       )
     )

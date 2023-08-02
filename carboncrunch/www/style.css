@@ -12,7 +12,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-.battery-div {
+.align-div {
   margin: auto;
   align-items: center;
   text-align: center;
@@ -23,6 +23,20 @@ body::-webkit-scrollbar {
   align-items: center;
   text-align: center;
   line-height: 120px;
+}
+
+.pl-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.pl-div .shiny-text-output.shiny-bound-output {
+  color: white;
+  font-size: 12px;
+  margin-left: 30px;
+  text-align: center;
+  white-space: nowrap;
 }
             
 .title-text {
