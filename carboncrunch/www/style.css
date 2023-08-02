@@ -1,6 +1,31 @@
 @font-face {
-    font-family: 'gameplay'; /*a name to be used later*/
+    font-family: 'gameplay';
     src: url('Gameplay.ttf') format('truetype'); /*URL to font*/
+}
+
+.tut_div {
+  font-family: 'arial'; /* Change font back to default for readability*/
+}
+
+
+
+.credit-div {
+  text-align: center;
+  justify-content: center; /* Align items horizontally */
+  align-items: center; 
+}
+
+.credit-title {
+  text-decoration: underline; 
+  margin-bottom: 50px;
+}
+
+.credit-div .row {
+  margin-bottom: 50px;
+}
+
+.credit-div .special-thanks {
+  color: #f6ff47;
 }
 
 .container-fluid {
