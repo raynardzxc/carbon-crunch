@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'gameplay'; /*a name to be used later*/
+    src: url('Gameplay.ttf') format('truetype'); /*URL to font*/
+}
+
 .container-fluid {
   height: 100vh;
   display: flex;
@@ -7,6 +12,7 @@
 }
 
 body {
+  font-family: gameplay;
   background-color: #243644;
   color: red;
   margin: 0;
