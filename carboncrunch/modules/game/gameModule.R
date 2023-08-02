@@ -149,7 +149,6 @@ game_server <- function(id, gameData) {
       
       # initialize state values
       values <- reactiveValues()
-      values$production_nerf_factor <- 1
       values$battery_level <- 1
       values$pl_levelsA <- rep(1,3)
       values$pl_levelsB <- rep(1,2)
@@ -198,6 +197,11 @@ game_server <- function(id, gameData) {
       battery_stats <- reactive({
         battery_df[battery_df$level == values$battery_level,]
       })
+      
+      # Compute production nerf factor
+      production_nerf_factor <- reactive(({
+        ifelse((values$battery_value/battery_cap()) < 0.25, 0.5, 1)
+      }))
       
       upgrade_cost_Battery <- reactive({
         if (values$battery_level < 3) {
@@ -278,7 +282,6 @@ game_server <- function(id, gameData) {
       ## FUNCTIONS
       
       resetGame <- function() {
-        values$production_nerf_factor <- 1
         values$battery_level <- 1
         values$pl_levelsA <- rep(1,3)
         values$pl_levelsB <- rep(1,2)
@@ -475,8 +478,8 @@ game_server <- function(id, gameData) {
         })
       
       output$productionNerfWarning <- renderText({
-        if (values$production_nerf_factor < 1) {
-          "Warning: Battery value is low. Cash generation from production lines is halved!"
+        if (production_nerf_factor() < 1) {
+          "Warning: Battery value is low. Cash generation from solar powered production lines is halved!"
         } else {
           ""  # No warning when production is not nerfed
         }
@@ -847,49 +850,46 @@ game_server <- function(id, gameData) {
         sunlight_value <- rgamma(1, shape = 4, scale = 2.5)
         values$sunlight <- sunlight_value
         
-        # Compute production nerf factor
-        values$production_nerf_factor <- ifelse((values$battery_value/battery_cap()) < 0.25, 0.5, 1)
-        
         # Apply updates
         values$day <- values$day + 1
         # Production Line 1
         if(input$toggle1 == FALSE) {
-          values$cash <- values$cash + cash_generatedA()[1]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedA()[1]*production_nerf_factor() # Cash added
           values$battery_value <- values$battery_value - solar_consumptionA()[1] # Battery amount used
         } else if(input$toggle1 == TRUE) {
-          values$cash <- values$cash + cash_generatedA()[1]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedA()[1] # Cash added
           values$emissions <- values$emissions + emissions_generatedA()[1] # Emissions generated
         }
         # Production Line 2
         if(input$toggle2 == FALSE) {
-          values$cash <- values$cash + cash_generatedA()[2]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedA()[2]*production_nerf_factor() # Cash added
           values$battery_value <- values$battery_value - solar_consumptionA()[2] # Battery amount used
         } else if(input$toggle2 == TRUE) {
-          values$cash <- values$cash + cash_generatedA()[2]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedA()[2] # Cash added
           values$emissions <- values$emissions + emissions_generatedA()[2] # Emissions generated
         }
         # Production Line 3
         if(input$toggle3 == FALSE) {
-          values$cash <- values$cash + cash_generatedA()[3]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedA()[3]*production_nerf_factor() # Cash added
           values$battery_value <- values$battery_value - solar_consumptionA()[3] # Battery amount used
         } else if(input$toggle3 == TRUE) {
-          values$cash <- values$cash + cash_generatedA()[3]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedA()[3] # Cash added
           values$emissions <- values$emissions + emissions_generatedA()[3] # Emissions generated
         }
         # Production Line 4
         if(input$toggle4 == FALSE) {
-          values$cash <- values$cash + cash_generatedB()[1]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedB()[1]*production_nerf_factor() # Cash added
           values$battery_value <- values$battery_value - solar_consumptionB()[1] # Battery amount used
         } else if(input$toggle4 == TRUE) {
-          values$cash <- values$cash + cash_generatedB()[1]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedB()[1] # Cash added
           values$emissions <- values$emissions + emissions_generatedB()[1] # Emissions generated
         }
         # Production Line 5
         if(input$toggle5 == FALSE) {
-          values$cash <- values$cash + cash_generatedB()[2]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedB()[2]*production_nerf_factor() # Cash added
           values$battery_value <- values$battery_value - solar_consumptionB()[2] # Battery amount used
         } else if(input$toggle5 == TRUE) {
-          values$cash <- values$cash + cash_generatedB()[2]*values$production_nerf_factor # Cash added
+          values$cash <- values$cash + cash_generatedB()[2] # Cash added
           values$emissions <- values$emissions + emissions_generatedB()[2] # Emissions generated
         }
         
