@@ -1,7 +1,5 @@
 source("helper.R")
 
-
-
 publish_page <- function(id) {
   ns <- NS(id)
   div(
@@ -102,7 +100,7 @@ publish_server <- function(id, gameData) {
         limit <- 350
         final_cash <- data$final_cash
         final_emissions <- data$final_emissions
-        final_score <- ifelse(final_emissions>limit,final_cash-5*(final_emissions-limit),final_cash+10*(limit-final_emissions))
+        final_score <- data$final_score
         vals$score <- final_score
         if (is.null(vals$playername)) {## player have not logged in yet
           tagList(
