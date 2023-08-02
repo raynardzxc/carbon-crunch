@@ -34,6 +34,7 @@ game_page <- function(id) {
                    textOutput(ns("battery_value")),
                    textOutput(ns("productionNerfWarning"))
                ),
+<<<<<<< HEAD
                
                ### Factory Floor
                div(class = "prodline-div",
@@ -113,6 +114,92 @@ game_page <- function(id) {
                    uiOutput(ns("next_day_button"))
                ))
       )
+=======
+             
+             ### Factory Floor
+             div(class = "prodline-div",
+                 fluidRow(
+                   column(12,
+                          textOutput(ns("PL1_text1")),
+                          textOutput(ns("PL1_text2")),
+                          textOutput(ns("PL1_text3")),
+                          uiOutput(ns("PL1")),
+                          switchInput(inputId = ns("toggle1"), 
+                                      offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
+                                      onStatus = "danger",
+                                      value = TRUE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          textOutput(ns("PL2_text1")),
+                          textOutput(ns("PL2_text2")),
+                          textOutput(ns("PL2_text3")),
+                          uiOutput(ns("PL2")),
+                          switchInput(inputId = ns("toggle2"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = TRUE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          textOutput(ns("PL3_text1")),
+                          textOutput(ns("PL3_text2")),
+                          textOutput(ns("PL3_text3")),
+                          uiOutput(ns("PL3")),
+                          switchInput(inputId = ns("toggle3"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = TRUE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          textOutput(ns("PL4_text1")),
+                          textOutput(ns("PL4_text2")),
+                          textOutput(ns("PL4_text3")),
+                          uiOutput(ns("PL4")),
+                          switchInput(inputId = ns("toggle4"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = FALSE,
+                                      inline = TRUE),
+                   ),
+                   column(12,
+                          textOutput(ns("PL5_text1")),
+                          textOutput(ns("PL5_text2")),
+                          textOutput(ns("PL5_text3")),
+                          uiOutput(ns("PL5")),
+                          switchInput(inputId = ns("toggle5"), 
+                                      offLabel = icon("sun","fa-solid"), 
+                                      onLabel = icon("oil-well"),
+                                      offStatus = "success", 
+                                      onStatus = "danger",
+                                      value = FALSE,
+                                      inline = TRUE),
+                   ),
+                 ),
+             )),
+      
+      ### Side panel (day indicator and dashboard)
+      column(4,
+             align="center",
+             ### Panel
+             div(class = "stats",
+                 textOutput(ns("day")),
+                 textOutput(ns("cash")),
+                 textOutput(ns("emissions")),
+                 uiOutput(ns("selected_component")),
+                 uiOutput(ns("next_day_button"))
+             ))
+    )
+>>>>>>> dbc40283641c9f13534f509441c7d27827d4b256
   )
 }
 
@@ -453,15 +540,95 @@ game_server <- function(id, gameData) {
       output$day <- renderText({ paste("Day:", values$day) })
       output$cash <- renderText({ paste("Cash ($):", values$cash) })
       output$emissions <- renderText({ paste("Emissions (CO2e):", values$emissions,"/", carbon_limit) })
-      output$PL1_text <- renderText({ paste("Production Line 1:", values$pl_levelsA[1],"/ 3") })
-      output$PL2_text <- renderText({ paste("Production Line 2:", values$pl_levelsA[2],"/ 3") })
-      output$PL3_text <- renderText({ paste("Production Line 3:", values$pl_levelsA[3],"/ 3") })
-      output$PL4_text <- renderText({ paste("Production Line 4:", values$pl_levelsB[1],"/ 3") })
-      output$PL5_text <- renderText({ paste("Production Line 5:", values$pl_levelsB[2],"/ 3") })
+      
+      ## Information for Production line 1
+      output$PL1_text1 <- renderText({
+          paste0("Line 1 Level: ", values$pl_levelsA[1], " / 3")
+      })
+      
+      output$PL1_text2 <- renderText({
+        paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated)
+      })
+      
+      output$PL1_text3 <- renderText({
+        if (input$toggle1==FALSE) {
+          paste0("Battery: -", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$solar_consumption, " Units")
+        } else {
+          paste0("Emission: +",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$emissions, " CO2e")
+        }
+      })
+      
+      ## Information for Production line 2
+      output$PL2_text1 <- renderText({
+        paste0("Line 2 Level: ", values$pl_levelsA[2], " / 3")
+      })
+      
+      output$PL2_text2 <- renderText({
+        paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$cash_generated)
+      })
+      
+      output$PL2_text3 <- renderText({
+        if (input$toggle2==FALSE) {
+          paste0("Battery: -", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$solar_consumption, " Units")
+        } else {
+          paste0("Emission: +",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$emissions, " CO2e")
+        }
+      })
+      
+      ## Information for Production line 3
+      output$PL3_text1 <- renderText({
+        paste0("Line 3 Level: ", values$pl_levelsA[3], " / 3")
+      })
+      
+      output$PL3_text2 <- renderText({
+        paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$cash_generated)
+      })
+      
+      output$PL3_text3 <- renderText({
+        if (input$toggle3==FALSE) {
+          paste0("Battery: -", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$solar_consumption, " Units")
+        } else {
+          paste0("Emission: +", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$emissions, " CO2e")
+        }
+      })
+      
+      ## Information for Production line 4
+      output$PL4_text1 <- renderText({
+        paste0("Line 4 Level: ", values$pl_levelsB[1], " / 3")
+      })
+      
+      output$PL4_text2 <- renderText({
+        paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$cash_generated)
+      })
+      
+      output$PL4_text3 <- renderText({
+        if (input$toggle4==FALSE) {
+          paste0("Battery: -", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$solar_consumption, " Units")
+        } else {
+          paste0("Emission: +", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$emissions, " CO2e")
+        }
+      })
+      
+      ## Information for Production line 5
+      output$PL5_text1 <- renderText({
+        paste0("Line 5 Level: ", values$pl_levelsB[2], " / 3")
+      })
+      
+      output$PL5_text2 <- renderText({
+        paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$cash_generated)
+      })
+      
+      output$PL5_text3 <- renderText({
+        if (input$toggle5==FALSE) {
+          paste0("Battery: -", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$solar_consumption, " Units")
+        } else {
+          paste0("Emission: +", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$emissions, " CO2e")
+        }
+      })
       
       output$productionNerfWarning <- renderText({
         if (values$production_nerf_factor < 1) {
-          "Warning: Battery value is low. Cash generation from production lines is halved!"
+          "Warning: Battery value is low. Cash generation from production lines using solar power is halved!"
         } else {
           ""  # No warning when production is not nerfed
         }
