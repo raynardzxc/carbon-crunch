@@ -1,4 +1,4 @@
-# Initialise all functions related to communicating with database --------------------
+# Initialise connection with database
 getAWSConnection <- function(){
   conn <- dbConnect(
     drv = RMySQL::MySQL(),
@@ -61,12 +61,10 @@ getLineInfo <- function(){
   dbDisconnect(conn)
   result
 }
-# ------------------------------------------------------------------------------------
 
 ## Function for login
 #Generate, or re-generate, HTML to create modal dialog for Password creation
 registerModal <- function(ns, failed = FALSE) {
-  
   modalDialog(
     title = "Create a new password",
     textInput(inputId = ns("playername1"), "Enter your desired username:", placeholder = "Username"),
@@ -74,7 +72,7 @@ registerModal <- function(ns, failed = FALSE) {
     passwordInput(inputId = ns("password2"), "Confirm by re-entering the new password:", placeholder = "Repeated Password"),
     
     if (failed)
-      div(tags$b("The passwords do not match. Try again.", style = "color: red;")),
+      div(tags$b("The passwords do not match or the username already exists. Try again.", style = "color: red;")),
     
     footer = tagList(
       modalButton("Cancel"),
@@ -84,7 +82,6 @@ registerModal <- function(ns, failed = FALSE) {
 }
 
 loginModal <- function(ns, failed = FALSE) {
-  
   modalDialog(
     title = "Login",
     textInput(inputId = ns("playername2"), "Enter your username", placeholder = "Username"),
@@ -97,6 +94,14 @@ loginModal <- function(ns, failed = FALSE) {
       actionButton(inputId = ns("loginok"), "OK")
     )
   )
+}
+
+existPlayername <- function(playername) {
+  conn <- getAWSConnection()
+  querytemplate <- "SELECT COUNT(*) AS count FROM LeaderPlayer WHERE playername=?id1;"
+  query <- sqlInterpolate(conn, querytemplate, id1=playername)
+  result <- dbGetQuery(conn, query)
+  return(result$count>0)
 }
 
 getPlayerID <- function(playername,password){
@@ -165,5 +170,5 @@ getLeaderBoard <- function(){
   result <- dbGetQuery(conn,query)
   dbDisconnect(conn)
   colnames(result) <- c("Player", "Score", "Date Achieved")
-  result
+  head(result,10)
 }

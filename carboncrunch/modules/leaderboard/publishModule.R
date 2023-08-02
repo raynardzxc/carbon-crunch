@@ -5,10 +5,12 @@ source("helper.R")
 publish_page <- function(id) {
   ns <- NS(id)
   div(
+    style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;", # Center the content vertically
+    titlePanel("Publish Highscore"),
     uiOutput(ns("leaderBoard")),
     uiOutput(ns("publishControls")),
     uiOutput(ns("logregControls")),
-    actionButton(ns("back"), label = "Back")
+    actionButton(ns("back"), label = "Back", class = "general-button")
   )
 }
 
@@ -20,7 +22,7 @@ publish_server <- function(id, gameData) {
       ns <- session$ns
       
       
-      vals <- reactiveValues(password = NULL, playerid = NULL, playername = NULL, score = NULL) ##placeholder score
+      vals <- reactiveValues(password = NULL, playerid = NULL, playername = NULL, score = NULL, published = FALSE) ##placeholder score
       
       
       observeEvent(input$test, {
@@ -34,14 +36,14 @@ publish_server <- function(id, gameData) {
       
       # Fire some code if the user clicks the registerok button
       observeEvent(input$registerok, {
-        # Check that password1 exists and it matches password2
-        if (str_length(input$password1) > 0 && (input$password1 == input$password2)) {
+        # Check that password1 exists and it matches password2 and username is unique
+        if (str_length(input$password1) > 0 && (input$password1 == input$password2) && (existPlayername(input$playername1) == FALSE)) {
           #store the password and close the dialog
           vals$password <- input$password1
           #print(vals$password) # for debugging
           
-          ## some check for playername
           vals$playername = input$playername1
+          
           
           # store in db
           createNewPlayerQuery(vals$playername, vals$password)
@@ -83,6 +85,7 @@ publish_server <- function(id, gameData) {
       observeEvent(input$publishok, {
         publishScore(vals$playerid,vals$score)
         "Score successfully published!"
+        vals$published <- TRUE
       })
       
       output$leaderBoard <- renderUI({
@@ -100,22 +103,25 @@ publish_server <- function(id, gameData) {
         final_emissions <- data$final_emissions
         final_score <- final_cash - final_emissions
         vals$score <- final_score
-        if (is.null(vals$playername)) ## player have not logged in yet
+        if (is.null(vals$playername)) {## player have not logged in yet
           tagList(
             paste0("Your score is: ", final_score, ". Please login if you want to publish your score.")
           )
-        else 
+        } else {
+          if (vals$published == FALSE) {
           tagList(
             paste0("Your score is: ", final_score, "."),
             actionButton(inputId = ns("publishok"), "Publish")
           )
+          }
+          }
       })
       
       output$logregControls <- renderUI({
         if (is.null(vals$playername)) ## player have not logged in yet
           tagList(
-            actionButton(inputId = ns("register"), "Register"),
-            actionButton(inputId = ns("login"), "Login")
+            actionButton(inputId = ns("register"), "Register", class = "general-button"),
+            actionButton(inputId = ns("login"), "Login", class = "general-button")
           )
         else 
           paste0("Logged in as: ",vals$playername)

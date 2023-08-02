@@ -10,8 +10,8 @@ analysis_page <- function(id) {
     plotOutput(ns("cashBarPlot"), height = "400px"),
     plotOutput(ns("emissionsBarPlot"), height = "400px"),
     plotOutput(ns("solarBarPlot"), height = "400px"),
-    actionButton(inputId = ns("back"), label = "Back to Home"),
-    actionButton(inputId = ns("publish"), label = "Publish"),
+    actionButton(inputId = ns("back"), label = "Back to Home", class = "general-button"),
+    actionButton(inputId = ns("publish"), label = "Publish Score", class = "general-button"),
   )
 }
 
