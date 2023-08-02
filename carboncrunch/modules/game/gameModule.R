@@ -15,7 +15,7 @@ game_page <- function(id) {
       fluidRow(
         column(6,
                align="center",
-               p(class = "big-text", "Carbon Crunch Game!")),
+               p(class = "big-text")),
         column(4),
         column(2,
                align="center",
@@ -468,39 +468,23 @@ game_server <- function(id, gameData) {
       })
       
       output$PL1 <- renderUI({
-        if (input$toggle1==FALSE) {
-          taglist(
-            tag$style(HTML
-                      ".custom-button-container {
-              display: flex;
-              align-items: center;
-            }
-            .custom-buttin {
-              background-color: transparent;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              margin-right: 100 px; 
-            }
-            .custom-button img {
-              width: 450px;
-            }"
-            )),
-          div(class = "custom-button-container",
-              actionButton(inputId = ns("PL1"), class = "custom-button",
-                           tag$img(src = "line1.png", alt = "Production Line 1")),
-              div(class = "text-toggle-container",
-                  div(paste0("Line 1 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                  switchInput(inputId = ns("toggle1"),
-                              offLabel = icon("sun", "fa-solid"),
-                              onLabel = icon("oil-well"),
-                              offStatus = "success",
-                              onStatus = "danger",
-                              value = TRUE,
-                              inline = TRUE)
-              )
+        if (input$toggle1 == FALSE) {
+          tagList(
+            div(class = "custom-button-container",
+                actionButton(inputId = ns("PL1"), class = "custom-button",
+                             tag$img(src = "line1.png", alt = "Production Line 1")),
+                div(class = "text-toggle-container",
+                    div(paste0("Line 1 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
+                    switchInput(inputId = ns("toggle1"),
+                                offLabel = icon("sun", "fa-solid"),
+                                onLabel = icon("oil-well"),
+                                offStatus = "success",
+                                onStatus = "danger",
+                                value = TRUE,
+                                inline = TRUE)
+                )
+            )
           )
-          
           
         } else {
           CompoundButton.shinyInput(
@@ -513,39 +497,23 @@ game_server <- function(id, gameData) {
       })
       
       output$PL2 <- renderUI({
-        if (input$toggle1==FALSE) {
-          taglist(
-            tag$style(HTML
-                      ".custom-button-container {
-              display: flex;
-              align-items: center;
-            }
-            .custom-buttin {
-              background-color: transparent;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              margin-right: 100 px; 
-            }
-            .custom-button img {
-              width: 450px;
-            }"
-            )),
-          div(class = "custom-button-container",
-              actionButton(inputId = ns("PL2"), class = "custom-button",
-                           tag$img(src = "line2.png", alt = "Production Line 2")),
-              div(class = "text-toggle-container",
-                  div(paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                  switchInput(inputId = ns("toggle2"),
-                              offLabel = icon("sun", "fa-solid"),
-                              onLabel = icon("oil-well"),
-                              offStatus = "success",
-                              onStatus = "danger",
-                              value = TRUE,
-                              inline = TRUE)
-              )
+        if (input$toggle2 == FALSE) {
+          tagList(
+            div(class = "custom-button-container",
+                actionButton(inputId = ns("PL2"), class = "custom-button",
+                             tag$img(src = "line2.png", alt = "Production Line 2")),
+                div(class = "text-toggle-container",
+                    div(paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
+                    switchInput(inputId = ns("toggle2"),
+                                offLabel = icon("sun", "fa-solid"),
+                                onLabel = icon("oil-well"),
+                                offStatus = "success",
+                                onStatus = "danger",
+                                value = TRUE,
+                                inline = TRUE)
+                )
+            )
           )
-          
           
         } else {
           CompoundButton.shinyInput(
@@ -558,39 +526,23 @@ game_server <- function(id, gameData) {
       })
       
       output$PL3 <- renderUI({
-        if (input$toggle1==FALSE) {
-          taglist(
-            tag$style(HTML
-                      ".custom-button-container {
-              display: flex;
-              align-items: center;
-            }
-            .custom-buttin {
-              background-color: transparent;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              margin-right: 100 px; 
-            }
-            .custom-button img {
-              width: 450px;
-            }"
-            )),
-          div(class = "custom-button-container",
-              actionButton(inputId = ns("PL3"), class = "custom-button",
-                           tag$img(src = "line3.png", alt = "Production Line 3")),
-              div(class = "text-toggle-container",
-                  div(paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                  switchInput(inputId = ns("toggle3"),
-                              offLabel = icon("sun", "fa-solid"),
-                              onLabel = icon("oil-well"),
-                              offStatus = "success",
-                              onStatus = "danger",
-                              value = TRUE,
-                              inline = TRUE)
-              )
-          )
-          
+        if (input$toggle3 == FALSE) {
+          tagList(
+            div(class = "custom-button-container",
+                actionButton(inputId = ns("PL3"), class = "custom-button",
+                             tag$img(src = "line3.png", alt = "Production Line 3")),
+                div(class = "text-toggle-container",
+                    div(paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
+                    switchInput(inputId = ns("toggle3"),
+                                offLabel = icon("sun", "fa-solid"),
+                                onLabel = icon("oil-well"),
+                                offStatus = "success",
+                                onStatus = "danger",
+                                value = TRUE,
+                                inline = TRUE)
+                )
+            )
+          ) 
           
         } else {
           CompoundButton.shinyInput(
@@ -603,39 +555,23 @@ game_server <- function(id, gameData) {
       })
       
       output$PL4 <- renderUI({
-        if (input$toggle1==FALSE) {
-          taglist(
-            tag$style(HTML
-                      ".custom-button-container {
-              display: flex;
-              align-items: center;
-            }
-            .custom-buttin {
-              background-color: transparent;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              margin-right: 100 px; 
-            }
-            .custom-button img {
-              width: 450px;
-            }"
-            )),
-          div(class = "custom-button-container",
-              actionButton(inputId = ns("PL4"), class = "custom-button",
-                           tag$img(src = "line4.png", alt = "Production Line 4")),
-              div(class = "text-toggle-container",
-                  div(paste0("Line 4 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                  switchInput(inputId = ns("toggle4"),
-                              offLabel = icon("sun", "fa-solid"),
-                              onLabel = icon("oil-well"),
-                              offStatus = "success",
-                              onStatus = "danger",
-                              value = TRUE,
-                              inline = TRUE)
-              )
-          )
-          
+        if (input$toggle4 == FALSE) {
+          tagList(
+            div(class = "custom-button-container",
+                actionButton(inputId = ns("PL4"), class = "custom-button",
+                             tag$img(src = "line4.png", alt = "Production Line 4")),
+                div(class = "text-toggle-container",
+                    div(paste0("Line 4 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
+                    switchInput(inputId = ns("toggle4"),
+                                offLabel = icon("sun", "fa-solid"),
+                                onLabel = icon("oil-well"),
+                                offStatus = "success",
+                                onStatus = "danger",
+                                value = TRUE,
+                                inline = TRUE)
+                )
+            )
+          ) 
           
         } else {
           CompoundButton.shinyInput(
@@ -648,39 +584,23 @@ game_server <- function(id, gameData) {
       })
       
       output$PL5 <- renderUI({
-        if (input$toggle1==FALSE) {
-          taglist(
-            tag$style(HTML
-                      ".custom-button-container {
-              display: flex;
-              align-items: center;
-            }
-            .custom-buttin {
-              background-color: transparent;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              margin-right: 100 px; 
-            }
-            .custom-button img {
-              width: 450px;
-            }"
-            )),
-          div(class = "custom-button-container",
-              actionButton(inputId = ns("PL5"), class = "custom-button",
-                           tag$img(src = "line5.png", alt = "Production Line 5")),
-              div(class = "text-toggle-container",
-                  div(paste0("Line 5 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                  switchInput(inputId = ns("toggle5"),
-                              offLabel = icon("sun", "fa-solid"),
-                              onLabel = icon("oil-well"),
-                              offStatus = "success",
-                              onStatus = "danger",
-                              value = TRUE,
-                              inline = TRUE)
-              )
-          )
-          
+        if (input$toggle5 == FALSE) {
+          tagList(
+            div(class = "custom-button-container",
+                actionButton(inputId = ns("PL5"), class = "custom-button",
+                             tag$img(src = "line5.png", alt = "Production Line 5")),
+                div(class = "text-toggle-container",
+                    div(paste0("Line 5 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
+                    switchInput(inputId = ns("toggle5"),
+                                offLabel = icon("sun", "fa-solid"),
+                                onLabel = icon("oil-well"),
+                                offStatus = "success",
+                                onStatus = "danger",
+                                value = TRUE,
+                                inline = TRUE)
+                )
+            )
+          )  
           
         } else {
           CompoundButton.shinyInput(
