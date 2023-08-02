@@ -43,8 +43,8 @@ body::-webkit-scrollbar {
   max-width: 90%; /* This will make the image's width up to 100% of the container's width */
   height: auto; /* This will maintain the image's aspect ratio as it scales */
   margin: 20px; 
-  margin-top: 10%;
-  margin-bottom: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .tut-button {
