@@ -1,30 +1,56 @@
 analysis_page <- function(id) {
   ns <- NS(id)
-  div(
-    titlePanel("Analysis Page"),
-    p("Final Cash: ", textOutput(ns("cashValue"))),
-    p("Final Emissions: ", textOutput(ns("emissionsValue"))),
-    p("Final Score: ", textOutput(ns("finalScore"))),
-    bsCollapse(
-      bsCollapsePanel(
-        "Game Summary",
-        plotOutput(ns("summaryPlot"), height = "400px")
+
+  tags$div(
+    class = "analysis-page",
+    fluidRow(
+      column(
+        8,
+        tags$div(
+          class = "analysis-div",
+          bsCollapse(
+            bsCollapsePanel(
+              "Game Summary",
+              plotOutput(ns("summaryPlot"), height = "400px")
+            ),
+            bsCollapsePanel(
+              "Battery Utilisation",
+              plotOutput(ns("energyPlot"), height = "400px")
+            ),
+            bsCollapsePanel(
+              "Production Line Analysis",
+              selectInput(ns("view_select"), "View:",
+                choices = c("Cash Generated", "Emissions Generated", "Solar Consumption"),
+                selected = "Cash Generated"
+              ),
+              plotOutput(ns("combinedPlot"), height = "400px")
+            )
+          )
+        )
       ),
-      bsCollapsePanel(
-        "Battery Utilisation",
-        plotOutput(ns("energyPlot"), height = "400px")
-      ),
-      bsCollapsePanel(
-        "Production Line Analysis",
-        selectInput(ns("view_select"), "View:",
-          choices = c("Cash Generated", "Emissions Generated", "Solar Consumption"),
-          selected = "Cash Generated"
+      column(
+        4,
+        fluidRow(
+          column(
+            12,
+            tags$div(
+              class = "score-div",
+              titlePanel("Analysis Page"),
+              p("Final Cash: ", textOutput(ns("cashValue"))),
+              p("Final Emissions: ", textOutput(ns("emissionsValue"))),
+              p("Final Score: ", textOutput(ns("finalScore")))
+            )
+          )
         ),
-        plotOutput(ns("combinedPlot"), height = "400px")
+        fluidRow(
+          tags$div(
+            class = "nav-div",
+            actionButton(inputId = ns("back"), label = "Back to Home", class = "general-button"),
+            actionButton(inputId = ns("publish"), label = "Publish Score", class = "general-button")
+          )
+        )
       )
-    ),
-    actionButton(inputId = ns("back"), label = "Back to Home", class = "general-button"),
-    actionButton(inputId = ns("publish"), label = "Publish Score", class = "general-button"),
+    )
   )
 }
 
@@ -46,7 +72,7 @@ analysis_server <- function(id, gameData) {
           game_state_df <- data$game_state
           final_cash <- data$final_cash
           final_emissions <- data$final_emissions
-          final_score <- ifelse(final_emissions>limit,final_cash-5*(final_emissions-limit),final_cash+10*(limit-final_emissions))
+          final_score <- ifelse(final_emissions > limit, final_cash - 5 * (final_emissions - limit), final_cash + 10 * (limit - final_emissions))
 
           # Calculate cumulative values
           game_state_df$CumulativeSolarGained <- cumsum(game_state_df$SolarGained)
