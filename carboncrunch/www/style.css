@@ -14,7 +14,7 @@
 body {
   font-family: gameplay;
   background-color: #243644;
-  color: red;
+  color: white;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -33,16 +33,37 @@ body::-webkit-scrollbar {
 }
 
 .exit-div {
-  margin: auto;
+  margin: 5% 30% 0 0;
   align-items: center;
   text-align: center;
-  line-height: 120px;
+}
+
+.exit-button {
+  background: url("X.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 50%; /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.exit-button:hover {
+  cursor: pointer;
+  background: url("X_h.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
 
 .pl-div {
   margin: auto;
   align-items: center;
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
 }
 
 .pl-div .shiny-text-output.shiny-bound-output {
@@ -57,12 +78,47 @@ body::-webkit-scrollbar {
   margin: auto;
   align-items: center;
   text-align: center;
+  background-image: url("floor.png");
+  background-size: 100% 100%; 
+  background-repeat: no-repeat; /* This line prevents the image from repeating */
+  background-position: center; /* This line centers the image in the div */
+  padding-top: 6%; /* Adjust the size as needed */
+  padding-right: 6%;
+  padding-bottom: 2%;
+}
+
+.factory-floor .row {
+  margin: 20px 0; /* Adjust the size as needed */
+  display: flex;
+  align-items: stretch;
+  text-align: center;
+}
+
+.factory-floor .row [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+.factory-floor .row [class*="col-"] .form-group.shiny-input-container.shiny-input-container-inline {
+  margin: auto;
 }
 
 .side-panel {
   margin: auto;
   align-items: center;
   text-align: center;
+}
+
+.board-div {
+  margin: 2%;
+  align-items: center;
+  text-align: center;
+  background-image: url("board.png");
+  background-size: 100% 100%; 
+  background-repeat: no-repeat; /* This line prevents the image from repeating */
+  background-position: center; /* This line centers the image in the div */
+  padding: 5%;
 }
             
 .title-text {
@@ -178,14 +234,14 @@ body::-webkit-scrollbar {
   background-size: contain; 
   background-color: transparent;
   border: none;
-  width: 500px; /* adjust width and height according to your image dimensions */
-  height: 100px;
+  width: 70%; /* adjust width and height according to your image dimensions */
+  height: 120px;
   padding: 0;
-  margin: 10px 0%;
+  margin: 0 12% 0 0;
 }
 
 .battery5:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   background-color: transparent;
   cursor: pointer;
   outline: none;
@@ -197,14 +253,14 @@ body::-webkit-scrollbar {
   background-size: contain; 
   background-color: transparent;
   border: none;
-  width: 500px; /* adjust width and height according to your image dimensions */
-  height: 100px;
+  width: 70%; /* adjust width and height according to your image dimensions */
+  height: 120px;
   padding: 0;
-  margin: 10px 0%;
+  margin: 0 12% 0 0;
 }
 
 .battery4:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   background-color: transparent;
   cursor: pointer;
   outline: none;
@@ -216,14 +272,14 @@ body::-webkit-scrollbar {
   background-size: contain; 
   background-color: transparent;
   border: none;
-  width: 500px; /* adjust width and height according to your image dimensions */
-  height: 100px;
+  width: 70%; /* adjust width and height according to your image dimensions */
+  height: 120px;
   padding: 0;
-  margin: 10px 0%;
+  margin: 0 12% 0 0;
 }
 
 .battery3:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   background-color: transparent;
   cursor: pointer;
   outline: none;
@@ -235,14 +291,14 @@ body::-webkit-scrollbar {
   background-size: contain; 
   background-color: transparent;
   border: none;
-  width: 500px; /* adjust width and height according to your image dimensions */
-  height: 100px;
+  width: 70%; /* adjust width and height according to your image dimensions */
+  height: 120px;
   padding: 0;
-  margin: 10px 0%;
+  margin: 0 12% 0 0;
 }
 
 .battery2:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   background-color: transparent;
   cursor: pointer;
   outline: none;
@@ -254,14 +310,14 @@ body::-webkit-scrollbar {
   background-size: contain; 
   background-color: transparent;
   border: none;
-  width: 500px; /* adjust width and height according to your image dimensions */
-  height: 100px;
+  width: 70%; /* adjust width and height according to your image dimensions */
+  height: 120px;
   padding: 0;
-  margin: 10px 0%;
+  margin: 0 12% 0 0;
 }
 
 .battery1:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   background-color: transparent;
   cursor: pointer;
   outline: none;
@@ -273,18 +329,144 @@ body::-webkit-scrollbar {
   background-size: contain; 
   background-color: transparent;
   border: none;
-  width: 500px; /* adjust width and height according to your image dimensions */
-  height: 100px;
+  width: 70%; /* adjust width and height according to your image dimensions */
+  height: 120px;
   padding: 0;
-  margin: 10px 0%;
+  margin: 0 12% 0 0;
 }
 
 .battery0:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   background-color: transparent;
   cursor: pointer;
   outline: none;
   border: none;
+}
+
+.pl1-button {
+  background: url("pl_line1.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 100%; /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl1-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.pl2-button {
+  background: url("pl_line2.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 100%; /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl2-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.pl3-button {
+  background: url("pl_line3.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 100%; /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl3-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.pl4-button {
+  background: url("pl_line4.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 100%; /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl4-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.pl5-button {
+  background: url("pl_line5.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 100%; /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl5-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.nextday-button {
+  background: url("next.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 50%; /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.nextday-button:hover {
+  cursor: pointer;
+  background: url("next_h.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.nextday-button:disabled {
+  background: url("next_d.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 50%; /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
 }
 
 .modal-content {
