@@ -1,120 +1,29 @@
 
 game_page <- function(id) {
   ns <- NS(id)
-  
-  # Custom CSS for setting the background image
-  background_image_css <- "
-    .game-page {
-      background-image: url('background.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
-  "
   div(class = "game-page",
-      fluidRow(
-        column(6,
-               align="center",
-               p(class = "big-text")),
-        column(4),
-        column(2,
-               align="center",
-               PrimaryButton.shinyInput(
-                 inputId = ns("back"),
-                 class=".btn",
-                 text="X"
-               ))
-      ),
-      fluidRow(
-        column(8,
-               align="center",
-               ### Battery Indicator
-               div(class="battery-div",
-                   uiOutput(ns("battery")),
-                   textOutput(ns("battery_value")),
-                   textOutput(ns("productionNerfWarning"))
+    fluidRow(
+      column(6,
+             align="center",
+             p(class = "big-text", "Carbon Crunch Game!")),
+      column(4),
+      column(2,
+             align="center",
+             PrimaryButton.shinyInput(
+               inputId = ns("back"),
+               class=".btn",
+               text="X"
+             ))
+    ),
+    fluidRow(
+      column(8,
+             align="center",
+             ### Battery Indicator
+             div(class="battery-div",
+               uiOutput(ns("battery")),
+               textOutput(ns("battery_value")),
+               textOutput(ns("productionNerfWarning"))
                ),
-<<<<<<< HEAD
-               
-               ### Factory Floor
-               div(class = "prodline-div",
-                   fluidRow(
-                     column(12,
-                            uiOutput(ns("PL1")),
-                            img(src = "line1.png", height = "90px", width = "450px", style = "margin-right: 20px;"),
-                            textOutput(ns("PL1_text")),
-                            switchInput(inputId = ns("toggle1"), 
-                                        offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
-                                        onLabel = icon("oil-well"),
-                                        offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
-                                        onStatus = "danger",
-                                        value = TRUE,
-                                        inline = TRUE),
-                     ),
-                     column(12,
-                            uiOutput(ns("PL2")),
-                            img(src = "line2.png", height = "90px", width = "450px", style = "margin-right: 20px;"),
-                            textOutput(ns("PL2_text")),
-                            switchInput(inputId = ns("toggle2"), 
-                                        offLabel = icon("sun","fa-solid"), 
-                                        onLabel = icon("oil-well"),
-                                        offStatus = "success", 
-                                        onStatus = "danger",
-                                        value = TRUE,
-                                        inline = TRUE),
-                     ),
-                     column(12,
-                            uiOutput(ns("PL3")),
-                            img(src = "line3.png", height = "90px", width = "450px", style = "margin-right: 20px;"),
-                            textOutput(ns("PL3_text")),
-                            switchInput(inputId = ns("toggle3"), 
-                                        offLabel = icon("sun","fa-solid"), 
-                                        onLabel = icon("oil-well"),
-                                        offStatus = "success", 
-                                        onStatus = "danger",
-                                        value = TRUE,
-                                        inline = TRUE),
-                     ),
-                     column(12,
-                            uiOutput(ns("PL4")),
-                            img(src = "line4.png", height = "90px", width = "450px", style = "margin-right: 20px;"),
-                            textOutput(ns("PL4_text")),
-                            switchInput(inputId = ns("toggle4"), 
-                                        offLabel = icon("sun","fa-solid"), 
-                                        onLabel = icon("oil-well"),
-                                        offStatus = "success", 
-                                        onStatus = "danger",
-                                        value = FALSE,
-                                        inline = TRUE),
-                     ),
-                     column(12,
-                            uiOutput(ns("PL5")),
-                            img(src = "line5.png", height = "90px", width = "450px", style = "margin-right: 20px;"),
-                            textOutput(ns("PL5_text")),
-                            switchInput(inputId = ns("toggle5"), 
-                                        offLabel = icon("sun","fa-solid"), 
-                                        onLabel = icon("oil-well"),
-                                        offStatus = "success", 
-                                        onStatus = "danger",
-                                        value = FALSE,
-                                        inline = TRUE),
-                     ),
-                   ),
-               )),
-        
-        ### Side panel (day indicator and dashboard)
-        column(4,
-               align="center",
-               ### Panel
-               div(class = "stats",
-                   textOutput(ns("day")),
-                   textOutput(ns("cash")),
-                   textOutput(ns("emissions")),
-                   uiOutput(ns("selected_component")),
-                   uiOutput(ns("next_day_button"))
-               ))
-      )
-=======
              
              ### Factory Floor
              div(class = "prodline-div",
@@ -199,7 +108,6 @@ game_page <- function(id) {
                  uiOutput(ns("next_day_button"))
              ))
     )
->>>>>>> dbc40283641c9f13534f509441c7d27827d4b256
   )
 }
 
@@ -643,24 +551,13 @@ game_server <- function(id, gameData) {
       })
       
       output$PL1 <- renderUI({
-        if (input$toggle1 == FALSE) {
-          tagList(
-            div(class = "custom-button-container",
-                actionButton(inputId = ns("PL1"), class = "custom-button",
-                             tag$img(src = "line1.png", alt = "Production Line 1")),
-                div(class = "text-toggle-container",
-                    div(paste0("Line 1 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                    switchInput(inputId = ns("toggle1"),
-                                offLabel = icon("sun", "fa-solid"),
-                                onLabel = icon("oil-well"),
-                                offStatus = "success",
-                                onStatus = "danger",
-                                value = TRUE,
-                                inline = TRUE)
-                )
-            )
+        if (input$toggle1==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL1"),
+            class=".btn",
+            text=paste0("Line 1 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$solar_consumption, " Units")
           )
-          
         } else {
           CompoundButton.shinyInput(
             inputId = ns("PL1"),
@@ -672,117 +569,73 @@ game_server <- function(id, gameData) {
       })
       
       output$PL2 <- renderUI({
-        if (input$toggle2 == FALSE) {
-          tagList(
-            div(class = "custom-button-container",
-                actionButton(inputId = ns("PL2"), class = "custom-button",
-                             tag$img(src = "line2.png", alt = "Production Line 2")),
-                div(class = "text-toggle-container",
-                    div(paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                    switchInput(inputId = ns("toggle2"),
-                                offLabel = icon("sun", "fa-solid"),
-                                onLabel = icon("oil-well"),
-                                offStatus = "success",
-                                onStatus = "danger",
-                                value = TRUE,
-                                inline = TRUE)
-                )
-            )
+        if (input$toggle2==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL2"),
+            class=".btn",
+            text=paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$solar_consumption, " Units")
           )
-          
         } else {
           CompoundButton.shinyInput(
             inputId = ns("PL2"),
             class=".btn",
-            text=paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated,")"),
-            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$emissions, " CO2e")
+            text=paste0("Line 2 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2],]$emissions, " CO2e")
           )
         }
       })
       
       output$PL3 <- renderUI({
-        if (input$toggle3 == FALSE) {
-          tagList(
-            div(class = "custom-button-container",
-                actionButton(inputId = ns("PL3"), class = "custom-button",
-                             tag$img(src = "line3.png", alt = "Production Line 3")),
-                div(class = "text-toggle-container",
-                    div(paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                    switchInput(inputId = ns("toggle3"),
-                                offLabel = icon("sun", "fa-solid"),
-                                onLabel = icon("oil-well"),
-                                offStatus = "success",
-                                onStatus = "danger",
-                                value = TRUE,
-                                inline = TRUE)
-                )
-            )
-          ) 
-          
+        if (input$toggle3==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL3"),
+            class=".btn",
+            text=paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$solar_consumption, " Units")
+          )
         } else {
           CompoundButton.shinyInput(
             inputId = ns("PL3"),
             class=".btn",
-            text=paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated,")"),
-            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$emissions, " CO2e")
+            text=paste0("Line 3 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3],]$emissions, " CO2e")
           )
         }
       })
       
       output$PL4 <- renderUI({
-        if (input$toggle4 == FALSE) {
-          tagList(
-            div(class = "custom-button-container",
-                actionButton(inputId = ns("PL4"), class = "custom-button",
-                             tag$img(src = "line4.png", alt = "Production Line 4")),
-                div(class = "text-toggle-container",
-                    div(paste0("Line 4 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                    switchInput(inputId = ns("toggle4"),
-                                offLabel = icon("sun", "fa-solid"),
-                                onLabel = icon("oil-well"),
-                                offStatus = "success",
-                                onStatus = "danger",
-                                value = TRUE,
-                                inline = TRUE)
-                )
-            )
-          ) 
-          
+        if (input$toggle4==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL4"),
+            class=".btn",
+            text=paste0("Line 4 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$solar_consumption, " Units")
+          )
         } else {
           CompoundButton.shinyInput(
             inputId = ns("PL4"),
             class=".btn",
-            text=paste0("Line 4 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated,")"),
-            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$emissions, " CO2e")
+            text=paste0("Line 4 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1],]$emissions, " CO2e")
           )
         }
       })
       
       output$PL5 <- renderUI({
-        if (input$toggle5 == FALSE) {
-          tagList(
-            div(class = "custom-button-container",
-                actionButton(inputId = ns("PL5"), class = "custom-button",
-                             tag$img(src = "line5.png", alt = "Production Line 5")),
-                div(class = "text-toggle-container",
-                    div(paste0("Line 5 (+$", pl_df_typeA[pl_df_typeA$level == value$pl_levelsA[1],]$cash_generated, ")")),
-                    switchInput(inputId = ns("toggle5"),
-                                offLabel = icon("sun", "fa-solid"),
-                                onLabel = icon("oil-well"),
-                                offStatus = "success",
-                                onStatus = "danger",
-                                value = TRUE,
-                                inline = TRUE)
-                )
-            )
-          )  
-          
+        if (input$toggle5==FALSE) {
+          CompoundButton.shinyInput(
+            inputId = ns("PL5"),
+            class=".btn",
+            text=paste0("Line 5 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$cash_generated,")"),
+            secondaryText=paste0("-",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$solar_consumption, " Units")
+          )
         } else {
           CompoundButton.shinyInput(
             inputId = ns("PL5"),
             class=".btn",
-            text=paste0("Line 5 (+$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$cash_generated,")"),
-            secondaryText=paste0("+",pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1],]$emissions, " CO2e")
+            text=paste0("Line 5 (+$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$cash_generated,")"),
+            secondaryText=paste0("+",pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2],]$emissions, " CO2e")
           )
         }
       })
@@ -892,7 +745,7 @@ game_server <- function(id, gameData) {
       })
       
       output$next_day_button <- renderUI({
-        if (values$day < 30 && battery_is_sufficient()) {
+        if (values$day < 30 && battery_is_sufficient()) { 
           PrimaryButton.shinyInput(
             inputId = ns("next_day"),
             class=".btn",
