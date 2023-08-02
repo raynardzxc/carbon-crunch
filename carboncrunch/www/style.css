@@ -573,3 +573,36 @@ body::-webkit-scrollbar {
 .custom-dialog .ms-Dialog-title {
   color: black;
 }
+
+.score-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.nav-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.btn {
+  cursor: url('l_cursors/l_size1.cur'),auto;
+}
+
+.selectize-dropdown,
+.selectize-dropdown.form-control, 
+.selectize-control.single .selectize-input, 
+.selectize-control.single .selectize-input input {
+  cursor: url('l_cursors/l_size1.cur'),auto;
+}
+
+a:-webkit-any-link {
+  cursor: url('l_cursors/l_size1.cur'),auto;
+}
+
+select {
+  cursor: url('l_cursors/l_size1.cur'),auto;
+}
