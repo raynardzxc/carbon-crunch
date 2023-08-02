@@ -3,112 +3,126 @@ game_page <- function(id) {
   ns <- NS(id)
   div(class = "game-page",
     fluidRow(
-      column(6,
+      column(8,
              align="center",
-             p(class = "big-text", "Carbon Crunch Game!")),
-      column(4),
-      column(2,
+             ### Battery Indicator
+             uiOutput(ns("battery")),
+             textOutput(ns("battery_value")),
+             textOutput(ns("productionNerfWarning"))
+             ),
+      column(4,
              align="center",
              PrimaryButton.shinyInput(
                inputId = ns("back"),
                class=".btn",
                text="X"
-             ))
+             )
+             )
     ),
     fluidRow(
       column(8,
              align="center",
-             ### Battery Indicator
-             div(class="battery-div",
-               uiOutput(ns("battery")),
-               textOutput(ns("battery_value")),
-               textOutput(ns("productionNerfWarning"))
-               ),
-             
              ### Factory Floor
-             div(class = "prodline-div",
-                 fluidRow(
-                   column(12,
-                          textOutput(ns("PL1_text1")),
-                          textOutput(ns("PL1_text2")),
-                          textOutput(ns("PL1_text3")),
-                          uiOutput(ns("PL1")),
-                          switchInput(inputId = ns("toggle1"), 
-                                      offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
-                                      onLabel = icon("oil-well"),
-                                      offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
-                                      onStatus = "danger",
-                                      value = TRUE,
-                                      inline = TRUE),
-                   ),
-                   column(12,
-                          textOutput(ns("PL2_text1")),
-                          textOutput(ns("PL2_text2")),
-                          textOutput(ns("PL2_text3")),
-                          uiOutput(ns("PL2")),
-                          switchInput(inputId = ns("toggle2"), 
-                                      offLabel = icon("sun","fa-solid"), 
-                                      onLabel = icon("oil-well"),
-                                      offStatus = "success", 
-                                      onStatus = "danger",
-                                      value = TRUE,
-                                      inline = TRUE),
-                   ),
-                   column(12,
-                          textOutput(ns("PL3_text1")),
-                          textOutput(ns("PL3_text2")),
-                          textOutput(ns("PL3_text3")),
-                          uiOutput(ns("PL3")),
-                          switchInput(inputId = ns("toggle3"), 
-                                      offLabel = icon("sun","fa-solid"), 
-                                      onLabel = icon("oil-well"),
-                                      offStatus = "success", 
-                                      onStatus = "danger",
-                                      value = TRUE,
-                                      inline = TRUE),
-                   ),
-                   column(12,
-                          textOutput(ns("PL4_text1")),
-                          textOutput(ns("PL4_text2")),
-                          textOutput(ns("PL4_text3")),
-                          uiOutput(ns("PL4")),
-                          switchInput(inputId = ns("toggle4"), 
-                                      offLabel = icon("sun","fa-solid"), 
-                                      onLabel = icon("oil-well"),
-                                      offStatus = "success", 
-                                      onStatus = "danger",
-                                      value = FALSE,
-                                      inline = TRUE),
-                   ),
-                   column(12,
-                          textOutput(ns("PL5_text1")),
-                          textOutput(ns("PL5_text2")),
-                          textOutput(ns("PL5_text3")),
-                          uiOutput(ns("PL5")),
-                          switchInput(inputId = ns("toggle5"), 
-                                      offLabel = icon("sun","fa-solid"), 
-                                      onLabel = icon("oil-well"),
-                                      offStatus = "success", 
-                                      onStatus = "danger",
-                                      value = FALSE,
-                                      inline = TRUE),
-                   ),
-                 ),
-             )),
+             fluidRow(
+               column(4,
+                      textOutput(ns("PL1_text1")),
+                      textOutput(ns("PL1_text2")),
+                      textOutput(ns("PL1_text3"))),
+               column(6,
+                      uiOutput(ns("PL1"))),
+               column(2,
+                      switchInput(inputId = ns("toggle1"), 
+                                  offLabel = icon("sun","fa-solid"), ## https://fontawesome.com/icons we can only use free icons from here
+                                  onLabel = icon("oil-well"),
+                                  offStatus = "success", ## idk why the colours are named like that. idk if there are other colours
+                                  onStatus = "danger",
+                                  value = TRUE,
+                                  inline = TRUE))
+             ),
+             fluidRow(
+               column(4,
+                      textOutput(ns("PL2_text1")),
+                      textOutput(ns("PL2_text2")),
+                      textOutput(ns("PL2_text3"))),
+               column(6,
+                      uiOutput(ns("PL2"))),
+               column(2,
+                      switchInput(inputId = ns("toggle2"), 
+                                  offLabel = icon("sun","fa-solid"), 
+                                  onLabel = icon("oil-well"),
+                                  offStatus = "success", 
+                                  onStatus = "danger",
+                                  value = TRUE,
+                                  inline = TRUE))
+             ),
+             fluidRow(
+               column(4,
+                      textOutput(ns("PL3_text1")),
+                      textOutput(ns("PL3_text2")),
+                      textOutput(ns("PL3_text3"))),
+               column(6,
+                      uiOutput(ns("PL3"))),
+               column(2,
+                      switchInput(inputId = ns("toggle3"), 
+                                  offLabel = icon("sun","fa-solid"), 
+                                  onLabel = icon("oil-well"),
+                                  offStatus = "success", 
+                                  onStatus = "danger",
+                                  value = TRUE,
+                                  inline = TRUE))
+             ),
+             fluidRow(
+               column(4,
+                      textOutput(ns("PL4_text1")),
+                      textOutput(ns("PL4_text2")),
+                      textOutput(ns("PL4_text3"))),
+               column(6,
+                      uiOutput(ns("PL4"))),
+               column(2,
+                      switchInput(inputId = ns("toggle4"), 
+                                  offLabel = icon("sun","fa-solid"), 
+                                  onLabel = icon("oil-well"),
+                                  offStatus = "success", 
+                                  onStatus = "danger",
+                                  value = FALSE,
+                                  inline = TRUE))
+             ),
+             fluidRow(
+               column(4,
+                      textOutput(ns("PL5_text1")),
+                      textOutput(ns("PL5_text2")),
+                      textOutput(ns("PL5_text3"))),
+               column(6,
+                      uiOutput(ns("PL5"))),
+               column(2,
+                      switchInput(inputId = ns("toggle5"), 
+                                  offLabel = icon("sun","fa-solid"), 
+                                  onLabel = icon("oil-well"),
+                                  offStatus = "success", 
+                                  onStatus = "danger",
+                                  value = FALSE,
+                                  inline = TRUE))
+             )
+            ),
       
       ### Side panel (day indicator and dashboard)
       column(4,
              align="center",
              ### Panel
-             div(class = "stats",
-                 textOutput(ns("day")),
-                 textOutput(ns("cash")),
-                 textOutput(ns("emissions")),
-                 uiOutput(ns("selected_component")),
-                 uiOutput(ns("next_day_button"))
-             ))
+             fluidRow(
+               textOutput(ns("day")),
+               textOutput(ns("cash")),
+               textOutput(ns("emissions"))
+             ),
+             fluidRow(
+               uiOutput(ns("selected_component"))
+             ),
+             fluidRow(
+               uiOutput(ns("next_day_button"))
+             )
+            )
     )
-  )
+    )
 }
 
 game_server <- function(id, gameData) {
