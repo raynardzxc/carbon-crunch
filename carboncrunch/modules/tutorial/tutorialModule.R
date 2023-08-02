@@ -67,10 +67,7 @@ tutorial_page <- function(id) {
       
       div(
         style = "text-align: center;",
-        PrimaryButton.shinyInput(
-          ns("back"),
-          text = "Back to Home"
-        )
+        actionButton(ns("back"), "Back", class = "final-button")
       )
     
   )

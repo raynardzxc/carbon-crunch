@@ -6,11 +6,7 @@ leaderboard_page <- function(id) {
     style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;", # Center the content vertically
     div(style = "text-align: center; margin-bottom: 20px;", h1("Leaderboard")), # Center the "Leaderboard" text
     div(style = "text-align: center; margin-bottom: 20px;", tableOutput(ns("leaderboard_table"))), # Center the leaderboard table
-    PrimaryButton.shinyInput(
-      ns("back"),
-      class = "general-button",
-      text = "Back to Home"
-    )
+    actionButton(ns("back"), "Back", class = "final-button")
   )
 }
 

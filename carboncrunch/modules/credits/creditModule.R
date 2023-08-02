@@ -38,11 +38,7 @@ credit_page <- function(id) {
     h3(class ="special-thanks", "Special thanks to Prof Peter Jackson, Prof Duan Lingjie and Prof Francisco Benita for their guidance and support in this project."),
     div( # Center the back button
       style = "text-align: center;",
-      PrimaryButton.shinyInput(
-        ns("back"),
-        class = ".btn",
-        text = "Back to Home"
-      )
+      actionButton(ns("back"), "Back", class = "final-button")
     )
   )
 }
