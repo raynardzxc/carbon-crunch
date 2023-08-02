@@ -10,7 +10,7 @@ publish_page <- function(id) {
     uiOutput(ns("leaderBoard")),
     uiOutput(ns("publishControls")),
     uiOutput(ns("logregControls")),
-    actionButton(ns("back"), label = "Back", class = "general-button")
+    actionButton(ns("back"), label = "Back", class = "final-button")
   )
 }
 
@@ -121,8 +121,8 @@ publish_server <- function(id, gameData) {
       output$logregControls <- renderUI({
         if (is.null(vals$playername)) ## player have not logged in yet
           tagList(
-            actionButton(inputId = ns("register"), "Register", class = "general-button"),
-            actionButton(inputId = ns("login"), "Login", class = "general-button")
+            actionButton(inputId = ns("register"), "Register", class = "final-button"),
+            actionButton(inputId = ns("login"), "Login", class = "final-button")
           )
         else 
           paste0("Logged in as: ",vals$playername)

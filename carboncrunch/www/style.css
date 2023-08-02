@@ -3,11 +3,13 @@
     src: url('Gameplay.ttf') format('truetype'); /*URL to font*/
 }
 
+.final-button {
+  margin: 10px;
+}
+
 .tut_div {
   font-family: 'arial'; /* Change font back to default for readability*/
 }
-
-
 
 .credit-div {
   text-align: center;

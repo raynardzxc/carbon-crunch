@@ -3,6 +3,8 @@ credit_page <- function(id) {
   div(
     class = "credit-div",
     h2(class= "credit-title", "Credits"),
+    h3("raynard chai insert here"),
+    
     h3("Assets"),
     fluidRow(
       column(12, 
@@ -25,7 +27,15 @@ credit_page <- function(id) {
              a("https://www.urbanfonts.com/fonts/Gameplay.font")
       ),
     ),
-    h3(class ="special-thanks", "Special thanks to Prof Jackson, Prof Lingjie and Prof Benita for their guidance and support in this project."),
+    h3("Cursor"),
+    fluidRow(
+      column(12, 
+             p("Cursor - Chee. (n.d.). Leaf Set."),
+             a("https://www.cursors-4u.com/cursor/2011/12/04/leaf-set.html")
+      ),
+    ),
+    
+    h3(class ="special-thanks", "Special thanks to Prof Peter Jackson, Prof Duan Lingjie and Prof Francisco Benita for their guidance and support in this project."),
     div( # Center the back button
       style = "text-align: center;",
       PrimaryButton.shinyInput(
