@@ -13,6 +13,7 @@
 
 body {
   font-family: gameplay;
+  font-size: 12px;
   background-color: #243644;
   color: white;
   margin: 0;
@@ -20,6 +21,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: url('l_cursors/l_arrow.cur'),auto;
 }
 
 body::-webkit-scrollbar {
@@ -30,6 +32,27 @@ body::-webkit-scrollbar {
   margin: auto;
   align-items: center;
   text-align: center;
+}
+
+.stats-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+#game-battery_value {
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+#game-productionNerfWarning {
+  color: red;
 }
 
 .exit-div {
@@ -50,7 +73,7 @@ body::-webkit-scrollbar {
 }
 
 .exit-button:hover {
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   background: url("X_h.png") no-repeat center;
   background-size: contain; 
   background-color: transparent;
@@ -68,7 +91,7 @@ body::-webkit-scrollbar {
 
 .pl-div .shiny-text-output.shiny-bound-output {
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   margin-left: 30px;
   text-align: center;
   white-space: nowrap;
@@ -85,6 +108,7 @@ body::-webkit-scrollbar {
   padding-top: 6%; /* Adjust the size as needed */
   padding-right: 6%;
   padding-bottom: 2%;
+  cursor: url('l_cursors/l_arrow.cur'),auto;
 }
 
 .factory-floor .row {
@@ -104,8 +128,17 @@ body::-webkit-scrollbar {
   margin: auto;
 }
 
+.bootstrap-switch-handle-on.bootstrap-switch-danger,
+.bootstrap-switch-handle-off.bootstrap-switch-success,
+.bootstrap-switch-label,
+.bootstrap-switch-container {
+  cursor: url('l_cursors/l_size1.cur'),auto;
+}
+
+
+
 .side-panel {
-  margin: auto;
+  margin-right: 2%;
   align-items: center;
   text-align: center;
 }
@@ -119,6 +152,16 @@ body::-webkit-scrollbar {
   background-repeat: no-repeat; /* This line prevents the image from repeating */
   background-position: center; /* This line centers the image in the div */
   padding: 5%;
+}
+
+#game-upgrade_PL1,
+#game-upgrade_PL2,
+#game-upgrade_PL3,
+#game-upgrade_PL4,
+#game-upgrade_PL5,
+#game-upgrade_Battery,
+#game-cancel_upgrade {
+  margin: 20px 10px 5px 0;
 }
             
 .title-text {
@@ -141,7 +184,7 @@ body::-webkit-scrollbar {
 }
 
 .tut-button:hover {
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   background: url("tutorial_h.png") no-repeat center;
   background-size: contain; 
   background-color: transparent;
@@ -161,7 +204,7 @@ body::-webkit-scrollbar {
 }
 
 .play-button:hover {
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   background: url("play_h.png") no-repeat center;
   background-size: contain; 
   background-color: transparent;
@@ -181,7 +224,7 @@ body::-webkit-scrollbar {
 }
 
 .lb-button:hover {
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   background: url("leaderboard_h.png") no-repeat center;
   background-size: contain; 
   background-color: transparent;
@@ -201,7 +244,7 @@ body::-webkit-scrollbar {
 }
 
 .credit-button:hover {
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   background: url("credits_h.png") no-repeat center;
   background-size: contain; 
   background-color: transparent;
@@ -221,7 +264,7 @@ body::-webkit-scrollbar {
 }
 
 .quit-button:hover {
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   background: url("quit_h.png") no-repeat center;
   background-size: contain; 
   background-color: transparent;
@@ -243,7 +286,7 @@ body::-webkit-scrollbar {
 .battery5:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -262,7 +305,7 @@ body::-webkit-scrollbar {
 .battery4:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -281,7 +324,7 @@ body::-webkit-scrollbar {
 .battery3:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -300,7 +343,7 @@ body::-webkit-scrollbar {
 .battery2:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -319,7 +362,7 @@ body::-webkit-scrollbar {
 .battery1:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -338,7 +381,7 @@ body::-webkit-scrollbar {
 .battery0:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -357,7 +400,7 @@ body::-webkit-scrollbar {
 .pl1-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -376,7 +419,7 @@ body::-webkit-scrollbar {
 .pl2-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -395,7 +438,7 @@ body::-webkit-scrollbar {
 .pl3-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -414,7 +457,7 @@ body::-webkit-scrollbar {
 .pl4-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -433,7 +476,7 @@ body::-webkit-scrollbar {
 .pl5-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   outline: none;
   border: none;
 }
@@ -450,7 +493,7 @@ body::-webkit-scrollbar {
 }
 
 .nextday-button:hover {
-  cursor: pointer;
+  cursor: url('l_cursors/l_size1.cur'),auto;
   background: url("next_h.png") no-repeat center;
   background-size: contain; 
   background-color: transparent;
@@ -467,6 +510,26 @@ body::-webkit-scrollbar {
   height: 70px;
   padding: 0;
   margin: 10px 0%;
+}
+
+.finish-button {
+  background: url("finish.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  border: none;
+  width: 50%; /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.finish-button:hover {
+  cursor: url('l_cursors/l_size1.cur'),auto;
+  background: url("finish_h.png") no-repeat center;
+  background-size: contain; 
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
 
 .modal-content {

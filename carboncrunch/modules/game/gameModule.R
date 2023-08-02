@@ -414,11 +414,11 @@ game_server <- function(id, gameData) {
             "<tr>",
             "<th>", "", "</th>",
             "<th>", "Current", "</th>",
-            "<th>", "Next Level", "</th>",
+            "<th>", "Next", "</th>",
             "<th>", "Change", "</th>",
             "</tr>",
             "<tr>",
-            "<td>", "Capacity: ", "</td>",
+            "<td>", "Capacity", "</td>",
             "<td>", cur_battery_stats$capacity, "</td>",
             "<td>", if (!is.null(next_battery_stats)) {
               next_battery_stats$capacity
@@ -434,8 +434,10 @@ game_server <- function(id, gameData) {
             if (!is.null(next_battery_stats)) {
               paste0(
                 "<tr>",
-                "<td>", "Upgrade Cost: ", "</td>",
-                "<td colspan='3'>", next_battery_stats$cost, "</td>",
+                "<td>", "Upgrade Cost", "</td>",
+                "<th>", "", "</th>",
+                "<td>", next_battery_stats$cost, "</td>",
+                "<th>", "", "</th>",
                 "</tr>"
               )
             }
@@ -487,11 +489,11 @@ game_server <- function(id, gameData) {
             "<tr>",
             "<th>", "", "</th>",
             "<th>", "Current", "</th>",
-            "<th>", "Next Level", "</th>",
+            "<th>", "Next", "</th>",
             "<th>", "Change", "</th>",
             "</tr>",
             "<tr>",
-            "<td>", "Cash Generated: ", "</td>",
+            "<td>", "Cash Generated", "</td>",
             "<td>", cur_pl_stats$cash_generated, "</td>",
             "<td>", if (!is.null(next_pl_stats)) {
               next_pl_stats$cash_generated
@@ -505,7 +507,7 @@ game_server <- function(id, gameData) {
             }, "</td>",
             "</tr>",
             "<tr>",
-            "<td>", "Emissions: ", "</td>",
+            "<td>", "Emissions", "</td>",
             "<td>", cur_pl_stats$emissions, "</td>",
             "<td>", if (!is.null(next_pl_stats)) {
               next_pl_stats$emissions
@@ -519,7 +521,7 @@ game_server <- function(id, gameData) {
             }, "</td>",
             "</tr>",
             "<tr>",
-            "<td>", "Solar Consumption: ", "</td>",
+            "<td>", "Solar Consumption", "</td>",
             "<td>", cur_pl_stats$solar_consumption, "</td>",
             "<td>", if (!is.null(next_pl_stats)) {
               next_pl_stats$solar_consumption
@@ -535,8 +537,10 @@ game_server <- function(id, gameData) {
             if (!is.null(next_pl_stats)) {
               paste0(
                 "<tr>",
-                "<td>", "Upgrade Cost: ", "</td>",
-                "<td colspan='3'>", next_pl_stats$cost, "</td>",
+                "<td>", "Upgrade Cost", "</td>",
+                "<th>", "", "</th>",
+                "<td>", next_pl_stats$cost, "</td>",
+                "<th>", "", "</th>",
                 "</tr>"
               )
             }
@@ -576,13 +580,13 @@ game_server <- function(id, gameData) {
         paste("Battery:", round_if_numeric(values$battery_value), "/", battery_cap())
       })
       output$day <- renderText({
-        paste("Day:", values$day)
+        paste0("Day:\t", values$day,"/30")
       })
       output$cash <- renderText({
-        paste("Cash ($):", values$cash)
+        paste0("Cash:\t$", values$cash)
       })
       output$emissions <- renderText({
-        paste("Emissions (CO2e):", values$emissions, "/", carbon_limit)
+        paste0("Emissions:\t", values$emissions, "/", carbon_limit," CO2e")
       })
 
       ## Information for Production line 1
@@ -591,7 +595,11 @@ game_server <- function(id, gameData) {
       })
 
       output$PL1_text2 <- renderText({
-        paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1], ]$cash_generated)
+        if (input$toggle1 == FALSE) {
+          paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1], ]$cash_generated*production_nerf_factor())
+        } else {
+          paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1], ]$cash_generated)
+        }
       })
 
       output$PL1_text3 <- renderText({
@@ -608,7 +616,11 @@ game_server <- function(id, gameData) {
       })
 
       output$PL2_text2 <- renderText({
-        paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2], ]$cash_generated)
+        if (input$toggle2 == FALSE) {
+          paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2], ]$cash_generated*production_nerf_factor())
+        } else {
+          paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2], ]$cash_generated)
+        }
       })
 
       output$PL2_text3 <- renderText({
@@ -625,7 +637,11 @@ game_server <- function(id, gameData) {
       })
 
       output$PL3_text2 <- renderText({
-        paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3], ]$cash_generated)
+        if (input$toggle3 == FALSE) {
+          paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3], ]$cash_generated*production_nerf_factor())
+        } else {
+          paste0("Cash: +$", pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3], ]$cash_generated)
+        }
       })
 
       output$PL3_text3 <- renderText({
@@ -642,7 +658,11 @@ game_server <- function(id, gameData) {
       })
 
       output$PL4_text2 <- renderText({
-        paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1], ]$cash_generated)
+        if (input$toggle4 == FALSE) {
+          paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1], ]$cash_generated*production_nerf_factor())
+        } else {
+          paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1], ]$cash_generated)
+        }
       })
 
       output$PL4_text3 <- renderText({
@@ -659,7 +679,11 @@ game_server <- function(id, gameData) {
       })
 
       output$PL5_text2 <- renderText({
-        paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2], ]$cash_generated)
+        if (input$toggle5 == FALSE) {
+          paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2], ]$cash_generated*production_nerf_factor())
+        } else {
+          paste0("Cash: +$", pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2], ]$cash_generated)
+        }
       })
 
       output$PL5_text3 <- renderText({
@@ -838,8 +862,7 @@ game_server <- function(id, gameData) {
         } else {
           PrimaryButton.shinyInput(
             inputId = ns("finish_game"),
-            class = "finish-button",
-            text = "Finish Game"
+            class = "finish-button"
           )
         }
       })
