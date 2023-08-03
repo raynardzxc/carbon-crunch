@@ -389,6 +389,7 @@ game_server <- function(id, gameData) {
       ## FUNCTIONS
 
       resetGame <- function() {
+        values <- reactiveValues()
         values$battery_level <- 1
         values$pl_levelsA <- rep(1, 3)
         values$pl_levelsB <- rep(1, 2)
@@ -396,11 +397,14 @@ game_server <- function(id, gameData) {
         values$cash <- initial_df$cash
         values$emissions <- initial_df$emissions
         values$battery_value <- initial_df$batteryvalue
-        values$sunlight <- rgamma(1, shape = shape, scale = scale) # This should give you a mean of 10 and a variance of 9.
+        values$sunlight <- rgamma(1, shape = shape, scale = scale)
         values$selected_component <- "None"
+        values$game_state_df <- initial_game_state
         values$summary_data <- NULL
+        values$batt_upgrade <- 0
+        values$line_upgrade <- 0
         gameData <- reactiveVal()
-        print("resetGame")
+        # print("resetGame")
       }
 
       generateUI <- function(name) {
@@ -885,7 +889,7 @@ game_server <- function(id, gameData) {
 
       observeEvent(input$battery, {
         values$selected_component <- "Battery"
-        print("Observe Battery Clicked")
+        # print("Observe Battery Clicked")
       })
 
       observeEvent(input$PL1, {
@@ -1195,16 +1199,11 @@ game_server <- function(id, gameData) {
         )
       })
 
-      # observeEvent(input$cancelButton, {
-      #   removeModal()
-      #   print("Cancel back to home dialog")
-      # })
-
       observeEvent(input$confirm_back, {
         resetGame()
         removeModal()
         change_page("/")
-        print("Back to home")
+        # print("Back to home")
       })
     }
   )
