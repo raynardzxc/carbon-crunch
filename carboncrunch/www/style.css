@@ -4,12 +4,18 @@
   /*URL to font*/
 }
 
+@font-face {
+  font-family: 'tutorial';
+  src: url('Munro-2LYe.ttf') format('truetype');
+  /*URL to font*/
+}
+
 .final-button {
   margin: 10px;
 }
 
 .container-fluid {
-  height: 100vh;
+  /*height: 100vh;*/
   display: flex;
   justify-content: center;
   /* Align items horizontally */
@@ -148,8 +154,6 @@ body::-webkit-scrollbar {
   cursor: url('l_cursors/l_size1.cur'), auto;
 }
 
-
-
 .side-panel {
   margin-right: 2%;
   align-items: center;
@@ -180,7 +184,7 @@ body::-webkit-scrollbar {
 }
 
 .title-text {
-  max-width: 90%;
+  max-width: 70%;
   /* This will make the image's width up to 100% of the container's width */
   height: auto;
   /* This will maintain the image's aspect ratio as it scales */
@@ -663,13 +667,13 @@ select {
   color: #f6ff47;
 }
 
-.image-contain {
-  border: 1px solid #ccc; /* Optional: Add a border for visual reference */
+.tut-div {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  /* Align items horizontally */
   align-items: center;
-}
-
-.tut-image {
-  width: 60%;
-  height:auto;
-  overflow:auto;
+  /* Align items vertically */
+  flex-direction: column;
+  /* Stack items vertically */
 }

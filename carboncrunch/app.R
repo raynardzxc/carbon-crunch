@@ -66,11 +66,6 @@ ui <- fluidPage(
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
   ),
-  # tags$script("
-  # $(document).on('shiny:sessioninitialized', function(e) {
-  #   window.resizeTo(1000, 800);
-  # });"
-  # )
 )
 
 # Define server logic
