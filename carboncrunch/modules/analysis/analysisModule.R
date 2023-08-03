@@ -26,6 +26,14 @@ analysis_page <- function(id) {
                 selected = "Cash Generated"
               ),
               plotOutput(ns("combinedPlot"), height = "400px")
+            ),
+            bsCollapsePanel(
+              "shit 1",
+              plotOutput(ns("shitPlot1"), height = "400px")
+            ),
+            bsCollapsePanel(
+              "shit 2",
+              plotOutput(ns("shitPlot2"), height = "400px")
             )
           )
         )
@@ -85,6 +93,14 @@ analysis_server <- function(id, gameData) {
           # Calculate cumulative values
           game_state_df$CumulativeSolarGained <- cumsum(game_state_df$SolarGained)
           game_state_df$CumulativeSolarOverflow <- cumsum(game_state_df$SolarOverflow)
+          game_state_df$CumulativeCarbonEmitted <- cumsum(game_state_df$Emissions)
+          game_state_df <- game_state_df %>% mutate(SolarUsed = SolarConsumedA1 + 
+                                                      SolarConsumedA2 + 
+                                                      SolarConsumedA3 + 
+                                                      SolarConsumedB1 +
+                                                      SolarConsumedB2)
+          game_state_df$CumulativeSolarUsed <- cumsum(game_state_df$SolarUsed)
+          game_state_df <- game_state_df %>% mutate(BatteryOverflow = SolarOverflow + Battery)
 
           # Render cash and emissions values
           output$cashValue <- renderText({
@@ -122,6 +138,7 @@ analysis_server <- function(id, gameData) {
 
             plot(game_state_df$Day, game_state_df$Battery,
               type = "n",
+              xlim = c(1, 30),
               ylim = c(0, ymax),
               xlab = "Day",
               ylab = "",
@@ -137,6 +154,65 @@ analysis_server <- function(id, gameData) {
               col = c("blue", "yellow", "orange"),
               lty = 1,
               cex = 0.8
+            )
+          })
+          
+          # cum solar used, cum solar gain, cum carbon emit
+          output$shitPlot1 <- renderPlot({
+            # Calculate the maximum y-value across all three series
+            ymax <- max(max(game_state_df$Emissions), max(game_state_df$CumulativeSolarGained), max(game_state_df$CumulativeSolarUsed))
+            
+            plot(game_state_df$Day, game_state_df$Emissions,
+                 type = "n",
+                 xlim = c(1, 30),
+                 ylim = c(0, ymax),
+                 xlab = "Day",
+                 ylab = "",
+                 main = "Solar/Fuel Utilisation"
+            )
+            
+            lines(game_state_df$Day, game_state_df$Emissions, col = "black")
+            lines(game_state_df$Day, game_state_df$CumulativeSolarGained, col = "green")
+            lines(game_state_df$Day, game_state_df$CumulativeSolarUsed, col = "red")
+            
+            legend("topright",
+                   legend = c("Carbon Emissions", "Solar Energy Gained", "Solar Used"),
+                   col = c("black", "green", "red"),
+                   lty = 1,
+                   cex = 0.8
+            )
+          })
+          
+          # battery, capacity and overflow
+          output$shitPlot2 <- renderPlot({
+            print(game_state_df$Capacity)
+            print(game_state_df$Battery)
+            print(game_state_df$BatteryOverflow)
+            # Calculate the maximum y-value across all three series
+            ymax <- max(game_state_df$BatteryOverflow)
+            
+            plot(game_state_df$Day, game_state_df$BatteryOverflow,
+                 type = "n",
+                 xlim = c(1, 30),
+                 ylim = c(0, ymax),
+                 xlab = "Day",
+                 ylab = "",
+                 main = "Overflow Analysis"
+            )
+            
+            lines(game_state_df$Day, game_state_df$Capacity, col = "black")
+            lines(game_state_df$Day, game_state_df$Battery, col = "green")
+            lines(game_state_df$Day, game_state_df$BatteryOverflow, col = "red")
+            
+            polygon(c(1,game_state_df$Day,30), c(0,game_state_df$BatteryOverflow,0), col = "red")
+            polygon(c(1,game_state_df$Day,30), c(0,game_state_df$Capacity,0), col = "black")
+            polygon(c(1,game_state_df$Day,30), c(0,game_state_df$Battery,0), col = "green")
+            
+            legend("topright",
+                   legend = c("Battery Capacity", "Stored energy", "Solar Overflow"),
+                   col = c("black", "green", "red"),
+                   lty = 1,
+                   cex = 0.8
             )
           })
 
