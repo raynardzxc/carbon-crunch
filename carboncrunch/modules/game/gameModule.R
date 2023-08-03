@@ -265,6 +265,8 @@ game_server <- function(id, gameData) {
       values$selected_component <- "None"
       values$game_state_df <- initial_game_state
       values$summary_data <- NULL
+      values$batt_upgrade <- 0
+      values$line_upgrade <- 0
 
       battery_cap <- reactive({
         battery_df$capacity[battery_df$level == values$battery_level]
@@ -901,6 +903,7 @@ game_server <- function(id, gameData) {
         if (values$cash >= upgrade_cost_Battery() && values$battery_level < 3) {
           values$cash <- values$cash - upgrade_cost_Battery()
           values$battery_level <- values$battery_level + 1
+          values$batt_upgrade <- values$batt_upgrade + upgrade_cost_Battery()
           values$selected_component <- "Upgraded" # reset selected component
         }
       })
@@ -915,11 +918,12 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsA # Get a copy of the current levels
           tmp[1] <- tmp[1] + 1 # Increase the level of the first production line
           values$pl_levelsA <- tmp # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
-          values$selected_component <- "None" # reset selected component
+          values$selected_component <- "Upgraded" # reset selected component
         }
       })
 
@@ -933,11 +937,12 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsA # Get a copy of the current levels
           tmp[2] <- tmp[2] + 1 # Increase the level of the first production line
           values$pl_levelsA <- tmp # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
-          values$selected_component <- "None" # reset selected component
+          values$selected_component <- "Upgraded" # reset selected component
         }
       })
 
@@ -951,11 +956,12 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsA # Get a copy of the current levels
           tmp[3] <- tmp[3] + 1 # Increase the level of the first production line
           values$pl_levelsA <- tmp # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
-          values$selected_component <- "None" # reset selected component
+          values$selected_component <- "Upgraded" # reset selected component
         }
       })
 
@@ -969,11 +975,12 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsB # Get a copy of the current levels
           tmp[1] <- tmp[1] + 1 # Increase the level of the first production line
           values$pl_levelsB <- tmp # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
-          values$selected_component <- "None" # reset selected component
+          values$selected_component <- "Upgraded" # reset selected component
         }
       })
 
@@ -987,11 +994,12 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsB # Get a copy of the current levels
           tmp[2] <- tmp[2] + 1 # Increase the level of the first production line
           values$pl_levelsB <- tmp # Update the production levels
           # No need to update cash_generated, emissions_generated, solar_consumption as they're reactive expressions
-          values$selected_component <- "None" # reset selected component
+          values$selected_component <- "Upgraded" # reset selected component
         }
       })
 
@@ -1156,7 +1164,9 @@ game_server <- function(id, gameData) {
         gameData(list(
           game_state = values$game_state_df,
           final_cash = values$cash,
-          final_emissions = values$emissions
+          final_emissions = values$emissions,
+          line_upgrade = values$line_upgrade,
+          batt_upgrade = values$batt_upgrade
         ))
         change_page("analysis")
         resetGame()
