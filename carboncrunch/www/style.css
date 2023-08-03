@@ -1,38 +1,580 @@
+@font-face {
+  font-family: 'gameplay';
+  src: url('Gameplay.ttf') format('truetype');
+  /*URL to font*/
+}
+
+@font-face {
+  font-family: 'tutorial';
+  src: url('Munro-2LYe.ttf') format('truetype');
+  /*URL to font*/
+}
+
+.final-button {
+  margin: 10px;
+}
+
+.container-fluid {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  /* Align items horizontally */
+  align-items: center;
+  /* Align items vertically */
+  flex-direction: column;
+  /* Stack items vertically */
+}
+
 body {
-  background-color: white;
+  font-family: gameplay;
+  font-size: 12px;
+  background-color: #243644;
+  color: white;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: url('l_cursors/l_arrow.cur'), auto;
+}
+
+.align-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.stats-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+#game-battery_value {
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+#game-productionNerfWarning {
   color: red;
+}
+
+.exit-div {
+  margin: 5% 30% 0 0;
+  align-items: center;
+  text-align: center;
+}
+
+.exit-button {
+  background: url("X.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.exit-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("X_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.pl-div {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
+}
+
+.pl-div .shiny-text-output.shiny-bound-output {
+  color: white;
+  font-size: 14px;
+  margin-left: 30px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.factory-floor {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  background-image: url("floor.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* This line prevents the image from repeating */
+  background-position: center;
+  /* This line centers the image in the div */
+  padding-top: 6%;
+  /* Adjust the size as needed */
+  padding-right: 6%;
+  padding-bottom: 2%;
+  cursor: url('l_cursors/l_arrow.cur'), auto;
+}
+
+.factory-floor .row {
+  margin: 20px 0;
+  /* Adjust the size as needed */
+  display: flex;
+  align-items: stretch;
+  text-align: center;
+}
+
+.factory-floor .row [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.factory-floor .row [class*="col-"] .form-group.shiny-input-container.shiny-input-container-inline {
+  margin: auto;
+}
+
+.bootstrap-switch-handle-on.bootstrap-switch-danger,
+.bootstrap-switch-handle-off.bootstrap-switch-success,
+.bootstrap-switch-label,
+.bootstrap-switch-container {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+}
+
+
+
+.side-panel {
+  margin-right: 2%;
+  align-items: center;
+  text-align: center;
+}
+
+.board-div {
+  margin: 2%;
+  align-items: center;
+  text-align: center;
+  background-image: url("board.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* This line prevents the image from repeating */
+  background-position: center;
+  /* This line centers the image in the div */
+  padding: 5%;
+}
+
+#game-upgrade_PL1,
+#game-upgrade_PL2,
+#game-upgrade_PL3,
+#game-upgrade_PL4,
+#game-upgrade_PL5,
+#game-upgrade_Battery,
+#game-cancel_upgrade {
+  margin: 20px 10px 5px 0;
+}
+
+.title-text {
+  width: 850px;
+  /* This will make the image's width up to 100% of the container's width */
+  height: auto;
+  /* This will maintain the image's aspect ratio as it scales */
+  margin: 20px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.tut-button {
+  background: url("tutorial.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
+  height: 50px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.tut-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("tutorial_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.play-button {
+  background: url("play.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
+  height: 50px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.play-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("play_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.lb-button {
+  background: url("leaderboard.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
+  height: 50px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.lb-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("leaderboard_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.credit-button {
+  background: url("credits.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
+  height: 50px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.credit-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("credits_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.quit-button {
+  background: url("quit.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
+  height: 50px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.quit-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("quit_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.battery5 {
+  background: url("battery_5.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
+  height: 120px;
+  padding: 0;
+  margin: 0 12% 0 0;
+}
+
+.battery5:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.battery4 {
+  background: url("battery_4.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
+  height: 120px;
+  padding: 0;
+  margin: 0 12% 0 0;
+}
+
+.battery4:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.battery3 {
+  background: url("battery_3.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
+  height: 120px;
+  padding: 0;
+  margin: 0 12% 0 0;
+}
+
+.battery3:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.battery2 {
+  background: url("battery_2.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
+  height: 120px;
+  padding: 0;
+  margin: 0 12% 0 0;
+}
+
+.battery2:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.battery1 {
+  background: url("battery_1.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
+  height: 120px;
+  padding: 0;
+  margin: 0 12% 0 0;
+}
+
+.battery1:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.battery0 {
+  background: url("battery_0.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
+  height: 120px;
+  padding: 0;
+  margin: 0 12% 0 0;
+}
+
+.battery0:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.pl1-button {
+  background: url("pl_line1.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
   margin: 0;
 }
 
-a {
-    color: darkgray;
+.pl1-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
 }
 
-a:hover {
-    color: rgb(128, 208, 91);
+.pl2-button {
+  background: url("pl_line2.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
 }
 
-.home-button:hover {
-  background-color:#002ead;
-  transition: 0.7s;
+.pl2-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
 }
 
-.home-button {
-  text-align: center;
-  padding: 15px 32px;
-  width: 30%;
-  margin: 7px 0%;
-  font-size: 16px;
-  color: white;
-  padding: 0px;
-  display: inline-block;
-  text-decoration: none;
+.pl3-button {
+  background: url("pl_line3.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl3-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.pl4-button {
+  background: url("pl_line4.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl4-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.pl5-button {
+  background: url("pl_line5.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
+  height: 60px;
+  padding: 0;
+  margin: 0;
+}
+
+.pl5-button:hover {
+  transform: scale(1.02);
+  background-color: transparent;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  outline: none;
+  border: none;
+}
+
+.nextday-button {
+  background: url("next.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.nextday-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("next_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.nextday-button:disabled {
+  background: url("next_d.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.finish-button {
+  background: url("finish.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
+  height: 70px;
+  padding: 0;
+  margin: 10px 0%;
+}
+
+.finish-button:hover {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+  background: url("finish_h.png") no-repeat center;
+  background-size: contain;
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
 
 .modal-content {
   background-color: #f9f9f9;
   color: black;
 }
+
 .modal-header {
   background-color: #f2f2f2;
   color: black;
@@ -42,45 +584,131 @@ a:hover {
   background-color: #f9f9f9;
   color: black;
 }
+
 .custom-dialog .ms-Dialog-title {
   color: black;
 }
 
-.big-text {
+.score-div {
+  margin: auto;
+  margin-bottom: 20px;
+  align-items: center;
   text-align: center;
-  font-size: 32px;
-  padding: 20px;
-  margin: 20px;
-  color: white;
+  font-size: 14px;
+  font-weight: bold;
+
+  background-image: url("board.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* This line prevents the image from repeating */
+  background-position: center;
+  /* This line centers the image in the div */
+  padding: 5%;
 }
 
-.normal-text {
+.nav-div {
+  margin: auto;
+  align-items: center;
   text-align: center;
-  font-size: 24px;
-  padding: 10px;
-  margin: 10px;
 }
 
 .btn {
-  display: inline-block;
-  font-size: 18px;
-  padding: 10px 20px; 
-  margin: 10px;
-  background-color: #007BFF; 
-  color: white;
-  border: none;
-  border-radius: 5px;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+}
+
+.selectize-dropdown,
+.selectize-dropdown.form-control,
+.selectize-control.single .selectize-input,
+.selectize-control.single .selectize-input input {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+}
+
+a:-webkit-any-link {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+}
+
+select {
+  cursor: url('l_cursors/l_size1.cur'), auto;
+}
+
+.credit-div {
+  align-items: center;
   text-align: center;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  height: 100vh;  /* Adjust the height to match the viewport height */
+  overflow-y: auto;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+.credit-title {
+  text-align: center;
+  margin-top: 30px;
 }
 
-.my-class {
-  color: red;
-  font-size: 20px;
-  /* add more styles as needed */
+.credit-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.credit-table th,
+.credit-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  /* Center table headers and contents */
+}
+
+.credit-table th {
+  background-color: #f2f2f2;
+  color: #243644;
+}
+
+.special-thanks {
+  text-align: justify;
+  /* Justify special thanks text */
+  margin-top: 30px;
+  margin-left: 10%;
+  /* Adjust as needed to achieve desired look */
+  margin-right: 10%;
+  /* Adjust as needed to achieve desired look */
+  color: #f6ff47;
+}
+
+.router.tut_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.tut-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.tut1-cont {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.tut1 {
+  width: 100%;
+  /* This will make the image's width up to 100% of the container's width */
+  height: auto;
+  /* This will maintain the image's aspect ratio as it scales */
+}
+
+.tut2-cont {
+  display: flex;
+  justify-content: center; 
+  overflow-y: ;: auto;
+  max-height: 100vh; /* Adjust as needed */
+}
+
+.tut2 {
+  width: 100%;
+  /* This will make the image's width up to 100% of the container's width */
+  height: auto;
+  /* This will maintain the image's aspect ratio as it scales */
+  object-fit: contain;
 }
