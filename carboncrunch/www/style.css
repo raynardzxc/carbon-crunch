@@ -595,8 +595,8 @@ body {
   align-items: center;
   text-align: center;
   font-size: 14px;
-  font-weight: bold;
 
+  letter-spacing: 1px;
   background-image: url("board.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -604,6 +604,10 @@ body {
   background-position: center;
   /* This line centers the image in the div */
   padding: 5%;
+}
+
+.score-div h3 {
+  font-weight: bold;
 }
 
 .nav-div {
@@ -701,7 +705,7 @@ select {
 .tut2-cont {
   display: flex;
   justify-content: center; 
-  overflow-y: ;: auto;
+  overflow-y: auto;
   max-height: 100vh; /* Adjust as needed */
 }
 
