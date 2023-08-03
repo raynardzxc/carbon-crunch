@@ -9,6 +9,7 @@ analysis_page <- function(id) {
         tags$div(
           class = "analysis-div",
           bsCollapse(
+            open = "Game Summary",
             bsCollapsePanel(
               "Game Summary",
               plotOutput(ns("summaryPlot"), height = "400px")
@@ -38,6 +39,7 @@ analysis_page <- function(id) {
               titlePanel("Analysis Page"),
               p("Final Cash: ", textOutput(ns("cashValue"))),
               p("Final Emissions: ", textOutput(ns("emissionsValue"))),
+              uiOutput(ns("pb")),
               p("Final Score: ", textOutput(ns("finalScore")))
             )
           )
@@ -73,6 +75,8 @@ analysis_server <- function(id, gameData) {
           final_cash <- data$final_cash
           final_emissions <- data$final_emissions
           final_score <- ifelse(final_emissions > limit, final_cash - 5 * (final_emissions - limit), final_cash + 10 * (limit - final_emissions))
+          # Calculate penalty or bonus
+          pb <- final_score-final_cash
           # Add final_score to the existing data
           data$final_score <- final_score
           gameData(data)  # Update gameData
@@ -87,6 +91,13 @@ analysis_server <- function(id, gameData) {
           }) # formatted as currency
           output$emissionsValue <- renderText({
             final_emissions
+          })
+          output$pb <- renderUI({
+            if (pb>=0){ # bonus for going below threshold
+              p("Emissions Bonus: ",pb, style = "color: green;")
+            } else { # penalty for going above threshold
+              p("Emissions Penalty: ",pb, style = "color: red;")
+            }
           })
           output$finalScore <- renderText({
             final_score

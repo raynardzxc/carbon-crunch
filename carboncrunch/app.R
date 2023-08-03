@@ -48,10 +48,6 @@ home_page <- div(
         "quit",
         class = "quit-button"
       ),
-      # PrimaryButton.shinyInput( ## placeholder to test
-      #   "publish",
-      #   text = "test publish"
-      # )
     )
   )
 )

@@ -583,10 +583,17 @@ body::-webkit-scrollbar {
 
 .score-div {
   margin: auto;
+  margin-bottom: 20px;
   align-items: center;
   text-align: center;
   font-size: 14px;
   font-weight: bold;
+
+  background-image: url("board.png");
+  background-size: 100% 100%; 
+  background-repeat: no-repeat; /* This line prevents the image from repeating */
+  background-position: center; /* This line centers the image in the div */
+  padding: 5%;
 }
 
 .nav-div {
