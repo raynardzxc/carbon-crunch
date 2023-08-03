@@ -16,10 +16,6 @@ analysis_page <- function(id) {
               plotOutput(ns("summaryPlot"), height = "400px")
             ),
             bsCollapsePanel(
-              "Battery Utilisation",
-              plotOutput(ns("energyPlot"), height = "400px")
-            ),
-            bsCollapsePanel(
               "Production Line Analysis",
               selectInput(ns("view_select"), "View:",
                 choices = c("Cash Generated", "Emissions Generated", "Solar Consumption"),
@@ -28,12 +24,12 @@ analysis_page <- function(id) {
               plotOutput(ns("combinedPlot"), height = "400px")
             ),
             bsCollapsePanel(
-              "shit 1",
-              plotOutput(ns("shitPlot1"), height = "400px")
+              "Solar/Carbon Utilisation",
+              plotOutput(ns("solarcarbonPlot"), height = "400px")
             ),
             bsCollapsePanel(
-              "shit 2",
-              plotOutput(ns("shitPlot2"), height = "400px")
+              "Overflow Analysis",
+              plotOutput(ns("overflowPlot"), height = "400px")
             )
           )
         )
@@ -130,35 +126,9 @@ analysis_server <- function(id, gameData) {
               col = c("green", "red"), lty = 1, cex = 0.8
             )
           })
-
-          # Plot Battery, Solar Gained and Solar Overflow over the days
-          output$energyPlot <- renderPlot({
-            # Calculate the maximum y-value across all three series
-            ymax <- max(max(game_state_df$Battery), max(game_state_df$SolarGained), max(game_state_df$SolarOverflow))
-
-            plot(game_state_df$Day, game_state_df$Battery,
-              type = "n",
-              xlim = c(1, 30),
-              ylim = c(0, ymax),
-              xlab = "Day",
-              ylab = "",
-              main = "Energy Utilization"
-            )
-
-            lines(game_state_df$Day, game_state_df$Battery, col = "blue")
-            lines(game_state_df$Day, game_state_df$SolarGained, col = "yellow")
-            lines(game_state_df$Day, game_state_df$SolarOverflow, col = "orange")
-
-            legend("topright",
-              legend = c("Battery Level", "Solar Energy Gained", "Solar Overflow"),
-              col = c("blue", "yellow", "orange"),
-              lty = 1,
-              cex = 0.8
-            )
-          })
           
           # cum solar used, cum solar gain, cum carbon emit
-          output$shitPlot1 <- renderPlot({
+          output$solarcarbonPlot <- renderPlot({
             # Calculate the maximum y-value across all three series
             ymax <- max(max(game_state_df$Emissions), max(game_state_df$CumulativeSolarGained), max(game_state_df$CumulativeSolarUsed))
             
@@ -183,12 +153,12 @@ analysis_server <- function(id, gameData) {
             )
           })
           
-          # battery, capacity and overflow
-          output$shitPlot2 <- renderPlot({
+          # Plot the relationship between battery, capacity and overflow
+          output$overflowPlot <- renderPlot({
             print(game_state_df$Capacity)
             print(game_state_df$Battery)
             print(game_state_df$BatteryOverflow)
-            # Calculate the maximum y-value across all three series
+            # Calculate the maximum y-value
             ymax <- max(game_state_df$BatteryOverflow)
             
             plot(game_state_df$Day, game_state_df$BatteryOverflow,

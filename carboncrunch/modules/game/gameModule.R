@@ -845,7 +845,7 @@ game_server <- function(id, gameData) {
       })
 
       output$next_day_button <- renderUI({
-        if (values$day < 30 && battery_is_sufficient()) {
+        if (values$day < 30 && battery_is_sufficient()) { 
           PrimaryButton.shinyInput(
             inputId = ns("next_day"),
             class = "nextday-button",
@@ -1161,30 +1161,24 @@ game_server <- function(id, gameData) {
         change_page("analysis")
         resetGame()
       })
-
-
+      
       observeEvent(input$back, {
         showModal(
-          Dialog(
-            className = "custom-dialog",
-            hidden = FALSE,
+          modalDialog(
             title = "Confirmation",
-            subText = "Are you sure you want to go back to home? All progress will be lost.",
-            DialogFooter(
-              DefaultButton.shinyInput(ns("cancelButton"), text = "Cancel"),
-              PrimaryButton.shinyInput(ns("confirm_back"), text = "Yes")
-            ),
-            # Prevent automatic dismissal
-            dismissOnClickOutside = FALSE,
-            dismissOnEscape = FALSE
+            "Are you sure you want to go back to home? All progress will be lost.",
+            footer = tagList(
+              modalButton("Cancel"),
+              actionButton(inputId = ns("confirm_back"), "Yes")
+            )
           )
         )
       })
 
-      observeEvent(input$cancelButton, {
-        removeModal()
-        print("Cancel back to home dialog")
-      })
+      # observeEvent(input$cancelButton, {
+      #   removeModal()
+      #   print("Cancel back to home dialog")
+      # })
 
       observeEvent(input$confirm_back, {
         resetGame()
