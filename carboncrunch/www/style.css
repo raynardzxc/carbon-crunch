@@ -4,6 +4,12 @@
   /*URL to font*/
 }
 
+@font-face {
+  font-family: 'tutorial';
+  src: url('Munro-2LYe.ttf') format('truetype');
+  /*URL to font*/
+}
+
 .final-button {
   margin: 10px;
 }
