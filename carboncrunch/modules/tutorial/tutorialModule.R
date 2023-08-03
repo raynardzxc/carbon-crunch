@@ -1,10 +1,25 @@
 tutorial_page <- function(id) {
   ns <- NS(id)
-  tags$div(class = "tut_div",
+  tags$div(
+    class = "tut_div",
+    fluidRow(
       tags$div(
-        style = "text-align: center;",
-        actionButton(ns("back"), "Back", class = "final-button")
+        class = "tut1-cont",
+        column(5,
+               align = "center",
+               h2(class = "tut-title", "Tutorial"),
+               img(class = "tut1", src = "tut_image1.png"),
+               actionButton(ns("back"), "Back", class = "final-button")
+        )
+      ),
+      tags$div(
+        class = "tut2-cont",
+        column(7,
+               align = "center",
+               img(class = "tut2", src = "tut_image2.png")
+        )
       )
+    )
   )
 }
 

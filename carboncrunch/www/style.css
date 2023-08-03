@@ -14,11 +14,6 @@
   margin: 10px;
 }
 
-.tut_div {
-  font-family: 'arial';
-  /* Change font back to default for readability*/
-}
-
 .container-fluid {
   height: 100vh;
   display: flex;
@@ -191,7 +186,7 @@ body::-webkit-scrollbar {
 }
 
 .title-text {
-  max-width: 90%;
+  width: 850px;
   /* This will make the image's width up to 100% of the container's width */
   height: auto;
   /* This will maintain the image's aspect ratio as it scales */
@@ -640,6 +635,16 @@ select {
   cursor: url('l_cursors/l_size1.cur'), auto;
 }
 
+.credit-div {
+  align-items: center;
+  text-align: center;
+}
+
+.credit-title {
+  text-align: center;
+  margin-top: 30px;
+}
+
 .credit-table {
   width: 100%;
   margin-top: 20px;
@@ -658,11 +663,6 @@ select {
   color: #243644;
 }
 
-.credit-title {
-  text-align: center;
-  margin-top: 20px;
-}
-
 .special-thanks {
   text-align: justify;
   /* Justify special thanks text */
@@ -672,4 +672,45 @@ select {
   margin-right: 10%;
   /* Adjust as needed to achieve desired look */
   color: #f6ff47;
+}
+
+.router.tut_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.tut-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.tut1-cont {
+  margin: auto;
+  align-items: center;
+  text-align: center;
+}
+
+.tut1 {
+  width: 100%;
+  /* This will make the image's width up to 100% of the container's width */
+  height: auto;
+  /* This will maintain the image's aspect ratio as it scales */
+}
+
+.tut2-cont {
+  display: flex;
+  justify-content: center; 
+  overflow: auto;
+  max-height: 100vh; /* Adjust as needed */
+}
+
+.tut2 {
+  width: 100%;
+  /* This will make the image's width up to 100% of the container's width */
+  height: auto;
+  /* This will maintain the image's aspect ratio as it scales */
+  object-fit: contain;
 }
