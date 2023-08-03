@@ -25,7 +25,7 @@ source("helper.R")
 # UI for Game
 home_page <- div(
   fluidRow(
-    column(12, ## Column might be redundant here
+    column(12,
       align = "center",
       img(class = "title-text", src = "title.png"),
       PrimaryButton.shinyInput(
