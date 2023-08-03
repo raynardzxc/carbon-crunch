@@ -307,7 +307,7 @@ game_server <- function(id, gameData) {
 
       # Compute production nerf factor
       production_nerf_factor <- reactive(({
-        ifelse((values$battery_value / battery_cap()) < 0.3, 0.5, 1)
+        ifelse((values$battery_value / battery_cap()) < 0.5, 0.5, 1)
       }))
 
       upgrade_cost_Battery <- reactive({
