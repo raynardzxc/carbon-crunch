@@ -8,6 +8,8 @@ credit_page <- function(id) {
       uiOutput(ns("developerTable")),
       h3("Assets used"),
       uiOutput(ns("assetTable")),
+      h3("Research references"),
+      uiOutput(ns("researchTable")),
       h3(class = "special-thanks",
          "Special thanks to Prof Peter Jackson, Prof Duan Lingjie, and Prof Francisco Benita for their guidance and support in this project."),
       div( # Center the back button
@@ -55,6 +57,24 @@ credit_server <- function(id) {
                 "<a href='https://www.urbanfonts.com/fonts/Gameplay.font'>Link</a>",
                 "<a href='https://www.fontspace.com/munro-font-f14903'>Link</a>",
                 "<a href='https://www.cursors-4u.com/cursor/2011/12/04/leaf-set.html'>Link</a>"), "</td></tr>",
+              collapse = ""),
+            "</tbody>",
+            "</table>"
+          )
+        )
+      })
+      
+      output$researchTable <- renderUI({
+        HTML(
+          paste(
+            "<table class='credit-table'>",
+            "<thead><tr><th>Research Article</th><th>Link</th></tr></thead>",
+            "<tbody>",
+            paste(
+              "<tr><td>", c("Singapore’s carbon tax increase of up to 16-fold will make low carbon technologies and power imports cost competitive", 
+                            "The impact of a carbon tax on manufacturing: Evidence from microdata"), "</td><td>",
+              c("<a href='https://www.spglobal.com/commodityinsights/en/ci/research-analysis/singapores-carbon-tax-increase-of-up-to-16fold-will-make-low-c.html'>Link</a>", 
+                "<a href='https://www.sciencedirect.com/science/article/pii/S0047272714001078'>Link</a>"), "</td></tr>",
               collapse = ""),
             "</tbody>",
             "</table>"
