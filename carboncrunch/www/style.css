@@ -8,11 +8,6 @@
   margin: 10px;
 }
 
-.tut_div {
-  font-family: 'arial';
-  /* Change font back to default for readability*/
-}
-
 .container-fluid {
   height: 100vh;
   display: flex;
@@ -666,4 +661,15 @@ select {
   margin-right: 10%;
   /* Adjust as needed to achieve desired look */
   color: #f6ff47;
+}
+
+.image-contain {
+  border: 1px solid #ccc; /* Optional: Add a border for visual reference */
+  align-items: center;
+}
+
+.tut-image {
+  width: 60%;
+  height:auto;
+  overflow:auto;
 }
