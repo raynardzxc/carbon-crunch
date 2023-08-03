@@ -703,7 +703,7 @@ select {
 .tut2-cont {
   display: flex;
   justify-content: center; 
-  overflow: auto;
+  overflow-y: ;: auto;
   max-height: 100vh; /* Adjust as needed */
 }
 
