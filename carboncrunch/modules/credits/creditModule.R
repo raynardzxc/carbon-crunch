@@ -1,44 +1,19 @@
 credit_page <- function(id) {
   ns <- NS(id)
-  div(
-    class = "credit-div",
-    h2(class= "credit-title", "Credits"),
-    h3("raynard chai insert here"),
-    
-    h3("Assets"),
-    fluidRow(
-      column(12, 
-             p("Engineers - Murphysdad. (n.d.). Sci-Fi Facility Asset Pack by Murphysdad."),
-             a("https://murphysdad.itch.io/sci-fi-facility")
-      ),
-      column(12, 
-             p("Floor - SHQ Design Zone. (n.d.). TileMap SF by OSHQ Design Zone."),
-             a("https://oshq.itch.io/tilemap-sf?download")
-      ),
-      column(12, 
-             p("Products - penzilla. (n.d.). Top-down Retro Interior House: Royalty free pixel art asset pack by penzilla."),
-             a("https://penzilla.itch.io/top-down-retro-house")
-      ),
-    ),
-    h3("Font"),
-    fluidRow(
-      column(12, 
-             p("Font - Geronimo. (n.d.). Gameplay. Free download: Gameplay Font."),
-             a("https://www.urbanfonts.com/fonts/Gameplay.font")
-      ),
-    ),
-    h3("Cursor"),
-    fluidRow(
-      column(12, 
-             p("Cursor - Chee. (n.d.). Leaf Set."),
-             a("https://www.cursors-4u.com/cursor/2011/12/04/leaf-set.html")
-      ),
-    ),
-    
-    h3(class ="special-thanks", "Special thanks to Prof Peter Jackson, Prof Duan Lingjie and Prof Francisco Benita for their guidance and support in this project."),
-    div( # Center the back button
-      style = "text-align: center;",
-      actionButton(ns("back"), "Back", class = "final-button")
+  fluidPage(
+    div(
+      class = "credit-div",
+      h2(class = "credit-title", "Credits"),
+      h3("Made with love by"),
+      uiOutput(ns("developerTable")),
+      h3("Assets used"),
+      uiOutput(ns("assetTable")),
+      h3(class = "special-thanks",
+         "Special thanks to Prof Peter Jackson, Prof Duan Lingjie, and Prof Francisco Benita for their guidance and support in this project."),
+      div( # Center the back button
+        style = "text-align: center;",
+        actionButton(ns("back"), "Back", class = "final-button")
+      )
     )
   )
 }
@@ -49,6 +24,42 @@ credit_server <- function(id) {
     function(input, output, session) {
       ns <- session$ns
       observeEvent(input$back, change_page("/"))
+      
+      output$developerTable <- renderUI({
+        HTML(
+          paste(
+            "<table class='credit-table'>",
+            "<thead><tr><th>Name</th><th>ID</th></tr></thead>",
+            "<tbody>",
+            paste("<tr><td>", c("Chai Yu Cheng, Raynard", "Nandini Prabakaran", "Ng Wei Xian", "Zaina Aafreen"), "</td><td>", c("1003436", "1005390", "1005937", "1006145"), "</td></tr>", collapse = ""),
+            "</tbody>",
+            "</table>"
+          )
+        )
+      })
+      
+      output$assetTable <- renderUI({
+        HTML(
+          paste(
+            "<table class='credit-table'>",
+            "<thead><tr><th>Asset</th><th>Provider</th><th>Link</th></tr></thead>",
+            "<tbody>",
+            paste(
+              "<tr><td>", c("Engine", "Floor", "Products", "Font", "Cursor"), "</td><td>",
+              c("Sci-Fi Facility Asset Pack by Murphysdad", "TileMap SF by OSHQ Design Zone", 
+                "Top-down Retro Interior House: Royalty free pixel art asset pack by penzilla", 
+                "Gameplay Font by Geronimo", "Leaf Set by Chee"), "</td><td>",
+              c("<a href='https://murphysdad.itch.io/sci-fi-facility'>Link</a>", 
+                "<a href='https://oshq.itch.io/tilemap-sf?download'>Link</a>", 
+                "<a href='https://penzilla.itch.io/top-down-retro-house'>Link</a>",
+                "<a href='https://www.urbanfonts.com/fonts/Gameplay.font'>Link</a>",
+                "<a href='https://www.cursors-4u.com/cursor/2011/12/04/leaf-set.html'>Link</a>"), "</td></tr>",
+              collapse = ""),
+            "</tbody>",
+            "</table>"
+          )
+        )
+      })
     }
   )
 }

@@ -1,6 +1,7 @@
 @font-face {
-    font-family: 'gameplay';
-    src: url('Gameplay.ttf') format('truetype'); /*URL to font*/
+  font-family: 'gameplay';
+  src: url('Gameplay.ttf') format('truetype');
+  /*URL to font*/
 }
 
 .final-button {
@@ -8,39 +9,19 @@
 }
 
 .tut_div {
-  font-family: 'arial'; /* Change font back to default for readability*/
-}
-
-.credit-div {
-  text-align: center;
-  justify-content: center; /* Align items horizontally */
-  align-items: center; 
-}
-
-.credit-title {
-  margin: 50px;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.credit-div .row {
-  margin-bottom: 50px;
-}
-
-.credit-div .row .col-sm-12{
-  margin-bottom: 20px;
-}
-
-.credit-div .special-thanks {
-  color: #f6ff47;
+  font-family: 'arial';
+  /* Change font back to default for readability*/
 }
 
 .container-fluid {
   height: 100vh;
   display: flex;
-  justify-content: center; /* Align items horizontally */
-  align-items: center;     /* Align items vertically */
-  flex-direction: column;  /* Stack items vertically */
+  justify-content: center;
+  /* Align items horizontally */
+  align-items: center;
+  /* Align items vertically */
+  flex-direction: column;
+  /* Stack items vertically */
 }
 
 body {
@@ -53,7 +34,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: url('l_cursors/l_arrow.cur'),auto;
+  cursor: url('l_cursors/l_arrow.cur'), auto;
 }
 
 body::-webkit-scrollbar {
@@ -95,19 +76,20 @@ body::-webkit-scrollbar {
 
 .exit-button {
   background: url("X.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 50%; /* adjust width and height according to your image dimensions */
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
   height: 70px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .exit-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("X_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -134,17 +116,21 @@ body::-webkit-scrollbar {
   align-items: center;
   text-align: center;
   background-image: url("floor.png");
-  background-size: 100% 100%; 
-  background-repeat: no-repeat; /* This line prevents the image from repeating */
-  background-position: center; /* This line centers the image in the div */
-  padding-top: 6%; /* Adjust the size as needed */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* This line prevents the image from repeating */
+  background-position: center;
+  /* This line centers the image in the div */
+  padding-top: 6%;
+  /* Adjust the size as needed */
   padding-right: 6%;
   padding-bottom: 2%;
-  cursor: url('l_cursors/l_arrow.cur'),auto;
+  cursor: url('l_cursors/l_arrow.cur'), auto;
 }
 
 .factory-floor .row {
-  margin: 20px 0; /* Adjust the size as needed */
+  margin: 20px 0;
+  /* Adjust the size as needed */
   display: flex;
   align-items: stretch;
   text-align: center;
@@ -153,7 +139,7 @@ body::-webkit-scrollbar {
 .factory-floor .row [class*="col-"] {
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .factory-floor .row [class*="col-"] .form-group.shiny-input-container.shiny-input-container-inline {
@@ -164,7 +150,7 @@ body::-webkit-scrollbar {
 .bootstrap-switch-handle-off.bootstrap-switch-success,
 .bootstrap-switch-label,
 .bootstrap-switch-container {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
 }
 
 
@@ -180,9 +166,11 @@ body::-webkit-scrollbar {
   align-items: center;
   text-align: center;
   background-image: url("board.png");
-  background-size: 100% 100%; 
-  background-repeat: no-repeat; /* This line prevents the image from repeating */
-  background-position: center; /* This line centers the image in the div */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* This line prevents the image from repeating */
+  background-position: center;
+  /* This line centers the image in the div */
   padding: 5%;
 }
 
@@ -195,30 +183,33 @@ body::-webkit-scrollbar {
 #game-cancel_upgrade {
   margin: 20px 10px 5px 0;
 }
-            
+
 .title-text {
-  max-width: 90%; /* This will make the image's width up to 100% of the container's width */
-  height: auto; /* This will maintain the image's aspect ratio as it scales */
-  margin: 20px; 
+  max-width: 90%;
+  /* This will make the image's width up to 100% of the container's width */
+  height: auto;
+  /* This will maintain the image's aspect ratio as it scales */
+  margin: 20px;
   margin-top: 5%;
   margin-bottom: 5%;
 }
 
 .tut-button {
   background: url("tutorial.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 35%; /* adjust width and height according to your image dimensions */
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
   height: 50px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .tut-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("tutorial_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -226,19 +217,20 @@ body::-webkit-scrollbar {
 
 .play-button {
   background: url("play.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 35%; /* adjust width and height according to your image dimensions */
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
   height: 50px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .play-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("play_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -246,19 +238,20 @@ body::-webkit-scrollbar {
 
 .lb-button {
   background: url("leaderboard.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 35%; /* adjust width and height according to your image dimensions */
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
   height: 50px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .lb-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("leaderboard_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -266,19 +259,20 @@ body::-webkit-scrollbar {
 
 .credit-button {
   background: url("credits.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 35%; /* adjust width and height according to your image dimensions */
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
   height: 50px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .credit-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("credits_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -286,19 +280,20 @@ body::-webkit-scrollbar {
 
 .quit-button {
   background: url("quit.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 35%; /* adjust width and height according to your image dimensions */
+  width: 35%;
+  /* adjust width and height according to your image dimensions */
   height: 50px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .quit-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("quit_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -306,10 +301,11 @@ body::-webkit-scrollbar {
 
 .battery5 {
   background: url("battery_5.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 70%; /* adjust width and height according to your image dimensions */
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
   height: 120px;
   padding: 0;
   margin: 0 12% 0 0;
@@ -318,17 +314,18 @@ body::-webkit-scrollbar {
 .battery5:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .battery4 {
   background: url("battery_4.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 70%; /* adjust width and height according to your image dimensions */
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
   height: 120px;
   padding: 0;
   margin: 0 12% 0 0;
@@ -337,17 +334,18 @@ body::-webkit-scrollbar {
 .battery4:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .battery3 {
   background: url("battery_3.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 70%; /* adjust width and height according to your image dimensions */
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
   height: 120px;
   padding: 0;
   margin: 0 12% 0 0;
@@ -356,17 +354,18 @@ body::-webkit-scrollbar {
 .battery3:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .battery2 {
   background: url("battery_2.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 70%; /* adjust width and height according to your image dimensions */
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
   height: 120px;
   padding: 0;
   margin: 0 12% 0 0;
@@ -375,17 +374,18 @@ body::-webkit-scrollbar {
 .battery2:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .battery1 {
   background: url("battery_1.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 70%; /* adjust width and height according to your image dimensions */
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
   height: 120px;
   padding: 0;
   margin: 0 12% 0 0;
@@ -394,17 +394,18 @@ body::-webkit-scrollbar {
 .battery1:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .battery0 {
   background: url("battery_0.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 70%; /* adjust width and height according to your image dimensions */
+  width: 70%;
+  /* adjust width and height according to your image dimensions */
   height: 120px;
   padding: 0;
   margin: 0 12% 0 0;
@@ -413,17 +414,18 @@ body::-webkit-scrollbar {
 .battery0:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .pl1-button {
   background: url("pl_line1.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 100%; /* adjust width and height according to your image dimensions */
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
   height: 60px;
   padding: 0;
   margin: 0;
@@ -432,17 +434,18 @@ body::-webkit-scrollbar {
 .pl1-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .pl2-button {
   background: url("pl_line2.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 100%; /* adjust width and height according to your image dimensions */
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
   height: 60px;
   padding: 0;
   margin: 0;
@@ -451,17 +454,18 @@ body::-webkit-scrollbar {
 .pl2-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .pl3-button {
   background: url("pl_line3.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 100%; /* adjust width and height according to your image dimensions */
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
   height: 60px;
   padding: 0;
   margin: 0;
@@ -470,17 +474,18 @@ body::-webkit-scrollbar {
 .pl3-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .pl4-button {
   background: url("pl_line4.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 100%; /* adjust width and height according to your image dimensions */
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
   height: 60px;
   padding: 0;
   margin: 0;
@@ -489,17 +494,18 @@ body::-webkit-scrollbar {
 .pl4-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .pl5-button {
   background: url("pl_line5.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 100%; /* adjust width and height according to your image dimensions */
+  width: 100%;
+  /* adjust width and height according to your image dimensions */
   height: 60px;
   padding: 0;
   margin: 0;
@@ -508,26 +514,27 @@ body::-webkit-scrollbar {
 .pl5-button:hover {
   transform: scale(1.02);
   background-color: transparent;
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   outline: none;
   border: none;
 }
 
 .nextday-button {
   background: url("next.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 50%; /* adjust width and height according to your image dimensions */
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
   height: 70px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .nextday-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("next_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -535,10 +542,11 @@ body::-webkit-scrollbar {
 
 .nextday-button:disabled {
   background: url("next_d.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 50%; /* adjust width and height according to your image dimensions */
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
   height: 70px;
   padding: 0;
   margin: 10px 0%;
@@ -546,19 +554,20 @@ body::-webkit-scrollbar {
 
 .finish-button {
   background: url("finish.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   border: none;
-  width: 50%; /* adjust width and height according to your image dimensions */
+  width: 50%;
+  /* adjust width and height according to your image dimensions */
   height: 70px;
   padding: 0;
   margin: 10px 0%;
 }
 
 .finish-button:hover {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
   background: url("finish_h.png") no-repeat center;
-  background-size: contain; 
+  background-size: contain;
   background-color: transparent;
   outline: none;
   border: none;
@@ -568,6 +577,7 @@ body::-webkit-scrollbar {
   background-color: #f9f9f9;
   color: black;
 }
+
 .modal-header {
   background-color: #f2f2f2;
   color: black;
@@ -577,6 +587,7 @@ body::-webkit-scrollbar {
   background-color: #f9f9f9;
   color: black;
 }
+
 .custom-dialog .ms-Dialog-title {
   color: black;
 }
@@ -590,9 +601,11 @@ body::-webkit-scrollbar {
   font-weight: bold;
 
   background-image: url("board.png");
-  background-size: 100% 100%; 
-  background-repeat: no-repeat; /* This line prevents the image from repeating */
-  background-position: center; /* This line centers the image in the div */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  /* This line prevents the image from repeating */
+  background-position: center;
+  /* This line centers the image in the div */
   padding: 5%;
 }
 
@@ -603,20 +616,54 @@ body::-webkit-scrollbar {
 }
 
 .btn {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
 }
 
 .selectize-dropdown,
-.selectize-dropdown.form-control, 
-.selectize-control.single .selectize-input, 
+.selectize-dropdown.form-control,
+.selectize-control.single .selectize-input,
 .selectize-control.single .selectize-input input {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
 }
 
 a:-webkit-any-link {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
 }
 
 select {
-  cursor: url('l_cursors/l_size1.cur'),auto;
+  cursor: url('l_cursors/l_size1.cur'), auto;
+}
+
+.credit-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.credit-table th,
+.credit-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  /* Center table headers and contents */
+}
+
+.credit-table th {
+  background-color: #f2f2f2;
+  color: #243644;
+}
+
+.credit-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.special-thanks {
+  text-align: justify;
+  /* Justify special thanks text */
+  margin-top: 30px;
+  margin-left: 10%;
+  /* Adjust as needed to achieve desired look */
+  margin-right: 10%;
+  /* Adjust as needed to achieve desired look */
+  color: #f6ff47;
 }
