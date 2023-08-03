@@ -1035,6 +1035,29 @@ game_server <- function(id, gameData) {
 
         # Apply updates
         values$day <- values$day + 1
+        
+        # # math
+        # pl_sd <- 3
+        # shape1 <- (cash_generatedA()[1] / pl_sd)^2
+        # scale1 <- cash_generatedA()[1] / shape1
+        # cash1 <- rgamma(1, shape = shape1, scale = scale1)
+        # 
+        # shape2 <- (cash_generatedA()[2] / pl_sd)^2
+        # scale2 <- cash_generatedA()[2] / shape1
+        # cash2 <- rgamma(1, shape = shape2, scale = scale2)
+        # 
+        # shape3 <- (cash_generatedA()[3] / pl_sd)^2
+        # scale3 <- cash_generatedA()[3] / shape3
+        # cash3 <- rgamma(1, shape = shape3, scale = scale3)
+        # 
+        # shape4 <- (cash_generatedB()[1] / pl_sd)^2
+        # scale4 <- cash_generatedB()[1] / shape4
+        # cash4 <- rgamma(1, shape = shape4, scale = scale4)
+        # 
+        # shape5 <- (cash_generatedB()[2] / pl_sd)^2
+        # scale5 <- cash_generatedB()[2] / shape5
+        # cash5 <- rgamma(1, shape = shape5, scale = scale5)
+        
         # Production Line 1
         if (input$toggle1 == FALSE) {
           values$cash <- values$cash + cash_generatedA()[1] * production_nerf_factor() # Cash added
