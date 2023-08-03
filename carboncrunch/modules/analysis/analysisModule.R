@@ -39,14 +39,16 @@ analysis_page <- function(id) {
         fluidRow(
           column(
             12,
-            uiOutput(ns("breakdownTable")),
             tags$div(
               class = "score-div",
               h3("Score Breakdown"),
-              p("Final Cash: ", textOutput(ns("cashValue"))),
-              p("Final Emissions: ", textOutput(ns("emissionsValue"))),
+              p("Gross Profit: ", textOutput(ns("grossProfit"))),
+              p("Battery Upgrade Cost: ", textOutput(ns("batupCost"))),
+              p("Line Upgrade Cost: ", textOutput(ns("lineupCost"))),
+              p("Operating Profit: ", textOutput(ns("cashValue"))),
               uiOutput(ns("pb")),
-              p("Final Score: ", textOutput(ns("finalScore")))
+              p("Final Score: ", textOutput(ns("finalScore"))),
+              p("Total Emissions: ", textOutput(ns("emissionsValue"))),
             )
           )
         ),
@@ -99,13 +101,27 @@ analysis_server <- function(id, gameData) {
           game_state_df$CumulativeSolarUsed <- cumsum(game_state_df$SolarUsed)
           game_state_df <- game_state_df %>% mutate(BatteryOverflow = SolarOverflow + Battery)
 
-          # Render cash and emissions values
+          # Render the gross profit
+          output$grossProfit <- renderText({
+            paste("$", format(final_cash+data$batt_upgrade+data$line_upgrade, big.mark = ","))
+          }) # formatted as currency
+          
+          # Render the total cost of battery upgrades
+          output$batupCost <- renderText({
+            paste("-$", format(data$batt_upgrade, big.mark = ","))
+          }) # formatted as currency
+          
+          # Render the total cost of line upgrades
+          output$lineupCost <- renderText({
+            paste("-$", format(data$line_upgrade, big.mark = ","))
+          }) # formatted as currency
+          
+          # Render the operating profit
           output$cashValue <- renderText({
             paste("$", format(final_cash, big.mark = ","))
           }) # formatted as currency
-          output$emissionsValue <- renderText({
-            final_emissions
-          })
+          
+          # Render the penalty/bonus
           output$pb <- renderUI({
             if (pb>=0){ # bonus for going below threshold
               p("Emissions Bonus: ",pb, style = "color: green;")
@@ -113,8 +129,15 @@ analysis_server <- function(id, gameData) {
               p("Emissions Penalty: ",pb, style = "color: red;")
             }
           })
+          
+          # Render the net profit
           output$finalScore <- renderText({
             final_score
+          })
+          
+          # Render the total emissions
+          output$emissionsValue <- renderText({
+            final_emissions
           })
 
           # Ensure that there is data to work with
@@ -230,22 +253,7 @@ analysis_server <- function(id, gameData) {
         change_page("publish")
       })
       
-      output$breakdownTable <- renderUI({
-        HTML(
-          paste(
-            "<table class='breakdown-table'>",
-            "<thead><tr><th>Score Breakdown</th><th>$</th></tr></thead>",
-            "<tbody>",
-            paste(
-              "<tr><td>", 
-              c("Gross Profit", "Battery Upgrade Cost", "Line Upgrade Cost"), "</td><td>",
-              c("$", "$", "$"), "</td></tr>",
-              collapse = ""),
-            "</tbody>",
-            "</table>"
-          )
-        )
-      })
+      
     }
   )
 }
