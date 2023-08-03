@@ -3,6 +3,7 @@ analysis_page <- function(id) {
 
   tags$div(
     class = "analysis-page",
+    titlePanel("Analysis Page"),
     fluidRow(
       column(
         8,
@@ -36,7 +37,7 @@ analysis_page <- function(id) {
             12,
             tags$div(
               class = "score-div",
-              titlePanel("Analysis Page"),
+              h3("Score Breakdown"),
               p("Final Cash: ", textOutput(ns("cashValue"))),
               p("Final Emissions: ", textOutput(ns("emissionsValue"))),
               uiOutput(ns("pb")),

@@ -66,7 +66,7 @@ getLineInfo <- function(){
 #Generate, or re-generate, HTML to create modal dialog for Password creation
 registerModal <- function(ns, failed = FALSE) {
   modalDialog(
-    title = "Create a new password",
+    title = "Create a new account",
     textInput(inputId = ns("playername1"), "Enter your desired username:", placeholder = "Username"),
     passwordInput(inputId = ns("password1"), "Enter a new password:", placeholder = "Password"),
     passwordInput(inputId = ns("password2"), "Confirm by re-entering the new password:", placeholder = "Repeated Password"),
