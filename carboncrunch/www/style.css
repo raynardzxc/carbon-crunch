@@ -38,10 +38,6 @@ body {
   cursor: url('l_cursors/l_arrow.cur'), auto;
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
-
 .align-div {
   margin: auto;
   align-items: center;
@@ -638,6 +634,8 @@ select {
 .credit-div {
   align-items: center;
   text-align: center;
+  height: 100vh;  /* Adjust the height to match the viewport height */
+  overflow-y: auto;
 }
 
 .credit-title {
