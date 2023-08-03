@@ -39,6 +39,7 @@ analysis_page <- function(id) {
         fluidRow(
           column(
             12,
+            uiOutput(ns("breakdownTable")),
             tags$div(
               class = "score-div",
               h3("Score Breakdown"),
@@ -227,6 +228,23 @@ analysis_server <- function(id, gameData) {
 
       observeEvent(input$publish, {
         change_page("publish")
+      })
+      
+      output$breakdownTable <- renderUI({
+        HTML(
+          paste(
+            "<table class='breakdown-table'>",
+            "<thead><tr><th>Score Breakdown</th><th>$</th></tr></thead>",
+            "<tbody>",
+            paste(
+              "<tr><td>", 
+              c("Gross Profit", "Battery Upgrade Cost", "Line Upgrade Cost"), "</td><td>",
+              c("$", "$", "$"), "</td></tr>",
+              collapse = ""),
+            "</tbody>",
+            "</table>"
+          )
+        )
       })
     }
   )
