@@ -209,7 +209,7 @@ game_server <- function(id, gameData) {
       ## STATE AND LOGIC VALUES
 
       # math
-      mean <- 23
+      mean <- 15
       sd <- 8
 
       shape <- (mean / sd)^2

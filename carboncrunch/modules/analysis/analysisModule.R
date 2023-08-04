@@ -231,6 +231,7 @@ analysis_server <- function(id, gameData) {
               )
             }
           })
+          
           # Solar Efficiency
           output$solarEfficiencyPlot <- renderPlot({
             solar_efficiency <- game_state_df$SolarGained / (game_state_df$SolarGained + game_state_df$SolarOverflow)
