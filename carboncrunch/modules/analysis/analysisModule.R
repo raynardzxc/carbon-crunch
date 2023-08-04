@@ -143,11 +143,11 @@ analysis_server <- function(id, gameData) {
           # Ensure that there is data to work with
           # Plot cash, emissions, battery, and solar gained over the days
           output$summaryPlot <- renderPlot({
-            plot(game_state_df$Day, game_state_df$Cash, type = "l", xlab = "Day", ylab = "", col = "green")
+            plot(game_state_df$Day, game_state_df$Cash, type = "l", xlab = "Day", ylab = "", col = "black")
             lines(game_state_df$Day, game_state_df$Emissions, col = "red")
             legend("topright",
               legend = c("Cash", "Emissions"),
-              col = c("green", "red"), lty = 1, cex = 0.8
+              col = c("black", "red"), lty = 1, cex = 0.8
             )
           })
           
@@ -165,13 +165,13 @@ analysis_server <- function(id, gameData) {
                  main = "Solar/Fuel Utilisation"
             )
             
-            lines(game_state_df$Day, game_state_df$Emissions, col = "black")
+            lines(game_state_df$Day, game_state_df$Emissions, col = "red")
             lines(game_state_df$Day, game_state_df$CumulativeSolarGained, col = "green")
-            lines(game_state_df$Day, game_state_df$CumulativeSolarUsed, col = "red")
+            lines(game_state_df$Day, game_state_df$CumulativeSolarUsed, col = "blue")
             
             legend("topright",
                    legend = c("Carbon Emissions", "Solar Energy Gained", "Solar Used"),
-                   col = c("black", "green", "red"),
+                   col = c("red", "green", "blue"),
                    lty = 1,
                    cex = 0.8
             )
@@ -227,7 +227,7 @@ analysis_server <- function(id, gameData) {
               solar_consumed <- colSums(game_state_df[, grep("SolarConsumed", names(game_state_df))])
               barplot(solar_consumed,
                 main = "Total Solar Consumption by Each Production Line",
-                ylab = "Total Solar Consumed", xlab = "Production Line", col = "blue"
+                ylab = "Total Solar Consumed", xlab = "Production Line", col = "green"
               )
             }
           })
