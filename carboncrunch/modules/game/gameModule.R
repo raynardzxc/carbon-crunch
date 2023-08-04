@@ -1211,8 +1211,8 @@ game_server <- function(id, gameData) {
           line_upgrade = values$line_upgrade,
           batt_upgrade = values$batt_upgrade
         ))
-        print(values$line_upgrade)
-        print(values$batt_upgrade)
+        # print(values$line_upgrade)
+        # print(values$batt_upgrade)
         change_page("analysis")
         resetGame()
       })

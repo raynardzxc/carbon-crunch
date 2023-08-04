@@ -181,9 +181,9 @@ analysis_server <- function(id, gameData) {
           
           # Plot the relationship between battery, capacity and overflow
           output$overflowPlot <- renderPlot({
-            print(game_state_df$Capacity)
-            print(game_state_df$Battery)
-            print(game_state_df$BatteryOverflow)
+            # print(game_state_df$Capacity)
+            # print(game_state_df$Battery)
+            # print(game_state_df$BatteryOverflow)
             # Calculate the maximum y-value
             ymax <- max(game_state_df$BatteryOverflow)
             
