@@ -1,3 +1,5 @@
+# Done by: Wei Xian
+
 # Initialise connection with database
 getAWSConnection <- function(){
   conn <- dbConnect(
