@@ -408,7 +408,7 @@ game_server <- function(id, gameData) {
         values$summary_data <- NULL
         values$batt_upgrade <- 0
         values$line_upgrade <- 0
-        print("resetGame")
+        # print("resetGame")
       }
 
       generateUI <- function(name) {
