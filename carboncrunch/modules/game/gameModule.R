@@ -389,7 +389,12 @@ game_server <- function(id, gameData) {
       ## FUNCTIONS
 
       resetGame <- function() {
-        values <- reactiveValues()
+        battery_df <- getBatteryInfo()
+        pl_df_temp <- getLineInfo()
+        pl_df_typeA <- pl_df_temp[pl_df_temp$linetype == 0, ]
+        pl_df_typeB <- pl_df_temp[pl_df_temp$linetype == 1, ]
+        initial_df <- getInitialCond()
+        
         values$battery_level <- 1
         values$pl_levelsA <- rep(1, 3)
         values$pl_levelsB <- rep(1, 2)
@@ -403,8 +408,7 @@ game_server <- function(id, gameData) {
         values$summary_data <- NULL
         values$batt_upgrade <- 0
         values$line_upgrade <- 0
-        gameData <- reactiveVal()
-        # print("resetGame")
+        print("resetGame")
       }
 
       generateUI <- function(name) {
@@ -1225,8 +1229,9 @@ game_server <- function(id, gameData) {
       })
 
       observeEvent(input$confirm_back, {
-        resetGame()
+        
         removeModal()
+        resetGame()
         change_page("/")
         # print("Back to home")
       })
