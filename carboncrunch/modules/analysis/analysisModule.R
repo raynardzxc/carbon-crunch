@@ -145,12 +145,19 @@ analysis_server <- function(id, gameData) {
           # Ensure that there is data to work with
           # Plot cash, emissions, battery, and solar gained over the days
           output$summaryPlot <- renderPlot({
-            plot(game_state_df$Day, game_state_df$Cash, type = "l", xlab = "Day", ylab = "", col = "black")
-            lines(game_state_df$Day, game_state_df$Emissions, col = "red")
-            legend("topleft",
-              legend = c("Cash", "Emissions"),
-              col = c("black", "red"), lty = 1, cex = 0.8
-            )
+            ggplot(game_state_df, aes(x = Day)) +
+              
+              # Add lines for each variable
+              geom_line(aes(y = Cash, color = "Cash"), size = 1) +
+              geom_line(aes(y = Emissions, color = "Carbon Emissions"), size = 1) +
+              
+              # Set labels and title
+              xlab("Day") +
+              ylab("Units") +
+              labs(title = "Summary Plot", colour = "Legend") +
+              
+              # Change colour of lines
+              scale_color_manual(values=c('black','red'))
           })
           
           # cum solar used, cum solar gain, cum carbon emit
@@ -158,25 +165,26 @@ analysis_server <- function(id, gameData) {
             # Calculate the maximum y-value across all three series
             ymax <- max(max(game_state_df$Emissions), max(game_state_df$CumulativeSolarGained), max(game_state_df$CumulativeSolarUsed))
             
-            plot(game_state_df$Day, game_state_df$Emissions,
-                 type = "n",
-                 xlim = c(1, 30),
-                 ylim = c(0, ymax),
-                 xlab = "Day",
-                 ylab = "",
-                 main = "Solar/Fuel Utilisation"
-            )
-            
-            lines(game_state_df$Day, game_state_df$Emissions, col = "red")
-            lines(game_state_df$Day, game_state_df$CumulativeSolarGained, col = "green")
-            lines(game_state_df$Day, game_state_df$CumulativeSolarUsed, col = "blue")
-            
-            legend("topleft",
-                   legend = c("Carbon Emissions", "Solar Energy Gained", "Solar Used"),
-                   col = c("red", "green", "blue"),
-                   lty = 1,
-                   cex = 0.8
-            )
+            ggplot(game_state_df, aes(x = Day)) +
+              
+              # Add lines for each variable
+              geom_line(aes(y = Emissions, color = "Carbon Emissions"), size = 1, show.legend = TRUE) +
+              geom_line(aes(y = CumulativeSolarGained, color = "Solar Energy Gained"), size = 1, show.legend = TRUE) +
+              geom_line(aes(y = CumulativeSolarUsed, color = "Solar Used"), size = 1, show.legend = TRUE) +
+              
+              # Set plot limits
+              xlim(1, 30) +
+              ylim(0, ymax) +
+              
+              # Labels and title
+              xlab("Day") +
+              ylab("Units") +
+              labs(title = "Solar/Carbon Utilisation", colour = "Legend") +
+              
+              # Change colour of lines
+              scale_color_manual(values=c('red','green','blue'))
+              
+              
           })
           
           # Plot the relationship between battery, capacity and overflow
