@@ -46,9 +46,9 @@ analysis_page <- function(id) {
               p("Battery Upgrade Cost: ", textOutput(ns("batupCost"))),
               p("Line Upgrade Cost: ", textOutput(ns("lineupCost"))),
               p("Operating Profit: ", textOutput(ns("cashValue"))),
-              uiOutput(ns("pb")),
-              p("Final Score: ", textOutput(ns("finalScore"))),
               p("Total Emissions: ", textOutput(ns("emissionsValue"))),
+              uiOutput(ns("pb")),
+              p("Final Score: ", textOutput(ns("finalScore")))
             )
           )
         ),
@@ -145,7 +145,7 @@ analysis_server <- function(id, gameData) {
           output$summaryPlot <- renderPlot({
             plot(game_state_df$Day, game_state_df$Cash, type = "l", xlab = "Day", ylab = "", col = "black")
             lines(game_state_df$Day, game_state_df$Emissions, col = "red")
-            legend("topright",
+            legend("topleft",
               legend = c("Cash", "Emissions"),
               col = c("black", "red"), lty = 1, cex = 0.8
             )
@@ -169,7 +169,7 @@ analysis_server <- function(id, gameData) {
             lines(game_state_df$Day, game_state_df$CumulativeSolarGained, col = "green")
             lines(game_state_df$Day, game_state_df$CumulativeSolarUsed, col = "blue")
             
-            legend("topright",
+            legend("topleft",
                    legend = c("Carbon Emissions", "Solar Energy Gained", "Solar Used"),
                    col = c("red", "green", "blue"),
                    lty = 1,
@@ -202,7 +202,7 @@ analysis_server <- function(id, gameData) {
             polygon(c(1,game_state_df$Day,30), c(0,game_state_df$Capacity,0), col = "black")
             polygon(c(1,game_state_df$Day,30), c(0,game_state_df$Battery,0), col = "green")
             
-            legend("topright",
+            legend("topleft",
                    legend = c("Battery Capacity", "Stored energy", "Solar Overflow"),
                    col = c("black", "green", "red"),
                    lty = 1,
