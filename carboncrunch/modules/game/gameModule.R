@@ -209,7 +209,7 @@ game_server <- function(id, gameData) {
       ## STATE AND LOGIC VALUES
 
       # math
-      mean <- 23
+      mean <- 15
       sd <- 8
 
       shape <- (mean / sd)^2
@@ -307,7 +307,7 @@ game_server <- function(id, gameData) {
 
       # Compute production nerf factor
       production_nerf_factor <- reactive(({
-        ifelse((values$battery_value / battery_cap()) < 0.5, 0.5, 1)
+        ifelse((values$battery_value / battery_cap()) <= 0.5, 0.5, 1)
       }))
 
       upgrade_cost_Battery <- reactive({
@@ -389,7 +389,13 @@ game_server <- function(id, gameData) {
       ## FUNCTIONS
 
       resetGame <- function() {
+        battery_df <- getBatteryInfo()
+        pl_df_temp <- getLineInfo()
+        pl_df_typeA <- pl_df_temp[pl_df_temp$linetype == 0, ]
+        pl_df_typeB <- pl_df_temp[pl_df_temp$linetype == 1, ]
+        initial_df <- getInitialCond()
         values <- reactiveValues()
+        gameData <- reactiveVal()
         values$battery_level <- 1
         values$pl_levelsA <- rep(1, 3)
         values$pl_levelsB <- rep(1, 2)
@@ -403,8 +409,8 @@ game_server <- function(id, gameData) {
         values$summary_data <- NULL
         values$batt_upgrade <- 0
         values$line_upgrade <- 0
-        gameData <- reactiveVal()
-        # print("resetGame")
+        battery_cap()
+        print("resetGame")
       }
 
       generateUI <- function(name) {
@@ -918,6 +924,7 @@ game_server <- function(id, gameData) {
           values$cash <- values$cash - upgrade_cost_Battery()
           values$battery_level <- values$battery_level + 1
           values$batt_upgrade <- values$batt_upgrade + upgrade_cost_Battery()
+          print(values$batt_upgrade)
           values$selected_component <- "UpgradedB" # reset selected component
         }
       })
@@ -1205,6 +1212,7 @@ game_server <- function(id, gameData) {
           line_upgrade = values$line_upgrade,
           batt_upgrade = values$batt_upgrade
         ))
+        print(values$batt_upgrade)
         change_page("analysis")
         resetGame()
       })
