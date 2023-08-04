@@ -936,7 +936,7 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
-          values$line_upgrade <- values$line_upgrade + pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[1], ]$cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsA # Get a copy of the current levels
           tmp[1] <- tmp[1] + 1 # Increase the level of the first production line
           values$pl_levelsA <- tmp # Update the production levels
@@ -955,7 +955,7 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
-          values$line_upgrade <- values$line_upgrade + pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[2], ]$cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsA # Get a copy of the current levels
           tmp[2] <- tmp[2] + 1 # Increase the level of the first production line
           values$pl_levelsA <- tmp # Update the production levels
@@ -974,7 +974,7 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
-          values$line_upgrade <- values$line_upgrade + pl_df_typeA[pl_df_typeA$level == values$pl_levelsA[3], ]$cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsA # Get a copy of the current levels
           tmp[3] <- tmp[3] + 1 # Increase the level of the first production line
           values$pl_levelsA <- tmp # Update the production levels
@@ -993,7 +993,7 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
-          values$line_upgrade <- values$line_upgrade + pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[1], ]$cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsB # Get a copy of the current levels
           tmp[1] <- tmp[1] + 1 # Increase the level of the first production line
           values$pl_levelsB <- tmp # Update the production levels
@@ -1012,7 +1012,7 @@ game_server <- function(id, gameData) {
 
         if (!is.na(upgrade_cost) && values$cash >= upgrade_cost) {
           values$cash <- values$cash - upgrade_cost # deduct cost
-          values$line_upgrade <- values$line_upgrade + pl_df_typeB[pl_df_typeB$level == values$pl_levelsB[2], ]$cost
+          values$line_upgrade <- values$line_upgrade + upgrade_cost
           tmp <- values$pl_levelsB # Get a copy of the current levels
           tmp[2] <- tmp[2] + 1 # Increase the level of the first production line
           values$pl_levelsB <- tmp # Update the production levels
