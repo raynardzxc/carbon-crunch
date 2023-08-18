@@ -4,7 +4,7 @@
 
 In the pursuit of net-zero emissions, businesses today face the unique challenge of transitioning to clean energy while simultaneously ensuring profitability. Climate change and regulations on CO2 emissions underscore the immediacy of this challenge. Yet, the shift to sustainable energy doesn't come without its own set of hurdles. Initial costs and technical complexities abound, but the future promises ample opportunities, such as cost savings due to energy efficiency and potential reputational enhancements.
 
-"**Carbon Crunch**" is a game that invites players to navigate this intricate terrain. Players will make critical decisions related to energy use, invest in sustainable technologies, all while adhering to the stringent CO2e emission norms, and continuously seeking to maximize their profits.
+"**Carbon Crunch**" is a game that invites players to navigate this intricate terrain. Players will make critical decisions related to energy use, invest in sustainable technologies, all while adhering to the stringent CO2 emission norms, and continuously seeking to maximize their profits.
 
 ## Team Members
 
